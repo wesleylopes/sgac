@@ -215,13 +215,11 @@ if (isset($_SESSION['ID'])==false){
                 <div id="sidebar-menu">
 
                     <ul>
-                        <li class="submenu">
-                            <a class="active" href="index.php"><i class="fa fa-fw fa-tachometer"></i><span> Dashboard Principal </span> </a>
-                            <a class="active2" href="index.php"><i class="fa fa-fw fa-bar-chart"></i><span> Preço Médio por Posto </span> </a>
-                            <a class="active2" href="evolucao-preco.php"><i class="fa fa-fw fa-line-chart"></i><span> Evolução de Preço </span> </a>
-                             <a class="active2" href="index.php"><i class="fa fa-fw fa-cloud-upload"></i><span>Upload de arquivos (Excel) </span> </a>
-
-
+                        <li class="submenu1">
+                            <a href="index.php"><i class="fa fa-fw fa-tachometer"></i><span> Dashboard Principal </span> </a>
+                            <a href="index.php"><i class="fa fa-fw fa-bar-chart"></i><span> Preço Médio por Posto </span> </a>
+                            <a class="active" href="index.php"><i class="fa fa-fw fa-line-chart"></i><span> Evolução de Preço </span> </a>
+                            <a href="index.php"><i class="fa fa-fw fa-cloud-upload"></i><span>Upload de arquivos (Excel) </span> </a>
 
                         </li>
 
@@ -275,9 +273,9 @@ function verificaAtualizacaoPeriodoDadosSistema(){
    require("conexao.php");           
 
    $sql="SELECT 
-            date_format( min(DATA_MOVIMENTO), '%d/%m/%Y') as MOVIMENTO_INICIAL,
-            date_format(max(DATA_MOVIMENTO), '%d/%m/%Y') as MOVIMENTO_FINAL,
-            date_format(max(DATA_IMPORTACAO),'%d/%m/%Y') as ULTIMA_IMPORTACAO 
+            date_format( min(DATA_MOVIMENTO), '%d/%m/%Y ') as MOVIMENTO_INICIAL,
+            date_format(max(DATA_MOVIMENTO), '%d/%m/%Y %h:%s') as MOVIMENTO_FINAL,
+            date_format(max(DATA_IMPORTACAO),'%d/%m/%Y %h:%s') as ULTIMA_IMPORTACAO 
          FROM movimento_veiculos";
        /*
          echo $sql;
@@ -315,10 +313,10 @@ require("conexao.php");
          AND   DATE(a.DATA_MOVIMENTO) >= '$dataInicial'
          AND   DATE(a.DATA_MOVIMENTO) <= '$dataFinal'";
     
-          /*   echo $sql;
+             echo $sql;
             echo "<br>";
             echo "<br>";
-            echo "<br>";*/
+            echo "<br>";
     
    $sql = $db->query($sql); 
    $dados = $sql->fetchAll();
@@ -340,7 +338,7 @@ require("conexao.php");
         $valorCombustivelReal = ( $dado['VALOR_UNITARIO'] *$peso ) ;             
            
         $array = array('VALOR_COMBUSTIVEL' => $valorCombustivelReal,
-                       'CENTRO_RESULTADO' => $dado['CENTRO_RESULTADO']);
+                       'CENTRO_RESULTADO' => $dado['CENTRO_RESULTADO'],'DATA_MOVIMENTO' => $dado['DATA_MOVIMENTO']);
     
         $arrayWlancamentos[] = $array; 
             
@@ -351,13 +349,16 @@ require("conexao.php");
     
         if (isset ($arrayWlancamentos[0])){
           $unidadePolo = $arrayWlancamentos[0]['CENTRO_RESULTADO'];
+          $dataMovimento =$arrayWlancamentos[0]['DATA_MOVIMENTO'];
         }else{
           $unidadePolo='';
+          $dataMovimento='';
         }
     
         $valorCombustivel = number_format($sum1, 2);
+        
       
-        return array('UNIDADE' => $unidadePolo, 'VALOR' => $valorCombustivel); 
+        return array('UNIDADE' => $unidadePolo, 'VALOR' => $valorCombustivel, 'DATA_MOVIMENTO' => $dataMovimento); 
         
         }     
                                    
@@ -404,18 +405,29 @@ require("conexao.php");
 
                 </div>
                 <br>
+                
                 <div class="row">
-                    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-12">
                         <div class="card mb-3">
                             <div class="card-header">
-                                <i class="fa fa-table"></i> R$/L - CUSTO MÉDIO POR POLO
+                                <i class="fa fa-table"></i> EVOLUÇÃO DIARIA PREÇO MÉDIO COMBUSTIVEL
                             </div>
-                            <div class="card-body">
-                                <canvas id="barChart"></canvas>
+                            <div class="card-body">   
 
-                                <?php                   
-                $dataInicial1 = $_POST['datai'];
-                $dataFinal1   = $_POST['dataf'];  
+                <?php  
+                   $dataInicial1 = $_POST['datai'];
+                  $dataFinal1   = $_POST['dataf']; 
+                        
+                for ($i=120;$i>=0;$i--){
+                  $data= date('Y-m-d',time() - ($i * 24 * 60 * 60));
+                 echo buscaValorCombustivelUnidade('UNAI',$data,$data,'GASOLINA')['VALOR'];  
+                  echo "<br>";
+                }
+    
+    
+    
+    
+                 
 
                 //Busca Valor Ponderado
 
@@ -464,10 +476,10 @@ require("conexao.php");
                     </div>
                     <hr>
 
-                    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-12">
                         <div class="card mb-3">
                             <div class="card-header">
-                                <i class="fa fa-table"></i> R$/L - CUSTO MÉDIO CONSOLIDADO
+                                <i class="fa fa-table"></i> EVOLUÇÃO MENSAL PREÇO MÉDIO COMBUSTIVEL
                             </div>
 
                             <div class="card-body">
@@ -478,35 +490,7 @@ require("conexao.php");
                     </div>
 
                 </div>
-                <div class="row">
-                    <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8 col-xl-8">
-                        <div class="card mb-3">
-                            <div class="card-header">
-                                <i class="fa fa-table"></i> QTD/L - QUANTIDADE LITROS POR UNIDADE
-                            </div>
 
-                            <div class="card-body">
-                                <canvas id="barChart3"></canvas>
-                            </div>
-                            <div class="card-footer small text-muted"></div>
-                        </div>
-                    </div>
-
-                    <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
-                        <div class="card mb-3">
-                            <div class="card-header">
-                                <i class="fa fa-table"></i> QTD/L - QUANTIDADE LITROS TOTAL
-                            </div>
-
-                            <div class="card-body">
-                                <canvas id="barChart4"></canvas>
-                            </div>
-
-                            <br>
-                            <div class="card-footer small text-muted"></div>
-                        </div>
-                    </div>
-                </div>
 
                 <footer class="footer">
                     <span class="text-right">
@@ -583,7 +567,7 @@ require("conexao.php");
                                 backgroundColor: [
                                     'rgba(96,167,0)',
                                     'rgba(96,167,0)',
-                                     'rgba(96,167,0)'
+                                    'rgba(96,167,0)'
                                 ],
                                 borderColor: [
 

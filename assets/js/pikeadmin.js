@@ -5,8 +5,8 @@ $( document ).ready(function() {
     $(function() {  
     $(".nicescroll").niceScroll({cursorcolor:"#858586"});
 	});
+    
 });
-
 
 !function($) {
     "use strict";
@@ -19,6 +19,7 @@ $( document ).ready(function() {
     Sidemenu.prototype.openLeftBar = function() {
       $("#main").toggleClass("enlarged");
       $("#main").addClass("forced");
+      
 
       if($("#main").hasClass("enlarged") && $("body").hasClass("adminbody")) {
         $("body").removeClass("adminbody").addClass("adminbody-void");
@@ -69,6 +70,7 @@ $( document ).ready(function() {
       this.$openLeftBtn.on(event, function(e) {
         e.stopPropagation();
         $this.openLeftBar();
+          
       });
 
       // LEFT SIDE MAIN NAVIGATION
@@ -76,6 +78,7 @@ $( document ).ready(function() {
 
       // NAVIGATION HIGHLIGHT & OPEN PARENT
       $("#sidebar-menu ul li.submenu a.active").parents("li:last").children("a:first").addClass("active").trigger("click");
+      
     },
 
     //init Sidemenu
@@ -91,6 +94,8 @@ $( document ).ready(function() {
     var App = function() {        
         this.pageScrollElement = "html, body",
         this.$body = $("body")
+       
+        
     };
 
      //on doc load
@@ -104,11 +109,11 @@ $( document ).ready(function() {
 
       //RUN RESIZE ITEMS
       $(window).resize(debounce(resizeitems,100));
-      $("body").trigger("resize");
+     
 
       // right side-bar toggle
       $('.right-bar-toggle').on('click', function(e){
-
+           
           $('#main').toggleClass('right-bar-enabled');
       });
 

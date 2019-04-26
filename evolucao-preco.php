@@ -50,7 +50,6 @@ if (isset($_SESSION['ID'])==false){
     <div id="main">
         <!-- top bar navigation -->
         <div class="headerbar">
-
             <!-- LOGO -->
             <div class="headerbar-left">
                 <a href="principal.php" class="logo"><img alt="Logo" src="assets/images/logo.png" /> <span>S.G.A.C</span></a>
@@ -76,9 +75,7 @@ if (isset($_SESSION['ID'])==false){
                                     <span>...</span>
                                 </p>
                             </a>
-
                             <!-- item-->
-
 
                             <!-- All-->
                             <a title="Clcik to visit Pike Admin Website" target="_blank" href="https://www.pikeadmin.com" class="dropdown-item notify-item notify-all">
@@ -132,12 +129,10 @@ if (isset($_SESSION['ID'])==false){
                                     <small class="text-muted">35 minutes ago</small>
                                 </p>
                             </a>
-
                             <!-- All-->
                             <a href="#" class="dropdown-item notify-item notify-all">
                                 Visualizar todos Alertas!
                             </a>
-
                         </div>
                     </li>
 
@@ -159,35 +154,24 @@ if (isset($_SESSION['ID'])==false){
                             <!-- item-->
                             <a href="sair.php" class="dropdown-item notify-item">
                                 <i class="fa fa-power-off"></i> <span>Sair</span></a>
-
-
                         </div>
                     </li>
-
                 </ul>
-
-
-
                 <ul class="list-inline menu-left mt-0">
                     <li class="float-left">
                         <button class="button-menu-mobile open-left mt-2">
                             <i class="fa fa-fw fa-bars"></i>
                         </button>
                     </li>
-
                 </ul>
-
             </nav>
 
         </div>
         <!-- End Navigation -->
 
-
         <!-- Left Sidebar -->
         <div class="left main-sidebar">
-
             <div class="sidebar-inner leftscroll">
-
                 <br>
                 <div class="container">
 
@@ -206,36 +190,29 @@ if (isset($_SESSION['ID'])==false){
                         <br>
                         <button type="submit" class="btn btn-primary  btn-block"><i class="fa fa-refresh"></i> Atualizar Graficos</button>
 
-
                         <br>
                         <br>
                     </form>
 
                 </div>
                 <div id="sidebar-menu">
-
                     <ul>
                         <li class="submenu1">
                             <a href="index.php"><i class="fa fa-fw fa-tachometer"></i><span> Dashboard Principal </span> </a>
                             <a href="index.php"><i class="fa fa-fw fa-bar-chart"></i><span> Preço Médio por Posto </span> </a>
                             <a class="active" href="index.php"><i class="fa fa-fw fa-line-chart"></i><span> Evolução de Preço </span> </a>
                             <a href="index.php"><i class="fa fa-fw fa-cloud-upload"></i><span>Upload de arquivos (Excel) </span> </a>
-
                         </li>
 
                         <div class="clearfix">
                         </div>
                     </ul>
-
-
                 </div>
             </div>
             <div class="clearfix"></div>
         </div>
     </div>
-
     <!-- End Sidebar -->
-
 
     <div class="content-page">
 
@@ -255,24 +232,21 @@ if (isset($_SESSION['ID'])==false){
                             <div class="clearfix"></div>
                         </div>
                     </div>
-
                 </div>
             </div>
         </div>
-
-
         <?php
         
 function buscaDataHora(){ 
-  date_default_timezone_set('America/Sao_Paulo');        
-  return date('d/m/Y H:i:s');
+    date_default_timezone_set('America/Sao_Paulo');        
+    return date('d/m/Y H:i:s');
 }
         
         
 function verificaAtualizacaoPeriodoDadosSistema(){
-   require("conexao.php");           
+  require("conexao.php");           
 
-   $sql="SELECT 
+  $sql="SELECT 
             date_format( min(DATA_MOVIMENTO), '%d/%m/%Y ') as MOVIMENTO_INICIAL,
             date_format(max(DATA_MOVIMENTO), '%d/%m/%Y %h:%s') as MOVIMENTO_FINAL,
             date_format(max(DATA_IMPORTACAO),'%d/%m/%Y %h:%s') as ULTIMA_IMPORTACAO 
@@ -294,7 +268,7 @@ function verificaAtualizacaoPeriodoDadosSistema(){
 function buscaValorCombustivelUnidade($unidade,$dataInicial,$dataFinal,$tipoCombustivel){
 require("conexao.php");
         
-   $sql="SELECT  
+     $sql="SELECT  
            DISTINCT(CENTRO_RESULTADO),
            VALOR_UNITARIO,
            QUANTIDADE,
@@ -312,11 +286,11 @@ require("conexao.php");
          AND   a.CENTRO_RESULTADO in ('$unidade')
          AND   DATE(a.DATA_MOVIMENTO) >= '$dataInicial'
          AND   DATE(a.DATA_MOVIMENTO) <= '$dataFinal'";
-    
+        /*
              echo $sql;
             echo "<br>";
             echo "<br>";
-            echo "<br>";
+            echo "<br>";*/
     
    $sql = $db->query($sql); 
    $dados = $sql->fetchAll();
@@ -360,9 +334,8 @@ require("conexao.php");
       
         return array('UNIDADE' => $unidadePolo, 'VALOR' => $valorCombustivel, 'DATA_MOVIMENTO' => $dataMovimento); 
         
-        }     
-                                   
-                                   
+        } 
+        
         function buscaQuantidadeCombustivelUnidade($unidade,$dataInicial,$dataFinal,$tipoCombustivel){
         
         require("conexao.php");           
@@ -405,32 +378,34 @@ require("conexao.php");
 
                 </div>
                 <br>
-                
+
                 <div class="row">
                     <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-12">
                         <div class="card mb-3">
                             <div class="card-header">
                                 <i class="fa fa-table"></i> EVOLUÇÃO DIARIA PREÇO MÉDIO COMBUSTIVEL
                             </div>
-                            <div class="card-body">   
+                            <div class="card-body">
 
-                <?php  
+                                <?php  
                    $dataInicial1 = $_POST['datai'];
                   $dataFinal1   = $_POST['dataf']; 
-                        
-                for ($i=120;$i>=0;$i--){
+               /*         
+                for ($i=90;$i>=0;$i--){
                   $data= date('Y-m-d',time() - ($i * 24 * 60 * 60));
-                 echo buscaValorCombustivelUnidade('UNAI',$data,$data,'GASOLINA')['VALOR'];  
-                  echo "<br>";
-                }
-    
-    
-    
-    
-                 
+                  $data_movimemto= date('d/m/Y',strtotime(buscaValorCombustivelUnidade('UNAI',$data,$data,'GASOLINA')['DATA_MOVIMENTO']));
+                  $vlr = buscaValorCombustivelUnidade('UNAI',$data,$data,'GASOLINA')['VALOR'];  
+                  if ($vlr>0) { 
+                   echo "<br>";    
+                 echo $data_movimemto.' - '. $vlr; 
+                                     
+                   echo "<br>";
+                  } 
+                   
+                } */
 
                 //Busca Valor Ponderado
-
+                        
                 $gasolinaUnai                  = buscaValorCombustivelUnidade('UNAI',$dataInicial1,$dataFinal1,'GASOLINA');
                 $etanolUnai                    = buscaValorCombustivelUnidade('UNAI',$dataInicial1,$dataFinal1,'ETANOL');
                 $dieselUnai                    = buscaValorCombustivelUnidade('UNAI',$dataInicial1,$dataFinal1,'DIESEL');
@@ -483,7 +458,7 @@ require("conexao.php");
                             </div>
 
                             <div class="card-body">
-                                <canvas id="barChart2"></canvas>
+                                <canvas id="barChart"></canvas>
                             </div>
                             <div class="card-footer small text-muted"></div>
                         </div>
@@ -516,334 +491,102 @@ require("conexao.php");
             <script src="assets/js/jquery.nicescroll.js"></script>
 
             <!-- App js -->
-            < <script src="assets/js/pikeadmin.js">
-                </script>
+            <script src="assets/js/pikeadmin.js">
+            </script>
 
-                <!-- BEGIN Java Script for this page -->
-                <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
-                <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
-                <script src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap4.min.js"></script>
+            <!-- BEGIN Java Script for this page -->
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
+            <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+            <script src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap4.min.js"></script>
 
-                <!-- Counter-Up-->
-                <script src="assets/plugins/waypoints/lib/jquery.waypoints.min.js"></script>
-                <script src="assets/plugins/counterup/jquery.counterup.min.js"></script>
+            <!-- Counter-Up-->
+            <script src="assets/plugins/waypoints/lib/jquery.waypoints.min.js"></script>
+            <script src="assets/plugins/counterup/jquery.counterup.min.js"></script>
 
-                <script>
-                    $(document).ready(function() {
-                        // data-tables
-                        $('#example1').DataTable();
+            <script>
+                $(document).ready(function() {
+                    // data-tables
+                    $('#example1').DataTable();
 
-                        // counter-up
-                        $('.counter').counterUp({
-                            delay: 10,
-                            time: 600
-                        });
+                    // counter-up
+                    $('.counter').counterUp({
+                        delay: 10,
+                        time: 600
                     });
+                });
 
-                </script>
+            </script>
 
-                <script>
-                    var ctx1 = document.getElementById("barChart").getContext('2d');
-                    var barChart = new Chart(ctx1, {
-                        type: 'bar',
-                        data: {
-                            labels: ["DIESEL", "GASOLINA", "ETANOL"],
-                            datasets: [{
-                                label: 'UNAI',
-                                data: ["<?php echo $dieselUnai['VALOR']?>", "<?php echo $gasolinaUnai['VALOR']?>", "<?php echo $etanolUnai['VALOR']?>"],
-                                backgroundColor: [
-                                    'rgba(251,195,0)',
-                                    'rgba(251,195,0)',
-                                    'rgba(251,195,0)',
-                                ],
-                                borderColor: [
-
-                                ],
-                                borderWidth: 1
-                            }, {
-                                label: 'PARACATU',
-                                data: [<?php echo $dieselParacatu['VALOR']?>, <?php echo $gasolinaParacatu['VALOR']?>, <?php echo $etanolParacatu['VALOR']?>],
-
-                                backgroundColor: [
-                                    'rgba(96,167,0)',
-                                    'rgba(96,167,0)',
-                                    'rgba(96,167,0)'
-                                ],
-                                borderColor: [
-
-                                ],
-                                responsive: true,
-                                borderWidth: 1,
-                                responsive: true,
-                            }, {
-                                label: 'PIRAPORA',
-                                data: [<?php echo $dieselPirapora['VALOR']?>, <?php echo $gasolinaPirapora['VALOR']?>, <?php echo $etanolPirapora['VALOR']?>],
-                                backgroundColor: [
-                                    'rgba(78,149,212)',
-                                    'rgba(78,149,212)',
-                                    'rgba(78,149,212)',
-                                ],
-                                borderColor: []
-
-                            }]
+            <script>
+                var ctx1 = document.getElementById("barChart").getContext('2d');
+                var barChart = new Chart(ctx1, {
+                    type: 'line',
+                    data: {
+                        labels: ["01/01/2019", "01/02/2019", "01/03/2019","01/03/2019","01/01/2019", "01/02/2019", "01/03/2019","01/03/2019"],
+                        datasets: [{
+                            label: 'UNAI',
+                            data: [1,2,3,9,5,6,2,8,4,10],
+                            backgroundColor:'rgba(251,195,0)'
+                                
+                            ,
+                        
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        title: {
+                            display: false,
+                            text: 'REFERENCIA <?php echo $dataInicial1?> A <?php echo $dataFinal1?>'
                         },
-                        options: {
-                            title: {
-                                display: false,
-                                text: 'REFERENCIA <?php echo $dataInicial1?> A <?php echo $dataFinal1?>'
+
+                        tooltips: {
+                            enabled: true
+                        },
+                        hover: {
+                            animationDuration: 1
+                        },
+                        animation: {
+                            duration: 1,
+                            onComplete: function() {
+                                var chartInstance = this.chart,
+                                    ctx = chartInstance.ctx;
+                                ctx.textAlign = 'center';
+                                ctx.fillStyle = "rgba(0, 0, 0, 1)";
+                                ctx.textBaseline = 'bottom';
+
+                                this.data.datasets.forEach(function(dataset, i) {
+                                    var meta = chartInstance.controller.getDatasetMeta(i);
+                                    meta.data.forEach(function(bar, index) {
+                                        var data = dataset.data[index];
+                                        ctx.fillText(data, bar._model.x, bar._model.y - 5);
+                                    });
+                                });
                             },
 
                             tooltips: {
-                                enabled: true
+
                             },
-                            hover: {
-                                animationDuration: 1
-                            },
-                            animation: {
-                                duration: 1,
-                                onComplete: function() {
-                                    var chartInstance = this.chart,
-                                        ctx = chartInstance.ctx;
-                                    ctx.textAlign = 'center';
-                                    ctx.fillStyle = "rgba(0, 0, 0, 1)";
-                                    ctx.textBaseline = 'bottom';
-
-                                    this.data.datasets.forEach(function(dataset, i) {
-                                        var meta = chartInstance.controller.getDatasetMeta(i);
-                                        meta.data.forEach(function(bar, index) {
-                                            var data = dataset.data[index];
-                                            ctx.fillText(data, bar._model.x, bar._model.y - 5);
-                                        });
-                                    });
-                                },
-
-                                tooltips: {
-
-                                },
-                            },
-                            scales: {
-                                yAxes: [{
-                                    ticks: {
-                                        beginAtZero: true,
-                                        fontColor: "white",
-                                        fontSize: 11,
-                                        stepSize: 9,
-                                        gridLines: {
-                                            lineWidth: 0
-                                        }
-
-                                    }
-                                }]
-                            }
-                        }
-                    });
-
-                    var ctx1 = document.getElementById("barChart2").getContext('2d');
-                    var barChart = new Chart(ctx1, {
-                        type: 'bar',
-                        data: {
-                            labels: ["DIESEL", "GASOLINA", "ETANOL"],
-                            datasets: [{
-                                label: '',
-                                data: ["<?php echo number_format($consolidadoDiesel,2) ?>",
-                                    "<?php echo number_format($consolidadoGasolina,2)?>",
-                                    "<?php echo number_format($consolidadoEtanol,2)?>"
-                                ],
-                                backgroundColor: [
-                                    'rgba(251,195,0)',
-                                    'rgba(251,195,0)',
-                                    'rgba(251,195,0)',
-
-                                ],
-                                borderColor: [
-
-                                ],
-                                borderWidth: 1
-                            }, ]
                         },
-                        options: {
-                            title: {
-                                display: false,
-                                text: 'REFERENCIA <?php echo $dataInicial1?> A <?php echo $dataFinal1?>'
-                            },
-
-                            tooltips: {
-                                enabled: true
-                            },
-                            hover: {
-                                animationDuration: 1
-                            },
-                            responsive: true,
-                            animation: {
-                                duration: 1,
-                                onComplete: function() {
-                                    var chartInstance = this.chart,
-                                        ctx = chartInstance.ctx;
-                                    ctx.textAlign = 'center';
-                                    ctx.fillStyle = "rgba(0, 0, 0, 1)";
-                                    ctx.textBaseline = 'bottom';
-
-                                    this.data.datasets.forEach(function(dataset, i) {
-                                        var meta = chartInstance.controller.getDatasetMeta(i);
-                                        meta.data.forEach(function(bar, index) {
-                                            var data = dataset.data[index];
-                                            ctx.fillText(data, bar._model.x, bar._model.y - 5);
-
-                                        });
-                                    });
-                                },
-
-                                tooltips: {
-
-                                },
-                            },
-                            scales: {
-                                yAxes: [{
-                                    ticks: {
-                                        beginAtZero: true,
-                                        fontColor: "white",
-                                        fontSize: 11,
-                                        stepSize: 10
-                                    }
-                                }]
-                            }
-                        }
-                    });
-
-                    var ctx1 = document.getElementById("barChart3").getContext('2d');
-                    var barChart = new Chart(ctx1, {
-                        type: 'bar',
-                        data: {
-                            labels: ["DIESEL", "GASOLINA", "ETANOL"],
-                            datasets: [{
-                                label: 'UNAI',
-                                data: ["<?php echo formataNumero($quantidadeDieselUnai['QUANTIDADE'])?>",
-                                    "<?php echo formataNumero($quantidadeGasolinaUnai['QUANTIDADE'])?>", "<?php echo formataNumero($quantidadeEtanolUnai['QUANTIDADE'])?>"
-                                ],
-                                backgroundColor: [
-                                    'rgba(251,195,0)',
-                                    'rgba(251,195,0)',
-                                    'rgba(251,195,0)',
-
-                                ],
-                                borderColor: [],
-                                borderWidth: 1,
-                                responsive: true,
-                            }, {
-                                label: 'PARACATU',
-                                data: ["<?php echo  formataNumero($quantidadeDieselParacatu['QUANTIDADE'])?>", "<?php echo formataNumero($quantidadeGasolinaParacatu['QUANTIDADE'])?>", "<?php echo formataNumero($quantidadeEtanolParacatu['QUANTIDADE'])?>"],
-
-                                backgroundColor: [
-                                    'rgba(96,167,0)',
-                                    'rgba(96,167,0)',
-                                    'rgba(78,A2,13S,1)'
-                                ],
-                                borderColor: [
-
-                                ],
-                                borderWidth: 1
-                            }, {
-                                label: 'PIRAPORA',
-                                data: [<?php echo formataNumero($quantidadeDieselPirapora['QUANTIDADE'])?>, "<?php echo formataNumero($quantidadeGasolinaPirapora['QUANTIDADE'])?>", "<?php echo formataNumero($quantidadeEtanolPirapora['QUANTIDADE'])?>"],
-                                backgroundColor: [
-                                    'rgba(78,149,212)',
-                                    'rgba(78,149,212)',
-                                    'rgba(78,149,212)',
-                                ],
-                                borderColor: [
-
-                                ]
-                            }]
-                        },
-                        options: {
-                            title: {
-                                display: false,
-                                text: 'REFERENCIA <?php echo $dataInicial1?> A <?php echo $dataFinal1?>'
-                            },
-
-                            tooltips: {
-                                enabled: true
-                            },
-                            hover: {
-                                animationDuration: 1
-                            },
-                            animation: {
-                                duration: 1,
-                                onComplete: function() {
-                                    var chartInstance = this.chart,
-                                        ctx = chartInstance.ctx;
-                                    ctx.textAlign = 'center';
-                                    ctx.fillStyle = "rgba(0, 0, 0, 1)";
-                                    ctx.textBaseline = 'bottom';
-
-                                    this.data.datasets.forEach(function(dataset, i) {
-                                        var meta = chartInstance.controller.getDatasetMeta(i);
-                                        meta.data.forEach(function(bar, index) {
-                                            var data = dataset.data[index];
-                                            ctx.fillText(data, bar._model.x, bar._model.y - 5);
-                                        });
-                                    });
-                                },
-                                tooltips: {},
-                            },
-                            scales: {
-                                xAxes: [{
+                        scales: {
+                            yAxes: [{
+                                ticks: {
+                                    beginAtZero: true,
+                                    fontColor: "white",
+                                    fontSize: 11,
+                                    stepSize: 9,
                                     gridLines: {
-                                        lineWidth: 0,
+                                        lineWidth: 0
                                     }
-                                }],
-                                yAxes: [{
-                                    ticks: {
-                                        beginAtZero: true,
-                                        fontColor: "white",
-                                        fontSize: 11,
-                                        stepSize: 0,
-                                        gridLines: {
-                                            lineWidth: 0
-                                        }
-                                    }
-                                }]
-                            }
+
+                                }
+                            }]
                         }
-                    });
+                    }
+                });
 
-                    var ctx1 = document.getElementById("barChart4").getContext('2d');
-                    var barChart = new Chart(ctx1, {
-                        type: 'doughnut',
-                        data: {
-                            labels: ["DIESEL <?php echo round($quantidadeConsolidadaDiesel)?>", "GASOLINA <?php echo round($quantidadeConsolidadaGasolina)?>", "ETANOL <?php echo round($quantidadeConsolidadaEtanol)?>"],
-                            datasets: [{
-                                label: 'UNAI',
-                                data: ["<?php echo round($quantidadeConsolidadaDiesel)?>", "<?php echo round($quantidadeConsolidadaGasolina)?>", "<?php echo round($quantidadeConsolidadaEtanol)?>"],
-                                backgroundColor: [
-                                    'rgba(251,195,0)',
-                                    'rgba(96,167,0)',
-                                    'rgba(78,149,212)'
-                                ],
-                                borderColor: [],
-                                borderWidth: 1
-                            }, ]
-                        },
-                        options: {
-                            title: {
-                                display: true,
-                                text: 'REFERENCIA <?php echo $dataInicial1?> A <?php echo $dataFinal1?>'
-                            },
-
-
-                            hover: {
-                                animationDuration: 1
-                            },
-                            animation: {
-                                duration: 1,
-                                tooltips: {},
-                            },
-
-                        }
-                    });
-
-                </script>
-                <!-- END Java Script for this page -->
+               
+            </script>
+            <!-- END Java Script for this page -->
 
 </body>
 

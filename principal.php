@@ -616,7 +616,7 @@ require("conexao.php");
                                 animationDuration: 1
                             },
                             animation: {
-                                duration: 1,
+                                duration: 1000,
                                 onComplete: function() {
                                     var chartInstance = this.chart,
                                         ctx = chartInstance.ctx;
@@ -691,7 +691,7 @@ require("conexao.php");
                             },
                             responsive: true,
                             animation: {
-                                duration: 1,
+                                duration: 1000,
                                 onComplete: function() {
                                     var chartInstance = this.chart,
                                         ctx = chartInstance.ctx;
@@ -757,7 +757,7 @@ require("conexao.php");
                                 borderColor: [
 
                                 ],
-                                borderWidth: 1
+                                borderWidth: 1,
                             }, {
                                 label: 'PIRAPORA',
                                 data: [<?php echo formataNumero($quantidadeDieselPirapora['QUANTIDADE'])?>, "<?php echo formataNumero($quantidadeGasolinaPirapora['QUANTIDADE'])?>", "<?php echo formataNumero($quantidadeEtanolPirapora['QUANTIDADE'])?>"],
@@ -784,7 +784,7 @@ require("conexao.php");
                                 animationDuration: 1
                             },
                             animation: {
-                                duration: 1,
+                                duration: 1000,
                                 onComplete: function() {
                                     var chartInstance = this.chart,
                                         ctx = chartInstance.ctx;
@@ -851,7 +851,7 @@ require("conexao.php");
                                 animationDuration: 1
                             },
                             animation: {
-                                duration: 1,
+                                duration: 1000,
                                 tooltips: {},
                             },
 

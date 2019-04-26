@@ -226,8 +226,8 @@ if (isset($_SESSION['ID'])==false){
                         <div class="breadcrumb-holder">
                             <h1 class="main-title float-left">Dashboard </h1>
                             <ol class="breadcrumb float-right">
-                                <li class="breadcrumb-item">Principal</li>
-                                <li class="breadcrumb-item active">Dashboard / Analise de Combustivel</li>
+                                <li class="breadcrumb-item">Evolução de Preço de Combustível</li>
+                                <li class="breadcrumb-item active">(Diario-Trimestre)</li>
                             </ol>
                             <div class="clearfix"></div>
                         </div>
@@ -238,10 +238,9 @@ if (isset($_SESSION['ID'])==false){
         <?php
         
 function buscaDataHora(){ 
-    date_default_timezone_set('America/Sao_Paulo');        
-    return date('d/m/Y H:i:s');
-}
-        
+  date_default_timezone_set('America/Sao_Paulo');     
+  return date('d/m/Y H:i:s');
+}        
         
 function verificaAtualizacaoPeriodoDadosSistema(){
   require("conexao.php");           
@@ -266,7 +265,7 @@ function verificaAtualizacaoPeriodoDadosSistema(){
    }   
             
 function buscaValorCombustivelUnidade($unidade,$dataInicial,$dataFinal,$tipoCombustivel){
-require("conexao.php");
+  require("conexao.php");
         
      $sql="SELECT  
            DISTINCT(CENTRO_RESULTADO),
@@ -383,15 +382,16 @@ require("conexao.php");
                     <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-12">
                         <div class="card mb-3">
                             <div class="card-header">
-                                <i class="fa fa-table"></i> EVOLUÇÃO DIARIA PREÇO MÉDIO COMBUSTIVEL
+                                <i class="fa fa-table"></i> EVOLUÇÃO DIARIA PREÇO MÉDIO COMBUSTÍVEL
                             </div>
                             <div class="card-body">
+                                 <canvas id="barChart"></canvas>
 
                                 <?php  
                    $dataInicial1 = $_POST['datai'];
                   $dataFinal1   = $_POST['dataf']; 
-               /*         
-                for ($i=90;$i>=0;$i--){
+                       
+                for ($i=30;$i>=0;$i--){
                   $data= date('Y-m-d',time() - ($i * 24 * 60 * 60));
                   $data_movimemto= date('d/m/Y',strtotime(buscaValorCombustivelUnidade('UNAI',$data,$data,'GASOLINA')['DATA_MOVIMENTO']));
                   $vlr = buscaValorCombustivelUnidade('UNAI',$data,$data,'GASOLINA')['VALOR'];  
@@ -402,7 +402,7 @@ require("conexao.php");
                    echo "<br>";
                   } 
                    
-                } */
+                } 
 
                 //Busca Valor Ponderado
                         
@@ -443,13 +443,13 @@ require("conexao.php");
 
                 $quantidadeConsolidadaDiesel   = ($quantidadeDieselUnai['QUANTIDADE'] + $quantidadeDieselPirapora['QUANTIDADE'] + $quantidadeDieselParacatu['QUANTIDADE'])  ; 
 
-                $arrData =array("'01/01/2019'", "'01/01/2019'","'01/01/2019'","'01/01/2019'", "'01/01/2019'", "'01/01/2019'", "'01/01/2019'", "'01/01/2019'","'01/01/2019'", "'01/01/2019'","'01/01/2019'","'01/01/2019'", "'01/01/2019'", "'01/01/2019'", "'01/01/2019'", "'01/01/2019'","'01/01/2019'", "'01/01/2019'","'01/01/2019'","'01/01/2019'", "'01/01/2019'", "'01/01/2019'", "'01/01/2019'", "'01/01/2019'","'01/01/2019'", "'01/01/2019'","'01/01/2019'","'01/01/2019'", "'01/01/2019'", "'01/01/2019'", "'01/01/2019'", "'01/01/2019'");
+                $arrData =array("'01/01/2019'", "'01/01/2019'","'01/01/2019'","'01/01/2019'", "'01/01/2019'", "'01/01/2019'", "'01/01/2019'", "'01/01/2019'","'01/01/2019'", "'01/01/2019'","'01/01/2019'","'01/01/2019'", "'01/01/2019'", "'01/01/2019'", "'01/01/2019'", );
                         
-                $arrValor =array(4.20, 4.40, 3, 9, 5, 6, 2, 8, 4, 10,1, 44, 3, 9, 5, 6, 2, 8, 4, 10,1, 44, 3, 9, 5, 6, 2, 8, 4, 10.8, 8, 4, 10,1, 44, 3, 9, 5, 6, 2, 8, 4, 10.8); 
+                $arrValor =array(4.20, 4.40, 3, 9, 5, 6, 2, 8, 4, 10,1, 6, 3, 9, 5); 
                         
-                $arrValor1 =array(4.20, 4.40, 3, 1, 5, 6, 2, 8, 12, 20,1, 5, 3, 9, 5, 6, 2, 18, 4.05, 10,1, 44, 3, 9, 5, 6, 2, 8, 4, 10.8, 8, 4, 10,1, 1.5, 3, 9, 5, 6, 2, 8, 4, 10.8);
+                $arrValor1 =array(4.20, 4.40, 3, 1, 5, 6, 2, 8, 12, 3,1, 5, 3, 9, 5);
                         
-                $arrValor2 =array(5.20, 2.40, 3, 1, 5, 6.90, 2, 8, 12, 20,1, 5, 3, 9, 5, 6, 2, 18, 4.05, 10,1, 44, 3, 9, 5, 6, 2, 8, 4, 10.8, 8, 4, 10,1, 1.5, 3, 9, 5, 6, 2, 8, 4, 10.8);
+                $arrValor2 =array(5.20, 2.40, 3, 1, 5, 6.90, 2, 8, 12, 20,1, 5, 3, 9, 5);
                         
                         
                         
@@ -465,12 +465,11 @@ require("conexao.php");
                     <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-12">
                         <div class="card mb-3">
                             <div class="card-header">
-                                <i class="fa fa-table"></i> EVOLUÇÃO MENSAL PREÇO MÉDIO COMBUSTIVEL
+                                <i class="fa fa-table"></i> EVOLUÇÃO MENSAL PREÇO MÉDIO COMBUSTÍVEL (30/60/90 DIAS)
                             </div>
 
                             <div class="card-body">
-                                <canvas id="barChart"></canvas>
-                                <progress id="animationProgress" max="1" value="0" style="width: 100%"></progress>
+                               
                             </div>
                             <div class="card-footer small text-muted"></div>
                         </div>
@@ -525,14 +524,7 @@ require("conexao.php");
                         delay: 10,
                         time: 600
                     });
-                });
-
-                var progress = document.getElementById('animationProgress');
-
-
-
-                progress.value = '100';
-
+                }); 
                 }
 
             </script>
@@ -541,33 +533,31 @@ require("conexao.php");
                 var ctx1 = document.getElementById("barChart").getContext('2d');
                 var barChart = new Chart(ctx1, {
                     type: 'line',
-                    borderWidth: 2,
+                    borderWidth: 10,
                     data: {
                         labels: [<?php echo implode(',', $arrData);?>],
                         datasets: [{
-                            label: 'GASOLINA',
+                            label: 'DIESEL',
                             data: [<?php echo implode(',', $arrValor);?>],
                             responsive: true,
                             fill: false,
-                            backgroundColor: ['rgba(96,167,0)'],
-                            borderColor: 'rgba(96,167,0)',
-                            borderWidth: 1,
+                            backgroundColor: ['rgba(96,167,0,0.9)'],
+                            borderColor: 'rgba(96,167,0,0.9)', 
                         }, {
-                            label: 'ETANOL',
+                            label: 'GASOLINA',
                             data: [<?php echo implode(',',$arrValor1)?>],
                             responsive: true,
                             fill: false,
-                            backgroundColor: 'rgba(255,167,0)',
-                            borderColor: [ 'rgba(255,167,0)'],
-                            borderWidth: 1,
+                            backgroundColor: 'rgba(255,167,0,0.9)',
+                            borderColor: ['rgba(255,167,0,0.9)'],                            
+                            
                         }, {
-                            label: 'DIESEL',
+                            label: 'ETANOL',
                             data: [<?php echo implode (',',$arrValor2) ?>],
                             responsive: true,
-                            fill: false,
-                            backgroundColor: 'rgba(78,149,212)',
-                            borderColor: ['rgba(78,149,212)'],
-                            borderWidth: 1,
+                            fill: false,                          
+                            backgroundColor:'rgba(78,149,212,0.9)',
+                            borderColor:'rgba(78,149,212,0.9)',
                         }]
                     },
                     options: {
@@ -578,25 +568,23 @@ require("conexao.php");
 
                         tooltips: {
                             enabled: true
-                        },
-                        hover: {
-                            animationDuration: 1
-                        },
+                        },                        
                         animation: {
-                            duration: 2000,
-                            duration: 1,
+                            duration: 1000,
                             onComplete: function() {
                                 var chartInstance = this.chart,
                                     ctx = chartInstance.ctx;
                                 ctx.textAlign = 'center';
-                                ctx.fillStyle = "rgba(0, 0, 0, 1)";
-                                ctx.textBaseline = 'bottom';
+                                ctx.fillStyle ='rgba(25,0,0,0.9)';
+
 
                                 this.data.datasets.forEach(function(dataset, i) {
                                     var meta = chartInstance.controller.getDatasetMeta(i);
                                     meta.data.forEach(function(bar, index) {
                                         var data = dataset.data[index];
-                                        ctx.fillText(data, bar._model.x, bar._model.y - 5);
+
+                                        ctx.fillText(data, bar._model.x , bar._model.y -10);
+
                                     });
                                 });
                             },

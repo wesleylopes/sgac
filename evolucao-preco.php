@@ -443,6 +443,17 @@ require("conexao.php");
 
                 $quantidadeConsolidadaDiesel   = ($quantidadeDieselUnai['QUANTIDADE'] + $quantidadeDieselPirapora['QUANTIDADE'] + $quantidadeDieselParacatu['QUANTIDADE'])  ; 
 
+                $arrData =array("'01/01/2019'", "'01/01/2019'","'01/01/2019'","'01/01/2019'", "'01/01/2019'", "'01/01/2019'", "'01/01/2019'", "'01/01/2019'","'01/01/2019'", "'01/01/2019'","'01/01/2019'","'01/01/2019'", "'01/01/2019'", "'01/01/2019'", "'01/01/2019'", "'01/01/2019'","'01/01/2019'", "'01/01/2019'","'01/01/2019'","'01/01/2019'", "'01/01/2019'", "'01/01/2019'", "'01/01/2019'", "'01/01/2019'","'01/01/2019'", "'01/01/2019'","'01/01/2019'","'01/01/2019'", "'01/01/2019'", "'01/01/2019'", "'01/01/2019'", "'01/01/2019'");
+                        
+                $arrValor =array(4.20, 4.40, 3, 9, 5, 6, 2, 8, 4, 10,1, 44, 3, 9, 5, 6, 2, 8, 4, 10,1, 44, 3, 9, 5, 6, 2, 8, 4, 10.8, 8, 4, 10,1, 44, 3, 9, 5, 6, 2, 8, 4, 10.8); 
+                        
+                $arrValor1 =array(4.20, 4.40, 3, 1, 5, 6, 2, 8, 12, 20,1, 5, 3, 9, 5, 6, 2, 18, 4.05, 10,1, 44, 3, 9, 5, 6, 2, 8, 4, 10.8, 8, 4, 10,1, 1.5, 3, 9, 5, 6, 2, 8, 4, 10.8);
+                        
+                $arrValor2 =array(5.20, 2.40, 3, 1, 5, 6.90, 2, 8, 12, 20,1, 5, 3, 9, 5, 6, 2, 18, 4.05, 10,1, 44, 3, 9, 5, 6, 2, 8, 4, 10.8, 8, 4, 10,1, 1.5, 3, 9, 5, 6, 2, 8, 4, 10.8);
+                        
+                        
+                        
+                        
             ?>
 
                             </div>
@@ -459,6 +470,7 @@ require("conexao.php");
 
                             <div class="card-body">
                                 <canvas id="barChart"></canvas>
+                                <progress id="animationProgress" max="1" value="0" style="width: 100%"></progress>
                             </div>
                             <div class="card-footer small text-muted"></div>
                         </div>
@@ -515,27 +527,52 @@ require("conexao.php");
                     });
                 });
 
+                var progress = document.getElementById('animationProgress');
+
+
+
+                progress.value = '100';
+
+                }
+
             </script>
 
             <script>
                 var ctx1 = document.getElementById("barChart").getContext('2d');
                 var barChart = new Chart(ctx1, {
                     type: 'line',
+                    borderWidth: 2,
                     data: {
-                        labels: ["01/01/2019", "01/02/2019", "01/03/2019","01/03/2019","01/01/2019", "01/02/2019", "01/03/2019","01/03/2019"],
+                        labels: [<?php echo implode(',', $arrData);?>],
                         datasets: [{
-                            label: 'UNAI',
-                            data: [1,2,3,9,5,6,2,8,4,10],
-                            backgroundColor:'rgba(251,195,0)'
-                                
-                            ,
-                        
-                            borderWidth: 1
+                            label: 'GASOLINA',
+                            data: [<?php echo implode(',', $arrValor);?>],
+                            responsive: true,
+                            fill: false,
+                            backgroundColor: ['rgba(96,167,0)'],
+                            borderColor: 'rgba(96,167,0)',
+                            borderWidth: 1,
+                        }, {
+                            label: 'ETANOL',
+                            data: [<?php echo implode(',',$arrValor1)?>],
+                            responsive: true,
+                            fill: false,
+                            backgroundColor: 'rgba(255,167,0)',
+                            borderColor: [ 'rgba(255,167,0)'],
+                            borderWidth: 1,
+                        }, {
+                            label: 'DIESEL',
+                            data: [<?php echo implode (',',$arrValor2) ?>],
+                            responsive: true,
+                            fill: false,
+                            backgroundColor: 'rgba(78,149,212)',
+                            borderColor: ['rgba(78,149,212)'],
+                            borderWidth: 1,
                         }]
                     },
                     options: {
                         title: {
-                            display: false,
+                            display: true,
                             text: 'REFERENCIA <?php echo $dataInicial1?> A <?php echo $dataFinal1?>'
                         },
 
@@ -546,6 +583,7 @@ require("conexao.php");
                             animationDuration: 1
                         },
                         animation: {
+                            duration: 2000,
                             duration: 1,
                             onComplete: function() {
                                 var chartInstance = this.chart,
@@ -563,28 +601,11 @@ require("conexao.php");
                                 });
                             },
 
-                            tooltips: {
-
-                            },
+                            tooltips: true,
                         },
-                        scales: {
-                            yAxes: [{
-                                ticks: {
-                                    beginAtZero: true,
-                                    fontColor: "white",
-                                    fontSize: 11,
-                                    stepSize: 9,
-                                    gridLines: {
-                                        lineWidth: 0
-                                    }
-
-                                }
-                            }]
-                        }
                     }
                 });
 
-               
             </script>
             <!-- END Java Script for this page -->
 

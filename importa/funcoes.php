@@ -14,3 +14,5 @@ function ehVazio($valor){
 function virgulatoPonto($value){
   return str_replace(',', '.', $value);
 }
+
+

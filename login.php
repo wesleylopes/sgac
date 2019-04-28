@@ -98,7 +98,7 @@ unset($_POST['email']);
                                 <a href="#">Esqueci a senha</a>
                                 <br>
                                 <br>
-                                <span>SGAC - SISTEMA DE GESTÃO E ANALISE DE CONSUMO DE COMBUSTÍVEL</span>
+                                <span class="span-login">SGAC - SISTEMA DE GESTÃO E ANALISE DE CONSUMO DE COMBUSTÍVEL</span>
 
 
                             </form>

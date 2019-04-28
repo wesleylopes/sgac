@@ -268,8 +268,7 @@ if (isset($_SESSION['ID'])==false){
 function buscaDataHora(){ 
   date_default_timezone_set('America/Sao_Paulo');        
   return date('d/m/Y H:i:s');
-}
-        
+}     
         
 function verificaAtualizacaoPeriodoDadosSistema(){
    require("conexao.php");           

@@ -17,7 +17,7 @@ function virgulatoPonto($value){
 
 function formataNumero($valor){
     if ($valor >= 1000){
-    $resultado = number_format($valor,0,"","");
+    $resultado = number_format($valor,0,",",".");
 } else {
         $resultado = round("0".$valor);
         

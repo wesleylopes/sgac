@@ -468,6 +468,11 @@ a {
     color: #fff;
 }
 
+.span-login{
+  color: #5E5D5E; 
+    font-size: 12px
+}
+
 .main-sidebar {
     top: 50px;
     width: 250px;
@@ -1447,6 +1452,7 @@ a.btn:focus {
 .btn-outline-dark.active,
 .btn-outline-dark.focus,
 .btn-outline-dark:active,
+.btn-outline-dark:focus,
 .btn-outline-dark:focus,
 .btn-outline-dark:hover,
 .open > .dropdown-toggle.btn-outline-dark {

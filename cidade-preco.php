@@ -3,10 +3,9 @@ session_start();
 require("conexao.php");
 require("funcoes.php");
 header('Content-Type: text/html; charset=utf-8');
-ini_set('max_execution_time', 0);
 
 if (isset($_POST['datai'] )==false or isset($_POST['dataf'] )==false){
-  $_POST['datai']= date('Y-m-d',time() - (10 * 24 * 60 * 60));
+  $_POST['datai']= date('Y-m-d',time() - (31 * 24 * 60 * 60));
   $_POST['dataf']= date('Y-m-d',time() - (1 * 24 * 60 * 60));
 
 }
@@ -47,10 +46,11 @@ if (isset($_SESSION['ID'])==false){
 </head>
 
 <body class="adminbody">
-    <div id="main">
 
+    <div id="main">
         <!-- top bar navigation -->
         <div class="headerbar">
+
             <!-- LOGO -->
             <div class="headerbar-left">
                 <a href="principal.php" class="logo"><img alt="Logo" src="assets/images/logo.png" /> <span>S.G.A.C</span></a>
@@ -76,7 +76,9 @@ if (isset($_SESSION['ID'])==false){
                                     <span>...</span>
                                 </p>
                             </a>
+
                             <!-- item-->
+
 
                             <!-- All-->
                             <a title="Clcik to visit Pike Admin Website" target="_blank" href="https://www.pikeadmin.com" class="dropdown-item notify-item notify-all">
@@ -130,10 +132,12 @@ if (isset($_SESSION['ID'])==false){
                                     <small class="text-muted">35 minutes ago</small>
                                 </p>
                             </a>
+
                             <!-- All-->
                             <a href="#" class="dropdown-item notify-item notify-all">
                                 Visualizar todos Alertas!
                             </a>
+
                         </div>
                     </li>
 
@@ -155,24 +159,35 @@ if (isset($_SESSION['ID'])==false){
                             <!-- item-->
                             <a href="sair.php" class="dropdown-item notify-item">
                                 <i class="fa fa-power-off"></i> <span>Sair</span></a>
+
+
                         </div>
                     </li>
+
                 </ul>
+
+
+
                 <ul class="list-inline menu-left mt-0">
                     <li class="float-left">
                         <button class="button-menu-mobile open-left mt-2">
                             <i class="fa fa-fw fa-bars"></i>
                         </button>
                     </li>
+
                 </ul>
+
             </nav>
 
         </div>
         <!-- End Navigation -->
 
+
         <!-- Left Sidebar -->
         <div class="left main-sidebar">
+
             <div class="sidebar-inner leftscroll">
+
                 <br>
                 <div class="container">
 
@@ -185,10 +200,12 @@ if (isset($_SESSION['ID'])==false){
                         <div class="form-group">
                             <label class="label" for="InputDataf">Data Final </label>
                             <input type="date" class="form-control" value="<?php echo $_POST['dataf'];?>" id="InputDataf" name="dataf" placeholder="Data final">
+
                         </div>
 
                         <br>
                         <button type="submit" class="btn btn-primary  btn-block"><i class="fa fa-refresh"></i> Atualizar Graficos</button>
+
 
                         <br>
                         <br>
@@ -196,23 +213,31 @@ if (isset($_SESSION['ID'])==false){
 
                 </div>
                 <div id="sidebar-menu">
+
                     <ul>
-                        <li class="submenu1">
-                            <a href="sgac/principal.php"><i class="fa fa-fw fa-tachometer"></i><span> Dashboard Principal </span> </a>
-                            <a href="../index.php"><i class="fa fa-fw fa-bar-chart"></i><span> Preço Médio por Posto </span> </a>
-                            <a class="active" href="index.php"><i class="fa fa-fw fa-line-chart"></i><span> Evolução de Preço </span> </a>
-                            <a href="importa/index.php"><i class="fa fa-fw fa-cloud-upload"></i><span>Upload de arquivos (Excel) </span> </a>
+                        <li class="submenu">
+                            <a class="active" href="index.php"><i class="fa fa-fw fa-tachometer"></i><span> Dashboard Principal </span> </a>
+                            <a class="active2" href="cidade-preco.php"><i class="fa fa-fw fa-bar-chart"></i><span> Preço Médio por Cidade </span> </a>
+                            <a class="active2" href="evolucao-preco.php"><i class="fa fa-fw fa-line-chart"></i><span> Evolução de Preço </span> </a>
+                            <a class="active2" href="index.php"><i class="fa fa-fw fa-cloud-upload"></i><span>Upload de arquivos (Excel) </span> </a>
+
+
+
                         </li>
 
                         <div class="clearfix">
                         </div>
                     </ul>
+
+
                 </div>
             </div>
             <div class="clearfix"></div>
         </div>
     </div>
+
     <!-- End Sidebar -->
+
 
     <div class="content-page">
 
@@ -226,34 +251,32 @@ if (isset($_SESSION['ID'])==false){
                         <div class="breadcrumb-holder">
                             <h1 class="main-title float-left">Dashboard </h1>
                             <ol class="breadcrumb float-right">
-                                <li class="breadcrumb-item">Evolução de Preço de Combustível</li>
-                                <li class="breadcrumb-item active">(Diario-Trimestre)</li>
+                                <li class="breadcrumb-item">Principal</li>
+                                <li class="breadcrumb-item active">Dashboard / Analise de Combustivel</li>
                             </ol>
                             <div class="clearfix"></div>
                         </div>
                     </div>
+
                 </div>
             </div>
         </div>
+
+
         <?php
         
 function buscaDataHora(){ 
-  date_default_timezone_set('America/Sao_Paulo');     
+  date_default_timezone_set('America/Sao_Paulo');        
   return date('d/m/Y H:i:s');
-}  
-        
-function buscaData($dataPeriodo,$qtddias){ 
-   $data= date('d/m/Y',time() - ($qtddias * 24 * 60 * 60));
-  return $data;
-} 
+}     
         
 function verificaAtualizacaoPeriodoDadosSistema(){
-  require("conexao.php");           
+   require("conexao.php");           
 
-  $sql="SELECT 
-            date_format( min(DATA_MOVIMENTO), '%d/%m/%Y ') as MOVIMENTO_INICIAL,
-            date_format(max(DATA_MOVIMENTO), '%d/%m/%Y %h:%s') as MOVIMENTO_FINAL,
-            date_format(max(DATA_IMPORTACAO),'%d/%m/%Y %h:%s') as ULTIMA_IMPORTACAO 
+   $sql="SELECT 
+            date_format( min(DATA_MOVIMENTO), '%d/%m/%Y') as MOVIMENTO_INICIAL,
+            date_format(max(DATA_MOVIMENTO), '%d/%m/%Y') as MOVIMENTO_FINAL,
+            date_format(max(DATA_IMPORTACAO),'%d/%m/%Y') as ULTIMA_IMPORTACAO 
          FROM movimento_veiculos";
        /*
          echo $sql;
@@ -270,27 +293,28 @@ function verificaAtualizacaoPeriodoDadosSistema(){
    }   
             
 function buscaValorCombustivelUnidade($unidade,$dataInicial,$dataFinal,$tipoCombustivel){
-  require("conexao.php");
+require("conexao.php");
         
-     $sql="SELECT  
+   $sql="SELECT  
            DISTINCT(CENTRO_RESULTADO),
            VALOR_UNITARIO,
            QUANTIDADE,
            DATA_MOVIMENTO,
+           CIDADE,
            (SELECT 
               SUM(QUANTIDADE) 
             FROM movimento_veiculos b 
             where b.PRODUTO like '%$tipoCombustivel%' 
               and B.CENTRO_RESULTADO= A.CENTRO_RESULTADO           
               and DATE(b.DATA_MOVIMENTO)>= '$dataInicial'
-              and DATE(b.DATA_MOVIMENTO)<= '$dataFinal'and TIPO_FROTA NOT IN('EQUIPAMENTOS') 
+              and DATE(b.DATA_MOVIMENTO)<= '$dataFinal' 
            ) as SOMAQTDCOMBUSTIVEL 
          FROM  movimento_veiculos a 
          WHERE a.PRODUTO like '%$tipoCombustivel%'
          AND   a.CENTRO_RESULTADO in ('$unidade')
          AND   DATE(a.DATA_MOVIMENTO) >= '$dataInicial'
-         AND   DATE(a.DATA_MOVIMENTO) <= '$dataFinal' and TIPO_FROTA NOT IN('EQUIPAMENTOS')";
-        
+         AND   DATE(a.DATA_MOVIMENTO) <= '$dataFinal'";
+    
              /*echo $sql;
             echo "<br>";
             echo "<br>";
@@ -313,11 +337,13 @@ function buscaValorCombustivelUnidade($unidade,$dataInicial,$dataFinal,$tipoComb
             
         $peso =  ($dado['QUANTIDADE'] / $dado['SOMAQTDCOMBUSTIVEL']);     
         $somaPeso = $somaPeso + $peso;
-        $valorCombustivelReal = ( $dado['VALOR_UNITARIO'] * $peso ) ;             
+        $valorCombustivelReal = ( $dado['VALOR_UNITARIO'] *$peso ) ; 
+        
            
         $array = array('VALOR_COMBUSTIVEL' => $valorCombustivelReal,
-                       'CENTRO_RESULTADO' => $dado['CENTRO_RESULTADO'],'DATA_MOVIMENTO' => $dado['DATA_MOVIMENTO']);
-    
+                       'CENTRO_RESULTADO' => $dado['CENTRO_RESULTADO'],
+                      'CIDADE' => $dado['CIDADE']);
+            
         $arrayWlancamentos[] = $array; 
             
         }  
@@ -327,19 +353,17 @@ function buscaValorCombustivelUnidade($unidade,$dataInicial,$dataFinal,$tipoComb
     
         if (isset ($arrayWlancamentos[0])){
           $unidadePolo = $arrayWlancamentos[0]['CENTRO_RESULTADO'];
-          $dataMovimento =$arrayWlancamentos[0]['DATA_MOVIMENTO'];
+          $cidade = $arrayWlancamentos[0]['CIDADE'];
         }else{
           $unidadePolo='';
-          $dataMovimento='';
         }
     
         $valorCombustivel = number_format($sum1, 2);
-        
       
-        return array('UNIDADE' => $unidadePolo, 'VALOR' => $valorCombustivel, 'DATA_MOVIMENTO' => $dataMovimento); 
+        return array('UNIDADE' => $unidadePolo, 'VALOR' => $valorCombustivel,'CIDADE' => $cidade); 
+      
         
-        } 
-        
+        }                         
         function buscaQuantidadeCombustivelUnidade($unidade,$dataInicial,$dataFinal,$tipoCombustivel){
         
         require("conexao.php");           
@@ -361,7 +385,7 @@ function buscaValorCombustivelUnidade($unidade,$dataInicial,$dataFinal,$tipoComb
          $sql = $db->query($sql);            
          $dados = $sql->fetchAll();       
             
-          foreach ($dados as $quantidade){
+        foreach ($dados as $quantidade){
             return array('UNIDADE' => $quantidade['CENTRO_RESULTADO'], 'QUANTIDADE' => $quantidade['SOMAQUANTIDADE']); 
           }             
         }
@@ -382,22 +406,32 @@ function buscaValorCombustivelUnidade($unidade,$dataInicial,$dataFinal,$tipoComb
 
                 </div>
                 <br>
-
                 <div class="row">
-                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-12">
                         <div class="card mb-3">
                             <div class="card-header">
-                                <i class="fa fa-table"></i> EVOLUÇÃO MENSAL PREÇO MÉDIO COMBUSTÍVEL (30/60/90 DIAS)
+                                <i class="fa fa-table"></i> R$/L - CUSTO MÉDIO POR POLO
                             </div>
                             <div class="card-body">
-                                <canvas id="barChart2"></canvas>
+                                <canvas id="barChart"></canvas>
 
-                                <?php  
+                                <?php                   
                 $dataInicial1 = $_POST['datai'];
-                $dataFinal1   = $_POST['dataf']; 
-                        
-                $diferenca = strtotime($dataFinal1) - strtotime($dataInicial1);
-                $dias = floor($diferenca / (60 * 60 * 24));
+                $dataFinal1   = $_POST['dataf'];  
+
+                //Busca Valor Ponderado
+
+                $gasolinaUnai                  = buscaValorCombustivelUnidade('UNAI',$dataInicial1,$dataFinal1,'GASOLINA');
+                $etanolUnai                    = buscaValorCombustivelUnidade('UNAI',$dataInicial1,$dataFinal1,'ETANOL');
+                $dieselUnai                    = buscaValorCombustivelUnidade('UNAI',$dataInicial1,$dataFinal1,'DIESEL');
+
+                $gasolinaParacatu              = buscaValorCombustivelUnidade('PARACATU',$dataInicial1,$dataFinal1,'GASOLINA');
+                $etanolParacatu                = buscaValorCombustivelUnidade('PARACATU',$dataInicial1,$dataFinal1,'ETANOL');
+                $dieselParacatu                = buscaValorCombustivelUnidade('PARACATU',$dataInicial1,$dataFinal1,'DIESEL');
+
+                $gasolinaPirapora              = buscaValorCombustivelUnidade('PIRAPORA',$dataInicial1,$dataFinal1,'GASOLINA');
+                $etanolPirapora                = buscaValorCombustivelUnidade('PIRAPORA',$dataInicial1,$dataFinal1,'ETANOL');
+                $dieselPirapora                = buscaValorCombustivelUnidade('PIRAPORA',$dataInicial1,$dataFinal1,'DIESEL');
 
                 //Busca Quantidade Por Unidade 
 
@@ -412,37 +446,18 @@ function buscaValorCombustivelUnidade($unidade,$dataInicial,$dataFinal,$tipoComb
                 $quantidadeGasolinaUnai        = buscaQuantidadeCombustivelUnidade('UNAI',$dataInicial1,$dataFinal1,'GASOLINA');
                 $quantidadeEtanolUnai          = buscaQuantidadeCombustivelUnidade('UNAI',$dataInicial1,$dataFinal1,'ETANOL'); 
                 $quantidadeDieselUnai          = buscaQuantidadeCombustivelUnidade('UNAI',$dataInicial1,$dataFinal1,'DIESEL');
-                        
+
+
+                $consolidadoEtanol             = ($etanolUnai['VALOR']+ $etanolParacatu['VALOR'] + $etanolPirapora['VALOR'])/3  ;
+                $consolidadoGasolina           = ($gasolinaUnai['VALOR'] + $gasolinaParacatu['VALOR'] +$gasolinaPirapora['VALOR'])/3;
+                $consolidadoDiesel             = ($dieselUnai['VALOR'] + $dieselParacatu['VALOR']+$dieselPirapora['VALOR'])/3  ;
+
                 $quantidadeConsolidadaEtanol   = ($quantidadeEtanolUnai['QUANTIDADE']+ $quantidadeEtanolParacatu['QUANTIDADE'] + $quantidadeEtanolPirapora['QUANTIDADE'])/3  ;
 
                 $quantidadeConsolidadaGasolina = ($quantidadeGasolinaUnai['QUANTIDADE'] + $quantidadeGasolinaParacatu['QUANTIDADE'] + $quantidadeGasolinaPirapora['QUANTIDADE'])/3;
 
-                $quantidadeConsolidadaDiesel   = ($quantidadeDieselUnai['QUANTIDADE'] + $quantidadeDieselPirapora['QUANTIDADE'] + $quantidadeDieselParacatu['QUANTIDADE']); 
-                        
-                        
-                for ($i=$dias;$i>=0;$i--){
-                  $data= date('Y-m-d',time() - ($i * 24 * 60 * 60));
-                  $data_movimento= buscaData('',$i);
-                     
-                  $gasolinaUnai                  = buscaValorCombustivelUnidade('UNAI',$data,$data,'GASOLINA');
-                  $etanolUnai                    = buscaValorCombustivelUnidade('UNAI',$data,$data,'ETANOL');
-                  $dieselUnai                    = buscaValorCombustivelUnidade('UNAI',$data,$data,'DIESEL');
-
-                  $gasolinaParacatu              = buscaValorCombustivelUnidade('PARACATU',$data,$data,'GASOLINA');
-                  $etanolParacatu                = buscaValorCombustivelUnidade('PARACATU',$data,$data,'ETANOL');
-                  $dieselParacatu                = buscaValorCombustivelUnidade('PARACATU',$data,$data,'DIESEL');
-
-                  $gasolinaPirapora              = buscaValorCombustivelUnidade('PIRAPORA',$data,$data,'GASOLINA');
-                  $etanolPirapora                = buscaValorCombustivelUnidade('PIRAPORA',$data,$data,'ETANOL');
-                  $dieselPirapora                = buscaValorCombustivelUnidade('PIRAPORA',$data,$data,'DIESEL');
-                    
-                  $arrayVlrDiesel[]= number_format(($dieselUnai['VALOR'] + $dieselParacatu['VALOR']+$dieselPirapora['VALOR'])/3,2)  ;
-                  $arrayVlrGasolina[] = number_format(($gasolinaUnai['VALOR'] + $gasolinaParacatu['VALOR'] +$gasolinaPirapora['VALOR'])/3,2);
-                  $arrayVlrEtanol[] = number_format(($etanolUnai['VALOR']+ $etanolParacatu['VALOR'] + $etanolPirapora['VALOR'])/3,2)  ;
-                    
-                  $arrayData[] = "'$data_movimento'";                
-                     
-                } 
+                $quantidadeConsolidadaDiesel   = ($quantidadeDieselUnai['QUANTIDADE'] + $quantidadeDieselPirapora['QUANTIDADE'] + $quantidadeDieselParacatu['QUANTIDADE'])  ; 
+                
             ?>
 
                             </div>
@@ -454,53 +469,46 @@ function buscaValorCombustivelUnidade($unidade,$dataInicial,$dataFinal,$tipoComb
                     <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-12">
                         <div class="card mb-3">
                             <div class="card-header">
-                                <i class="fa fa-table"></i> EVOLUÇÃO DIARIA PREÇO MÉDIO COMBUSTÍVEL
+                                <i class="fa fa-table"></i> R$/L - CUSTO MÉDIO CONSOLIDADO
                             </div>
 
                             <div class="card-body">
-
-                                <?php 
-                                
-                  function buscaMovimentoTrimestre(){
-                    $dataIni0= date('Y-m-d',time() - (0 * 24 * 60 * 60));              
-                    $dataFin30= date('Y-m-d',time() - (30 * 24 * 60 * 60));
-                    $dataFin60= date('Y-m-d',time() - (60 * 24 * 60 * 60));
-                   $dataFin90= date('Y-m-d',time() - (90 * 24 * 60 * 60));
-                   
-                     
-                  $gasolinaUnai                  = buscaValorCombustivelUnidade('UNAI',$data,$data,'GASOLINA');
-                  $etanolUnai                    = buscaValorCombustivelUnidade('UNAI',$data,$data,'ETANOL');
-                  $dieselUnai                    = buscaValorCombustivelUnidade('UNAI',$data,$data,'DIESEL');
-
-                  $gasolinaParacatu              = buscaValorCombustivelUnidade('PARACATU',$data,$data,'GASOLINA');
-                  $etanolParacatu                = buscaValorCombustivelUnidade('PARACATU',$data,$data,'ETANOL');
-                  $dieselParacatu                = buscaValorCombustivelUnidade('PARACATU',$data,$data,'DIESEL');
-
-                  $gasolinaPirapora              = buscaValorCombustivelUnidade('PIRAPORA',$data,$data,'GASOLINA');
-                  $etanolPirapora                = buscaValorCombustivelUnidade('PIRAPORA',$data,$data,'ETANOL');
-                  $dieselPirapora                = buscaValorCombustivelUnidade('PIRAPORA',$data,$data,'DIESEL');
-                    
-                  $arrayVlrDiesel[]= number_format(($dieselUnai['VALOR'] + $dieselParacatu['VALOR']+$dieselPirapora['VALOR'])/3,2)  ;
-                  $arrayVlrGasolina[] = number_format(($gasolinaUnai['VALOR'] + $gasolinaParacatu['VALOR'] +$gasolinaPirapora['VALOR'])/3,2);
-                  $arrayVlrEtanol[] = number_format(($etanolUnai['VALOR']+ $etanolParacatu['VALOR'] + $etanolPirapora['VALOR'])/3,2)  ;
-                    
-                  $arrayData[] = "'$data_movimento'";  
-                                    
-                                    }
-                                
-                                
-                                
-                                
-                                ?>
-                                <canvas id="barChart"></canvas>
-
+                                <canvas id="barChart2"></canvas>
                             </div>
                             <div class="card-footer small text-muted"></div>
                         </div>
                     </div>
 
                 </div>
+                <div class="row">
+                    <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8 col-xl-8">
+                        <div class="card mb-3">
+                            <div class="card-header">
+                                <i class="fa fa-table"></i> QTD/L - QUANTIDADE LITROS POR UNIDADE
+                            </div>
 
+                            <div class="card-body">
+                                <canvas id="barChart3"></canvas>
+                            </div>
+                            <div class="card-footer small text-muted"></div>
+                        </div>
+                    </div>
+
+                    <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
+                        <div class="card mb-3">
+                            <div class="card-header">
+                                <i class="fa fa-table"></i> QTD/L - QUANTIDADE LITROS TOTAL
+                            </div>
+
+                            <div class="card-body">
+                                <canvas id="barChart4"></canvas>
+                            </div>
+
+                            <br>
+                            <div class="card-footer small text-muted"></div>
+                        </div>
+                    </div>
+                </div>
 
                 <footer class="footer">
                     <span class="text-right">
@@ -526,166 +534,142 @@ function buscaValorCombustivelUnidade($unidade,$dataInicial,$dataFinal,$tipoComb
             <script src="assets/js/jquery.nicescroll.js"></script>
 
             <!-- App js -->
-            <script src="assets/js/pikeadmin.js">
-            </script>
+            < <script src="assets/js/pikeadmin.js">
+                </script>
 
-            <!-- BEGIN Java Script for this page -->
-            <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
-            <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
-            <script src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap4.min.js"></script>
+                <!-- BEGIN Java Script for this page -->
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
+                <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+                <script src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap4.min.js"></script>
 
-            <!-- Counter-Up-->
-            <script src="assets/plugins/waypoints/lib/jquery.waypoints.min.js"></script>
-            <script src="assets/plugins/counterup/jquery.counterup.min.js"></script>
+                <!-- Counter-Up-->
+                <script src="assets/plugins/waypoints/lib/jquery.waypoints.min.js"></script>
+                <script src="assets/plugins/counterup/jquery.counterup.min.js"></script>
 
-            <script>
-                $(document).ready(function() {
-                    // data-tables
-                    $('#example1').DataTable();
+                <script>
+                    $(document).ready(function() {
+                        // data-tables
+                        $('#example1').DataTable();
 
-                    // counter-up
-                    $('.counter').counterUp({
-                        delay: 10,
-                        time: 600
+                        // counter-up
+                        $('.counter').counterUp({
+                            delay: 10,
+                            time: 600
+                        });
                     });
-                });
-                }
 
-            </script>
+                </script>
 
-            <script>
-                var ctx1 = document.getElementById("barChart").getContext('2d');
-                var barChart = new Chart(ctx1, {
-                    type: 'line',
-                    borderWidth: 10,
-                    data: {
-                        labels: [<?php echo implode(',', $arrayData);?>],
-                        datasets: [{
-                            label: 'DIESEL',
-                            data: [<?php echo implode(',',$arrayVlrDiesel);?>],
-                            responsive: true,
-                            fill: false,
-                            backgroundColor: ['rgba(96,167,0,0.9)'],
-                            borderColor: 'rgba(96,167,0,0.9)',
+                <script>
+                    var ctx1 = document.getElementById("barChart").getContext('2d');
+                    var barChart = new Chart(ctx1, {
+                        type: 'horizontalBar',
+                        data: {
+                            labels: ["goiania1", "goiania1", "goiania1", "goiania1", "goiania1", "goiania1", "goiania1", "goiania1", "goiania1", "goiania1", "goiania1", "goiania1","goiania1", "goiania1", "goiania1", "goiania1", "goiania1", "goiania1", "goiania1", "goiania1", "goiania1", "goiania1", "goiania1", "goiania1"],
+                            datasets: [{
+                                label: 'UNAI',
+                                data: [1200, 1000, 900, 800, 700, 600, 500, 400, 300, 200, 100, 500, 200,120, 100, 90, 80, 70, 60, 50, 40, 30, 20, 10, 5, 2],
+                                backgroundColor: 'rgba(251,195,0)',
+                                borderColor: [
 
-                        }, {
-                            label: 'GASOLINA',
-                            data: [<?php echo implode(',',$arrayVlrGasolina)?>],
-                            responsive: true,
-                            fill: false,
-                            backgroundColor: 'rgba(255,167,0,0.9)',
-                            borderColor: ['rgba(255,167,0,0.9)'],
-
-                        }, {
-                            label: 'ETANOL',
-                            data: [<?php echo implode (',',$arrayVlrEtanol) ?>],
-                            responsive: true,
-                            fill: false,
-                            backgroundColor: 'rgba(78,149,212,0.9)',
-                            borderColor: 'rgba(78,149,212,0.9)',
-
-                        }]
-                    },
-                    options: {
-                        title: {
-                            display: true,
-                            text: 'REFERENCIA <?php echo $dataInicial1?> A <?php echo $dataFinal1?>'
+                                ],
+                                borderWidth: 1
+                            }]
                         },
-
-                        tooltips: {
-                            enabled: true
-                        },
-                        animation: {
-                            duration: 3000,
-                            onComplete: function() {
-                                var chartInstance = this.chart,
-                                    ctx = chartInstance.ctx;
-                                ctx.textAlign = 'center';
-                                ctx.fillStyle = 'rgba(25,0,0,0.9)';
+                        options: {
 
 
-                                this.data.datasets.forEach(function(dataset, i) {
-                                    var meta = chartInstance.controller.getDatasetMeta(i);
-                                    meta.data.forEach(function(bar, index) {
-                                        var data = dataset.data[index];
-
-                                        ctx.fillText(data, bar._model.x, bar._model.y - 10);
-                                    });
-                                });
+                            title: {
+                                display: false,
+                                text: 'REFERENCIA <?php echo $dataInicial1?> A <?php echo $dataFinal1?>'
                             },
 
-                            tooltips: true,
-                        },
-                    }
-                });
-
-                var ctx1 = document.getElementById("barChart2").getContext('2d');
-                var barChart = new Chart(ctx1, {
-                    type: 'line',
-                    borderWidth: 10,
-                    data: {
-                        labels: ["Janeiro","Fevereiro","Abril"],
-                        datasets: [{
-                            label: 'DIESEL',
-                            data: [<?php echo implode(',',$arrayVlrDiesel);?>],
-                            responsive: true,
-                            fill: false,
-                            backgroundColor: ['rgba(96,167,0,0.9)'],
-                            borderColor: 'rgba(96,167,0,0.9)',
-
-                        }, {
-                            label: 'GASOLINA',
-                            data: [<?php echo implode(',',$arrayVlrGasolina)?>],
-                            responsive: true,
-                            fill: false,
-                            backgroundColor: 'rgba(255,167,0,0.9)',
-                            borderColor: ['rgba(255,167,0,0.9)'],
-
-                        }, {
-                            label: 'ETANOL',
-                            data: [<?php echo implode (',',$arrayVlrEtanol) ?>],
-                            responsive: true,
-                            fill: false,
-                            backgroundColor: 'rgba(78,149,212,0.9)',
-                            borderColor: 'rgba(78,149,212,0.9)',
-
-                        }]
-                    },
-                    options: {
-                        title: {
-                            display: true,
-                            text: 'REFERENCIA <?php echo $dataInicial1?> A <?php echo $dataFinal1?>'
-                        },
-
-                        tooltips: {
-                            enabled: true
-                        },
-                        animation: {
-                            duration: 3000,
-                            onComplete: function() {
-                                var chartInstance = this.chart,
-                                    ctx = chartInstance.ctx;
-                                ctx.textAlign = 'center';
-                                ctx.fillStyle = 'rgba(25,0,0,0.9)';
-
-
-                                this.data.datasets.forEach(function(dataset, i) {
-                                    var meta = chartInstance.controller.getDatasetMeta(i);
-                                    meta.data.forEach(function(bar, index) {
-                                        var data = dataset.data[index];
-
-                                        ctx.fillText(data, bar._model.x, bar._model.y - 10);
-                                    });
-                                });
+                            tooltips: {
+                                enabled: true
+                            },
+                            hover: {
+                                animationDuration: 1
                             },
 
-                            tooltips: true,
-                        },
-                    }
-                });
+                            animation: {
+                                duration: 1000,
+                                onComplete: function() {
+                                    var chartInstance = this.chart,
+                                        ctx = chartInstance.ctx;
+                                    ctx.textAlign = 'center';
+                                    ctx.fillStyle = "rgba(0, 0, 0, 1)";
+                                    ctx.textBaseline = 'bottom';
 
-            </script>
-            <!-- END Java Script for this page -->
+                                    this.data.datasets.forEach(function(dataset, i) {
+                                        var meta = chartInstance.controller.getDatasetMeta(i);
+                                        meta.data.forEach(function(bar, index) {
+                                            var data = dataset.data[index];
+                                            ctx.font = "bold 80% calibri";
+                                            ctx.fillText(data, bar._model.x  , bar._model.y +10);;
+                                        });
+                                    });
+                                },
+                            }
+
+                        }
+                    });
+                    
+                    var ctx1 = document.getElementById("barChart2").getContext('2d');
+                    var barChart = new Chart(ctx1, {
+                        type: 'horizontalBar',
+                        data: {
+                            labels: ["goiania1", "goiania1", "goiania1", "goiania1", "goiania1", "goiania1", "goiania1", "goiania1", "goiania1", "goiania1", "goiania1", "goiania1"],
+                            datasets: [{
+                                label: 'UNAI',
+                                data: [120, 100, 90, 80, 70, 60, 50, 40, 30, 20, 10, 5, 2],
+                                backgroundColor: 'rgba(251,195,0)',
+                                borderColor: [
+
+                                ],
+                                borderWidth: 1
+                            }]
+                        },
+                        options: {
+
+
+                            title: {
+                                display: false,
+                                text: 'REFERENCIA <?php echo $dataInicial1?> A <?php echo $dataFinal1?>'
+                            },
+
+                            tooltips: {
+                                enabled: true
+                            },
+                            hover: {
+                                animationDuration: 1
+                            },
+
+                            animation: {
+                                duration: 1000,
+                                onComplete: function() {
+                                    var chartInstance = this.chart,
+                                        ctx = chartInstance.ctx;
+                                    ctx.textAlign = 'center';
+                                    ctx.fillStyle = "rgba(0, 0, 0, 1)";
+                                    ctx.textBaseline = 'bottom';
+
+                                    this.data.datasets.forEach(function(dataset, i) {
+                                        var meta = chartInstance.controller.getDatasetMeta(i);
+                                        meta.data.forEach(function(bar, index) {
+                                            var data = dataset.data[index];
+                                            ctx.font = "bold 80% calibri";
+                                            ctx.fillText(data, bar._model.x  , bar._model.y +10);
+                                        });
+                                    });
+                                },
+                            }
+
+                        }
+                    });
+
+
+                </script>
+                <!-- END Java Script for this page -->
 
 </body>
 

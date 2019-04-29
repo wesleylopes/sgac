@@ -300,6 +300,7 @@ require("conexao.php");
            VALOR_UNITARIO,
            QUANTIDADE,
            DATA_MOVIMENTO,
+           CIDADE,
            (SELECT 
               SUM(QUANTIDADE) 
             FROM movimento_veiculos b 
@@ -314,19 +315,18 @@ require("conexao.php");
          AND   DATE(a.DATA_MOVIMENTO) >= '$dataInicial'
          AND   DATE(a.DATA_MOVIMENTO) <= '$dataFinal'";
     
-          /*   echo $sql;
-            echo "<br>";
-            echo "<br>";
-            echo "<br>";*/
+         /* echo $sql;
+         echo "<br>";
+         echo "<br>";
+         echo "<br>"; */
     
-   $sql = $db->query($sql); 
-   $dados = $sql->fetchAll();
-   $row = $sql->rowCount();
+         $sql = $db->query($sql); 
+         $dados = $sql->fetchAll();
+         $row = $sql->rowCount();
       
-   if ($sql->rowCount()>0)
-     {
-       $sql->rowCount();       
-     }            
+       if ($sql->rowCount()>0){
+         $sql->rowCount();       
+       }            
         $array=array();
         $arrayWlancamentos=array();        
        
@@ -336,10 +336,11 @@ require("conexao.php");
             
         $peso =  ($dado['QUANTIDADE'] / $dado['SOMAQTDCOMBUSTIVEL']);     
         $somaPeso = $somaPeso + $peso;
-        $valorCombustivelReal = ( $dado['VALOR_UNITARIO'] *$peso ) ;             
+        $valorCombustivelReal = ( $dado['VALOR_UNITARIO'] *$peso ) ;        
            
         $array = array('VALOR_COMBUSTIVEL' => $valorCombustivelReal,
-                       'CENTRO_RESULTADO' => $dado['CENTRO_RESULTADO']);
+                       'CENTRO_RESULTADO' => $dado['CENTRO_RESULTADO'],
+                      'CIDADE' => $dado['CIDADE']);
     
         $arrayWlancamentos[] = $array; 
             
@@ -350,17 +351,17 @@ require("conexao.php");
     
         if (isset ($arrayWlancamentos[0])){
           $unidadePolo = $arrayWlancamentos[0]['CENTRO_RESULTADO'];
+          $cidade = $arrayWlancamentos[0]['CIDADE'];
         }else{
           $unidadePolo='';
         }
     
         $valorCombustivel = number_format($sum1, 2);
       
-        return array('UNIDADE' => $unidadePolo, 'VALOR' => $valorCombustivel); 
+        return array('UNIDADE' => $unidadePolo, 'VALOR' => $valorCombustivel,'CIDADE' => $cidade);
+       
         
-        }     
-                                   
-                                   
+        }                         
         function buscaQuantidadeCombustivelUnidade($unidade,$dataInicial,$dataFinal,$tipoCombustivel){
         
         require("conexao.php");           
@@ -382,7 +383,7 @@ require("conexao.php");
          $sql = $db->query($sql);            
          $dados = $sql->fetchAll();       
             
-          foreach ($dados as $quantidade){
+        foreach ($dados as $quantidade){
             return array('UNIDADE' => $quantidade['CENTRO_RESULTADO'], 'QUANTIDADE' => $quantidade['SOMAQUANTIDADE']); 
           }             
         }
@@ -454,7 +455,7 @@ require("conexao.php");
                 $quantidadeConsolidadaGasolina = ($quantidadeGasolinaUnai['QUANTIDADE'] + $quantidadeGasolinaParacatu['QUANTIDADE'] + $quantidadeGasolinaPirapora['QUANTIDADE'])/3;
 
                 $quantidadeConsolidadaDiesel   = ($quantidadeDieselUnai['QUANTIDADE'] + $quantidadeDieselPirapora['QUANTIDADE'] + $quantidadeDieselParacatu['QUANTIDADE'])  ; 
-
+                
             ?>
 
                             </div>
@@ -793,37 +794,37 @@ require("conexao.php");
                                     ctx.textBaseline = 'bottom';
 
                                     this.data.datasets.forEach(function(dataset, i) {
-                                            var meta = chartInstance.controller.getDatasetMeta(i);
-                                            meta.data.forEach(function(bar, index) {
-                                                    var data = dataset.data[index];
-                                                    ctx.fillText(data, bar._model.x, bar._model.y - 5); 
+                                        var meta = chartInstance.controller.getDatasetMeta(i);
+                                        meta.data.forEach(function(bar, index) {
+                                                var data = dataset.data[index];
+                                                ctx.fillText(data, bar._model.x, bar._model.y - 5);
 
-                                                }
+                                            }
 
-                                            );
+                                        );
                                     });
+                                },
+                                tooltips: {},
                             },
-                            tooltips: {},
-                        },
-                        scales: {
-                            xAxes: [{
-                                gridLines: {
-                                    lineWidth: 0,
-                                }
-                            }],
-                            yAxes: [{
-                                ticks: {
-                                    beginAtZero: true,
-                                    fontColor: "white",
-                                    fontSize: 11,
-                                    stepSize: 0,
+                            scales: {
+                                xAxes: [{
                                     gridLines: {
-                                        lineWidth: 0
+                                        lineWidth: 0,
                                     }
-                                }
-                            }]
+                                }],
+                                yAxes: [{
+                                    ticks: {
+                                        beginAtZero: true,
+                                        fontColor: "white",
+                                        fontSize: 11,
+                                        stepSize: 0,
+                                        gridLines: {
+                                            lineWidth: 0
+                                        }
+                                    }
+                                }]
+                            }
                         }
-                    }
                     });
 
                     var ctx1 = document.getElementById("barChart4").getContext('2d');

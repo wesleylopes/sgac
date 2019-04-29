@@ -219,7 +219,7 @@ if (isset($_SESSION['ID'])==false){
                             <a class="active" href="index.php"><i class="fa fa-fw fa-tachometer"></i><span> Dashboard Principal </span> </a>
                             <a class="active2" href="index.php"><i class="fa fa-fw fa-bar-chart"></i><span> Preço Médio por Posto </span> </a>
                             <a class="active2" href="evolucao-preco.php"><i class="fa fa-fw fa-line-chart"></i><span> Evolução de Preço </span> </a>
-                             <a class="active2" href="index.php"><i class="fa fa-fw fa-cloud-upload"></i><span>Upload de arquivos (Excel) </span> </a>
+                            <a class="active2" href="index.php"><i class="fa fa-fw fa-cloud-upload"></i><span>Upload de arquivos (Excel) </span> </a>
 
 
 
@@ -577,12 +577,13 @@ require("conexao.php");
                                 borderWidth: 1
                             }, {
                                 label: 'PARACATU',
-                                data: [<?php echo $dieselParacatu['VALOR']?>, <?php echo $gasolinaParacatu['VALOR']?>, <?php echo $etanolParacatu['VALOR']?>],
+                                data: [<?php echo $dieselParacatu['VALOR']?>, <?php echo formataNumero($gasolinaParacatu['VALOR'])?>, <?php echo $etanolParacatu['VALOR']?>],
+                                data: [<?php echo $dieselParacatu['VALOR']?>, <?php echo formataNumero($gasolinaParacatu['VALOR'])?>, <?php echo $etanolParacatu['VALOR']?>],
 
                                 backgroundColor: [
                                     'rgba(96,167,0)',
                                     'rgba(96,167,0)',
-                                     'rgba(96,167,0)'
+                                    'rgba(96,167,0)'
                                 ],
                                 borderColor: [
 
@@ -792,44 +793,47 @@ require("conexao.php");
                                     ctx.textBaseline = 'bottom';
 
                                     this.data.datasets.forEach(function(dataset, i) {
-                                        var meta = chartInstance.controller.getDatasetMeta(i);
-                                        meta.data.forEach(function(bar, index) {
-                                            var data = dataset.data[index];
-                                            ctx.fillText(data, bar._model.x, bar._model.y - 5);
-                                        });
+                                            var meta = chartInstance.controller.getDatasetMeta(i);
+                                            meta.data.forEach(function(bar, index) {
+                                                    var data = dataset.data[index];
+                                                    ctx.fillText(data, bar._model.x, bar._model.y - 5); 
+
+                                                }
+
+                                            );
                                     });
-                                },
-                                tooltips: {},
                             },
-                            scales: {
-                                xAxes: [{
+                            tooltips: {},
+                        },
+                        scales: {
+                            xAxes: [{
+                                gridLines: {
+                                    lineWidth: 0,
+                                }
+                            }],
+                            yAxes: [{
+                                ticks: {
+                                    beginAtZero: true,
+                                    fontColor: "white",
+                                    fontSize: 11,
+                                    stepSize: 0,
                                     gridLines: {
-                                        lineWidth: 0,
+                                        lineWidth: 0
                                     }
-                                }],
-                                yAxes: [{
-                                    ticks: {
-                                        beginAtZero: true,
-                                        fontColor: "white",
-                                        fontSize: 11,
-                                        stepSize: 0,
-                                        gridLines: {
-                                            lineWidth: 0
-                                        }
-                                    }
-                                }]
-                            }
+                                }
+                            }]
                         }
+                    }
                     });
 
                     var ctx1 = document.getElementById("barChart4").getContext('2d');
                     var barChart = new Chart(ctx1, {
                         type: 'doughnut',
                         data: {
-                            labels: ["DIESEL <?php echo round($quantidadeConsolidadaDiesel)?>", "GASOLINA <?php echo round($quantidadeConsolidadaGasolina)?>", "ETANOL <?php echo round($quantidadeConsolidadaEtanol)?>"],
+                            labels: ["DIESEL <?php echo formataNumero($quantidadeConsolidadaDiesel)?>", "GASOLINA <?php echo formataNumero($quantidadeConsolidadaGasolina)?>", "ETANOL <?php echo formataNumero($quantidadeConsolidadaEtanol)?>"],
                             datasets: [{
                                 label: 'UNAI',
-                                data: ["<?php echo round($quantidadeConsolidadaDiesel)?>", "<?php echo round($quantidadeConsolidadaGasolina)?>", "<?php echo round($quantidadeConsolidadaEtanol)?>"],
+                                data: ["<?php echo formataNumero($quantidadeConsolidadaDiesel)?>", "<?php echo formataNumero($quantidadeConsolidadaGasolina)?>", "<?php echo formataNumero($quantidadeConsolidadaEtanol)?>"],
                                 backgroundColor: [
                                     'rgba(251,195,0)',
                                     'rgba(96,167,0)',

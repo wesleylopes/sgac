@@ -6,7 +6,7 @@ header('Content-Type: text/html; charset=utf-8');
 ini_set('max_execution_time', 0);
 
 if (isset($_POST['datai'] )==false or isset($_POST['dataf'] )==false){
-  $_POST['datai']= date('Y-m-d',time() - (31 * 24 * 60 * 60));
+  $_POST['datai']= date('Y-m-d',time() - (10 * 24 * 60 * 60));
   $_POST['dataf']= date('Y-m-d',time() - (1 * 24 * 60 * 60));
 
 }
@@ -48,7 +48,7 @@ if (isset($_SESSION['ID'])==false){
 
 <body class="adminbody">
     <div id="main">
-       
+
         <!-- top bar navigation -->
         <div class="headerbar">
             <!-- LOGO -->
@@ -198,8 +198,8 @@ if (isset($_SESSION['ID'])==false){
                 <div id="sidebar-menu">
                     <ul>
                         <li class="submenu1">
-                            <a href="../principal.php"><i class="fa fa-fw fa-tachometer"></i><span> Dashboard Principal </span> </a>
-                            <a href="../ndex.php"><i class="fa fa-fw fa-bar-chart"></i><span> Preço Médio por Posto </span> </a>
+                            <a href="sgac/principal.php"><i class="fa fa-fw fa-tachometer"></i><span> Dashboard Principal </span> </a>
+                            <a href="../index.php"><i class="fa fa-fw fa-bar-chart"></i><span> Preço Médio por Posto </span> </a>
                             <a class="active" href="index.php"><i class="fa fa-fw fa-line-chart"></i><span> Evolução de Preço </span> </a>
                             <a href="importa/index.php"><i class="fa fa-fw fa-cloud-upload"></i><span>Upload de arquivos (Excel) </span> </a>
                         </li>
@@ -387,10 +387,10 @@ function buscaValorCombustivelUnidade($unidade,$dataInicial,$dataFinal,$tipoComb
                     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
                         <div class="card mb-3">
                             <div class="card-header">
-                                <i class="fa fa-table"></i> EVOLUÇÃO DIARIA PREÇO MÉDIO COMBUSTÍVEL
+                                <i class="fa fa-table"></i> EVOLUÇÃO MENSAL PREÇO MÉDIO COMBUSTÍVEL (30/60/90 DIAS)
                             </div>
                             <div class="card-body">
-                                <canvas id="barChart"></canvas>
+                                <canvas id="barChart2"></canvas>
 
                                 <?php  
                 $dataInicial1 = $_POST['datai'];
@@ -454,10 +454,45 @@ function buscaValorCombustivelUnidade($unidade,$dataInicial,$dataFinal,$tipoComb
                     <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-12">
                         <div class="card mb-3">
                             <div class="card-header">
-                                <i class="fa fa-table"></i> EVOLUÇÃO MENSAL PREÇO MÉDIO COMBUSTÍVEL (30/60/90 DIAS)
+                                <i class="fa fa-table"></i> EVOLUÇÃO DIARIA PREÇO MÉDIO COMBUSTÍVEL
                             </div>
 
                             <div class="card-body">
+
+                                <?php 
+                                
+                  function buscaMovimentoTrimestre(){
+                    $dataIni0= date('Y-m-d',time() - (0 * 24 * 60 * 60));              
+                    $dataFin30= date('Y-m-d',time() - (30 * 24 * 60 * 60));
+                    $dataFin60= date('Y-m-d',time() - (60 * 24 * 60 * 60));
+                   $dataFin90= date('Y-m-d',time() - (90 * 24 * 60 * 60));
+                   
+                     
+                  $gasolinaUnai                  = buscaValorCombustivelUnidade('UNAI',$data,$data,'GASOLINA');
+                  $etanolUnai                    = buscaValorCombustivelUnidade('UNAI',$data,$data,'ETANOL');
+                  $dieselUnai                    = buscaValorCombustivelUnidade('UNAI',$data,$data,'DIESEL');
+
+                  $gasolinaParacatu              = buscaValorCombustivelUnidade('PARACATU',$data,$data,'GASOLINA');
+                  $etanolParacatu                = buscaValorCombustivelUnidade('PARACATU',$data,$data,'ETANOL');
+                  $dieselParacatu                = buscaValorCombustivelUnidade('PARACATU',$data,$data,'DIESEL');
+
+                  $gasolinaPirapora              = buscaValorCombustivelUnidade('PIRAPORA',$data,$data,'GASOLINA');
+                  $etanolPirapora                = buscaValorCombustivelUnidade('PIRAPORA',$data,$data,'ETANOL');
+                  $dieselPirapora                = buscaValorCombustivelUnidade('PIRAPORA',$data,$data,'DIESEL');
+                    
+                  $arrayVlrDiesel[]= number_format(($dieselUnai['VALOR'] + $dieselParacatu['VALOR']+$dieselPirapora['VALOR'])/3,2)  ;
+                  $arrayVlrGasolina[] = number_format(($gasolinaUnai['VALOR'] + $gasolinaParacatu['VALOR'] +$gasolinaPirapora['VALOR'])/3,2);
+                  $arrayVlrEtanol[] = number_format(($etanolUnai['VALOR']+ $etanolParacatu['VALOR'] + $etanolPirapora['VALOR'])/3,2)  ;
+                    
+                  $arrayData[] = "'$data_movimento'";  
+                                    
+                                    }
+                                
+                                
+                                
+                                
+                                ?>
+                                <canvas id="barChart"></canvas>
 
                             </div>
                             <div class="card-footer small text-muted"></div>
@@ -525,6 +560,71 @@ function buscaValorCombustivelUnidade($unidade,$dataInicial,$dataFinal,$tipoComb
                     borderWidth: 10,
                     data: {
                         labels: [<?php echo implode(',', $arrayData);?>],
+                        datasets: [{
+                            label: 'DIESEL',
+                            data: [<?php echo implode(',',$arrayVlrDiesel);?>],
+                            responsive: true,
+                            fill: false,
+                            backgroundColor: ['rgba(96,167,0,0.9)'],
+                            borderColor: 'rgba(96,167,0,0.9)',
+
+                        }, {
+                            label: 'GASOLINA',
+                            data: [<?php echo implode(',',$arrayVlrGasolina)?>],
+                            responsive: true,
+                            fill: false,
+                            backgroundColor: 'rgba(255,167,0,0.9)',
+                            borderColor: ['rgba(255,167,0,0.9)'],
+
+                        }, {
+                            label: 'ETANOL',
+                            data: [<?php echo implode (',',$arrayVlrEtanol) ?>],
+                            responsive: true,
+                            fill: false,
+                            backgroundColor: 'rgba(78,149,212,0.9)',
+                            borderColor: 'rgba(78,149,212,0.9)',
+
+                        }]
+                    },
+                    options: {
+                        title: {
+                            display: true,
+                            text: 'REFERENCIA <?php echo $dataInicial1?> A <?php echo $dataFinal1?>'
+                        },
+
+                        tooltips: {
+                            enabled: true
+                        },
+                        animation: {
+                            duration: 3000,
+                            onComplete: function() {
+                                var chartInstance = this.chart,
+                                    ctx = chartInstance.ctx;
+                                ctx.textAlign = 'center';
+                                ctx.fillStyle = 'rgba(25,0,0,0.9)';
+
+
+                                this.data.datasets.forEach(function(dataset, i) {
+                                    var meta = chartInstance.controller.getDatasetMeta(i);
+                                    meta.data.forEach(function(bar, index) {
+                                        var data = dataset.data[index];
+
+                                        ctx.fillText(data, bar._model.x, bar._model.y - 10);
+                                    });
+                                });
+                            },
+
+                            tooltips: true,
+                        },
+                    }
+                });
+
+                var ctx1 = document.getElementById("barChart2").getContext('2d');
+                var barChart = new Chart(ctx1, {
+                    type: 'line',
+                    borderWidth: 10,
+                    data: {
+                        labels: ["Janeiro","Fevereiro","Abril"],
                         datasets: [{
                             label: 'DIESEL',
                             data: [<?php echo implode(',',$arrayVlrDiesel);?>],

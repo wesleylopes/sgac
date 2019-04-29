@@ -16,14 +16,13 @@ function virgulatoPonto($value){
 }
 
 function formataNumero($valor){
-    if ($valor >= 1000){
-    $resultado = number_format($valor,0,",",".");
+    if ($valor > 1000){
+    $resultado = round($valor);
 } else {
-        $resultado = round("0".$valor);
+        $resultado = round($valor);
         
   }
 return $resultado;
-
 }
 
 

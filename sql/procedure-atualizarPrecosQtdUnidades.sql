@@ -4,8 +4,7 @@ CREATE PROCEDURE buscaPrecoQtdUnidade(
    IN p_unidade  VARCHAR(70) COLLATE utf8_unicode_ci,
    IN p_tipoCombustivel VARCHAR(70)COLLATE utf8_unicode_ci,
    IN p_dataInicial VARCHAR(70)COLLATE utf8_unicode_ci,
-   IN p_dataFinal VARCHAR(70)COLLATE utf8_unicode_ci )
-   
+   IN p_dataFinal VARCHAR(70)COLLATE utf8_unicode_ci)
 BEGIN
   DECLARE somaQuantidade FLOAT DEFAULT 0;
   DECLARE peso FLOAT DEFAULT 0;  /* ( quantidade /  somaQuantidade)*/ 
@@ -19,8 +18,7 @@ BEGIN
   DECLARE v_data_movimento DATETIME;
   DECLARE v_cidade VARCHAR(70) DEFAULT '';
   DECLARE v_produto VARCHAR(70) DEFAULT '';
-  DECLARE p_comb VARCHAR(70) DEFAULT '';
-  
+  DECLARE p_comb VARCHAR(70) DEFAULT ''; 
   DECLARE cursorMovimentoVeiculos CURSOR FOR SELECT DISTINCT(CENTRO_RESULTADO),
 								    VALOR_UNITARIO,
                                     QUANTIDADE,
@@ -28,18 +26,17 @@ BEGIN
                                     CIDADE,PRODUTO 
 							      FROM movimento_veiculos a 
 	                              WHERE a.PRODUTO like CONCAT('%', p_tipoCombustivel, '%')
-							        AND a.CENTRO_RESULTADO = p_unidade
+                                  AND a.CENTRO_RESULTADO in( p_unidade)
 						            AND  DATE(a.DATA_MOVIMENTO) between p_dataInicial and p_dataFinal;  
                                
     -- Definição da variável de controle de looping do cursor                             
   DECLARE CONTINUE HANDLER FOR NOT FOUND SET existe_mais_linhas=1;
   
      -- Puxando Soma Quantidade para calcular peso 
-  SET p_comb ='';  
   SET somaQuantidade = (SELECT SUM(QUANTIDADE) 
 					    FROM movimento_veiculos b 
 	                    WHERE b.PRODUTO like CONCAT('%', p_tipoCombustivel, '%')
-						AND b.CENTRO_RESULTADO =p_unidade 
+						AND b.CENTRO_RESULTADO in(p_unidade)
 						AND DATE(b.DATA_MOVIMENTO) between p_dataInicial and p_dataFinal);  
 
 -- Abertura do cursor
@@ -68,10 +65,16 @@ BEGIN
   
   SET qtdCombustivel = IF (ROUND(somaQuantidade)>1000,REPLACE(FORMAT(ROUND(somaQuantidade),0), ',', '.'), CONCAT("0.", round(somaQuantidade)));
   -- Setando a variável com o resultado final
+  /*IF p_tipoconsulta=0 THEN
+  SET p_comb = 'PASSOU AQUI'; else
+   SET p_comb= 'NAO PASSOU AQUI';
+  END IF;*/
   
-  SELECT v_centroResultado as CENTRO_RESULTADO ,
+  SELECT UPPER(v_centroResultado) as CENTRO_RESULTADO ,
     ROUND(somaValorCombustivel,2) as VALOR_COMBUSTIVEL, 
-	qtdCombustivel as QUANTIDADE_LITROS, v_produto AS TIPO_COMBUSTIVEL, p_tipoCombustivel AS TIPO_COMBUSTIVEL_BUSCA; 
+	qtdCombustivel as QUANTIDADE_LITROS,
+    v_produto AS TIPO_COMBUSTIVEL,
+    UPPER( p_tipoCombustivel) AS TIPO_COMBUSTIVEL_BUSCA,v_cidade AS CIDADE;
 END $$
 
 

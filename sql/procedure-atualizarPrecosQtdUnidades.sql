@@ -71,7 +71,7 @@ BEGIN
   END IF;*/
   
   SELECT UPPER(v_centroResultado) as CENTRO_RESULTADO ,
-    ROUND(somaValorCombustivel,2) as VALOR_COMBUSTIVEL, 
+    format(somaValorCombustivel,2) as VALOR_COMBUSTIVEL, 
 	qtdCombustivel as QUANTIDADE_LITROS,
     v_produto AS TIPO_COMBUSTIVEL,
     UPPER( p_tipoCombustivel) AS TIPO_COMBUSTIVEL_BUSCA,v_cidade AS CIDADE;

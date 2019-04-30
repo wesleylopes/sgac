@@ -1,11 +1,9 @@
 var resizefunc = [];
 
-
 $( document ).ready(function() {
     $(function() {  
     $(".nicescroll").niceScroll({cursorcolor:"#858586"});
-	});
-    
+	});    
 });
 
 !function($) {
@@ -13,7 +11,7 @@ $( document ).ready(function() {
 	
     var Sidemenu = function() {
         this.$body = $("body"),
-        this.$openLeftBtn = $(".open-left"),
+        this.$openLeftBtn = $(".open-l"),
         this.$menuItem = $("#sidebar-menu a")
     };
     Sidemenu.prototype.openLeftBar = function() {
@@ -86,16 +84,13 @@ $( document ).ready(function() {
 
 }(window.jQuery),
 
-
 //main app module
  function($) {
     "use strict";
 
     var App = function() {        
         this.pageScrollElement = "html, body",
-        this.$body = $("body")
-       
-        
+        this.$body = $("body")  
     };
 
      //on doc load
@@ -114,9 +109,8 @@ $( document ).ready(function() {
       // right side-bar toggle
       $('.right-bar-toggle').on('click', function(e){
            
-          $('#main').toggleClass('right-bar-enabled');
+         $('#main').toggleClass('right-bar-enabled');
       });
-
 
     },
     //initilizing
@@ -135,7 +129,6 @@ function($) {
     "use strict";
     $.App.init();
 }(window.jQuery);
-
 
 function executeFunctionByName(functionName, context) {
   var args = [].slice.call(arguments).splice(2);
@@ -175,7 +168,6 @@ var changeptype = function(){
   }
   
 }
-
 
 var debounce = function(func, wait, immediate) {
   var timeout, result;

@@ -1,20 +1,7 @@
 <?php
-session_start();
-require("conexao.php");
 require("funcoes.php");
-header('Content-Type: text/html; charset=utf-8');
-
-if (isset($_POST['datai'] )==false or isset($_POST['dataf'] )==false){
-  $_POST['datai']= date('Y-m-d',time() - (31 * 24 * 60 * 60));
-  $_POST['dataf']= date('Y-m-d',time() - (1 * 24 * 60 * 60));
-
-}
-
-if (isset($_SESSION['ID'])==false){
-   header("location: login.php");
-}else{
-   echo "Àrea Restrita...";     
-    
+if (iniciaSessao()===true){  
+  
 $dti   = $_POST['datai'];  // Captura data Inicial Formulário
 $dtf   = $_POST['dataf'];  // Captura data Final Formulário
 
@@ -53,42 +40,6 @@ $qtdGasolinaConsolidado   = buscaValorQtCombConsolidado($dti,$dtf,'GASOLINA')['Q
 $qtdEtanolConsolidado     = buscaValorQtCombConsolidado($dti,$dtf,'ETANOL')['QUANTIDADE_LITROS'];
 $qtdDieselConsolidado     = buscaValorQtCombConsolidado($dti,$dtf,'DIESEL')['QUANTIDADE_LITROS'];
   
-  
-  
-
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
 }?>
 
 <!DOCTYPE html>
@@ -417,6 +368,33 @@ $qtdDieselConsolidado     = buscaValorQtCombConsolidado($dti,$dtf,'DIESEL')['QUA
 
               <div class="card-body">
                 <canvas id="grafico2"></canvas>
+                   <?php  
+                ini_set('max_execution_time', 0); 
+                 $datai = $_POST['datai'];
+                 $dataf = $_POST['dataf'];
+    
+   
+                
+                
+                $diferenca = strtotime($dtf) - strtotime($dti);
+              
+                $dias = floor($diferenca / (60 * 60 * 24));
+
+                  
+                for ($i=$dias;$i>=0;$i--){
+                  $data= date('Y-m-d',time() - ($i * 24 * 60 * 60));                  
+                     
+                  echo $vlrGasolinaConsolidado   = buscaValorQtCombConsolidado($data,$data,'GASOLINA')['VALOR_COMBUSTIVEL'].' - Gasolina -  '.formataData($data);
+                  echo "<br>";
+                  echo $vlrEtanolConsolidado     = buscaValorQtCombConsolidado($data,$data,'ETANOL')['VALOR_COMBUSTIVEL'].' - Etanol - '.formataData($data);
+                  echo "<br>";
+                  echo $vlrDieselConsolidado     = buscaValorQtCombConsolidado($data,$data,'DIESEL')['VALOR_COMBUSTIVEL'].' - Diesel -  '.formataData($data);
+                  echo "<br>";
+                
+                  
+                     
+                } 
+            ?>
               </div>
               <div class="card-footer small text-muted"></div>
             </div>
@@ -430,7 +408,7 @@ $qtdDieselConsolidado     = buscaValorQtCombConsolidado($dti,$dtf,'DIESEL')['QUA
                 <i class="fa fa-table"></i> QTD/L - QUANTIDADE LITROS POR UNIDADE
               </div>
 
-              <div class="card-body">
+              <div class="card-body">                
                 <canvas id="grafico3"></canvas>
               </div>
               <div class="card-footer small text-muted"></div>
@@ -445,6 +423,8 @@ $qtdDieselConsolidado     = buscaValorQtCombConsolidado($dti,$dtf,'DIESEL')['QUA
 
               <div class="card-body">
                 <canvas id="grafico4"></canvas>
+                
+                
               </div>
 
               <br>
@@ -750,7 +730,7 @@ $qtdDieselConsolidado     = buscaValorQtCombConsolidado($dti,$dtf,'DIESEL')['QUA
                   beginAtZero: true,
                   fontColor: "white",
                   fontSize: 11,
-                  stepSize: 5,
+                  stepSize: 9,
                   gridLines: {
                     lineWidth: 0
                   }
@@ -800,7 +780,7 @@ $qtdDieselConsolidado     = buscaValorQtCombConsolidado($dti,$dtf,'DIESEL')['QUA
                   beginAtZero: true,
                   fontColor: "white",
                   fontSize: 11,
-                  stepSize: 10
+                  stepSize: 0
                 }
               }]
             }

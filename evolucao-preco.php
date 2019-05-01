@@ -1,20 +1,45 @@
 <?php
-session_start();
-require("conexao.php");
 require("funcoes.php");
-header('Content-Type: text/html; charset=utf-8');
-ini_set('max_execution_time', 0);
+if (iniciaSessao()===true){  
+  
+$dti   = $_POST['datai'];  // Captura data Inicial Formulário
+$dtf   = $_POST['dataf'];  // Captura data Final Formulário
 
-if (isset($_POST['datai'] )==false or isset($_POST['dataf'] )==false){
-  $_POST['datai']= date('Y-m-d',time() - (10 * 24 * 60 * 60));
-  $_POST['dataf']= date('Y-m-d',time() - (1 * 24 * 60 * 60));
-
-}
-
-if (isset($_SESSION['ID'])==false){
-   header("location: login.php");
-}else{
-   echo "Àrea Restrita...";     
+//Busca Valores por Unidade  
+  
+$vlrGasolinaUnai        = buscaValorQtComb('UNAI',$dti,$dtf,'GASOLINA')['VALOR_COMBUSTIVEL'];
+$vlrEtanolUnai          = buscaValorQtComb('UNAI',$dti,$dtf,'ETANOL')['VALOR_COMBUSTIVEL'];
+$vlrDieselUnai          = buscaValorQtComb('UNAI',$dti,$dtf,'DIESEL')['VALOR_COMBUSTIVEL'];
+  
+$vlrGasolinaParacatu    = buscaValorQtComb('Paracatu',$dti,$dtf,'GASOLINA')['VALOR_COMBUSTIVEL'];
+$vlrEtanolParacatu      = buscaValorQtComb('Paracatu',$dti,$dtf,'ETANOL')['VALOR_COMBUSTIVEL'];
+$vlrDieselParacatu      = buscaValorQtComb('Paracatu',$dti,$dtf,'DIESEL')['VALOR_COMBUSTIVEL'];
+  
+$vlrGasolinaPirapora    = buscaValorQtComb('Pirapora',$dti,$dtf,'GASOLINA')['VALOR_COMBUSTIVEL'];
+$vlrEtanolPirapora      = buscaValorQtComb('Pirapora',$dti,$dtf,'ETANOL')['VALOR_COMBUSTIVEL'];
+$vlrDieselPirapora      = buscaValorQtComb('Pirapora',$dti,$dtf,'DIESEL')['VALOR_COMBUSTIVEL'];
+  
+$qtdGasolinaUnai        = buscaValorQtComb('UNAI',$dti,$dtf,'GASOLINA')['QUANTIDADE_LITROS'];
+$qtdEtanolUnai          = buscaValorQtComb('UNAI',$dti,$dtf,'ETANOL')['QUANTIDADE_LITROS'];
+$qtdDieselUnai          = buscaValorQtComb('UNAI',$dti,$dtf,'DIESEL')['QUANTIDADE_LITROS'];
+  
+$qtdGasolinaParacatu    = buscaValorQtComb('Paracatu',$dti,$dtf,'GASOLINA')['QUANTIDADE_LITROS'];
+$qtdEtanolParacatu      = buscaValorQtComb('Paracatu',$dti,$dtf,'ETANOL')['QUANTIDADE_LITROS'];
+$qtdDieselParacatu      = buscaValorQtComb('Paracatu',$dti,$dtf,'DIESEL')['QUANTIDADE_LITROS'];
+  
+$qtdGasolinaPirapora    = buscaValorQtComb('Pirapora',$dti,$dtf,'GASOLINA') ['QUANTIDADE_LITROS'];
+$qtdEtanolPirapora      = buscaValorQtComb('Pirapora',$dti,$dtf,'ETANOL')['QUANTIDADE_LITROS'];
+$qtdDieselPirapora      = buscaValorQtComb('Pirapora',$dti,$dtf,'DIESEL')['QUANTIDADE_LITROS']; 
+  
+// Busca Valores e Quantidades Consolidadas 
+$vlrGasolinaConsolidado   = buscaValorQtCombConsolidado($dti,$dtf,'GASOLINA')['VALOR_COMBUSTIVEL'];
+$vlrEtanolConsolidado     = buscaValorQtCombConsolidado($dti,$dtf,'ETANOL')['VALOR_COMBUSTIVEL'];
+$vlrDieselConsolidado     = buscaValorQtCombConsolidado($dti,$dtf,'DIESEL')['VALOR_COMBUSTIVEL'];
+  
+$qtdGasolinaConsolidado   = buscaValorQtCombConsolidado($dti,$dtf,'GASOLINA')['QUANTIDADE_LITROS'];
+$qtdEtanolConsolidado     = buscaValorQtCombConsolidado($dti,$dtf,'ETANOL')['QUANTIDADE_LITROS'];
+$qtdDieselConsolidado     = buscaValorQtCombConsolidado($dti,$dtf,'DIESEL')['QUANTIDADE_LITROS'];
+  
 }?>
 
 <!DOCTYPE html>
@@ -234,153 +259,11 @@ if (isset($_SESSION['ID'])==false){
                     </div>
                 </div>
             </div>
-        </div>
-        <?php
-        
-function buscaDataHora(){ 
-  date_default_timezone_set('America/Sao_Paulo');     
-  return date('d/m/Y H:i:s');
-}  
-        
-function buscaData($dataPeriodo,$qtddias){ 
-   $data= date('d/m/Y',time() - ($qtddias * 24 * 60 * 60));
-  return $data;
-} 
-        
-function verificaAtualizacaoPeriodoDadosSistema(){
-  require("conexao.php");           
-
-  $sql="SELECT 
-            date_format( min(DATA_MOVIMENTO), '%d/%m/%Y ') as MOVIMENTO_INICIAL,
-            date_format(max(DATA_MOVIMENTO), '%d/%m/%Y %h:%s') as MOVIMENTO_FINAL,
-            date_format(max(DATA_IMPORTACAO),'%d/%m/%Y %h:%s') as ULTIMA_IMPORTACAO 
-         FROM movimento_veiculos";
-       /*
-         echo $sql;
-            echo "<br>";
-            echo "<br>";
-            echo "<br>";
-            */
-         $sql = $db->query($sql);            
-         $registros = $sql->fetchAll();       
-            
-    foreach ($registros as $registro){
-       return array('MOVIMENTO_INICIAL' => $registro['MOVIMENTO_INICIAL'], 'MOVIMENTO_FINAL' => $registro['MOVIMENTO_FINAL'],'ULTIMA_IMPORTACAO' => $registro['ULTIMA_IMPORTACAO']); 
-     }             
-   }   
-            
-function buscaValorCombustivelUnidade($unidade,$dataInicial,$dataFinal,$tipoCombustivel){
-  require("conexao.php");
-        
-     $sql="SELECT  
-           DISTINCT(CENTRO_RESULTADO),
-           VALOR_UNITARIO,
-           QUANTIDADE,
-           DATA_MOVIMENTO,
-           (SELECT 
-              SUM(QUANTIDADE) 
-            FROM movimento_veiculos b 
-            where b.PRODUTO like '%$tipoCombustivel%' 
-              and B.CENTRO_RESULTADO= A.CENTRO_RESULTADO           
-              and DATE(b.DATA_MOVIMENTO)>= '$dataInicial'
-              and DATE(b.DATA_MOVIMENTO)<= '$dataFinal'and TIPO_FROTA NOT IN('EQUIPAMENTOS') 
-           ) as SOMAQTDCOMBUSTIVEL 
-         FROM  movimento_veiculos a 
-         WHERE a.PRODUTO like '%$tipoCombustivel%'
-         AND   a.CENTRO_RESULTADO in ('$unidade')
-         AND   DATE(a.DATA_MOVIMENTO) >= '$dataInicial'
-         AND   DATE(a.DATA_MOVIMENTO) <= '$dataFinal' and TIPO_FROTA NOT IN('EQUIPAMENTOS')";
-        
-             /*echo $sql;
-            echo "<br>";
-            echo "<br>";
-            echo "<br>";*/
-    
-   $sql = $db->query($sql); 
-   $dados = $sql->fetchAll();
-   $row = $sql->rowCount();
-      
-   if ($sql->rowCount()>0)
-     {
-       $sql->rowCount();       
-     }            
-        $array=array();
-        $arrayWlancamentos=array();        
-       
-        $somaPeso=0;  
-        
-        foreach ($dados as $dado){
-            
-        $peso =  ($dado['QUANTIDADE'] / $dado['SOMAQTDCOMBUSTIVEL']);     
-        $somaPeso = $somaPeso + $peso;
-        $valorCombustivelReal = ( $dado['VALOR_UNITARIO'] * $peso ) ;             
-           
-        $array = array('VALOR_COMBUSTIVEL' => $valorCombustivelReal,
-                       'CENTRO_RESULTADO' => $dado['CENTRO_RESULTADO'],'DATA_MOVIMENTO' => $dado['DATA_MOVIMENTO']);
-    
-        $arrayWlancamentos[] = $array; 
-            
-        }  
-           
-        $sum1 = array_sum(array_column($arrayWlancamentos,'VALOR_COMBUSTIVEL'));
-        $title =$sum1 ; 
-    
-        if (isset ($arrayWlancamentos[0])){
-          $unidadePolo = $arrayWlancamentos[0]['CENTRO_RESULTADO'];
-          $dataMovimento =$arrayWlancamentos[0]['DATA_MOVIMENTO'];
-        }else{
-          $unidadePolo='';
-          $dataMovimento='';
-        }
-    
-        $valorCombustivel = number_format($sum1, 2);
-        
-      
-        return array('UNIDADE' => $unidadePolo, 'VALOR' => $valorCombustivel, 'DATA_MOVIMENTO' => $dataMovimento); 
-        
-        } 
-        
-        function buscaQuantidadeCombustivelUnidade($unidade,$dataInicial,$dataFinal,$tipoCombustivel){
-        
-        require("conexao.php");           
-        
-        $sql="SELECT CENTRO_RESULTADO,
-                  SUM(QUANTIDADE) as SOMAQUANTIDADE
-                FROM sgac.movimento_veiculos 
-                WHERE PRODUTO like'%$tipoCombustivel%' 
-                  AND   DATE(DATA_MOVIMENTO) >= '$dataInicial'
-                  AND   DATE(DATA_MOVIMENTO) <= '$dataFinal'                
-                  AND CENTRO_RESULTADO in ('$unidade') 
-                GROUP BY CENTRO_RESULTADO";         
-       
-         /*echo $sql;
-            echo "<br>";
-            echo "<br>";
-            echo "<br>";*/
-            
-         $sql = $db->query($sql);            
-         $dados = $sql->fetchAll();       
-            
-          foreach ($dados as $quantidade){
-            return array('UNIDADE' => $quantidade['CENTRO_RESULTADO'], 'QUANTIDADE' => $quantidade['SOMAQUANTIDADE']); 
-          }             
-        }
-                                   
-        ?>
+        </div>   
 
         <div class="container">
             <div class="container">
-                <div class="card-footer small text-muted">Ultima Sincronização de Tela:
-                    <?php echo buscaDataHora();                    
-                    $arrayMensagem = verificaAtualizacaoPeriodoDadosSistema();
-                    ?>
-                    <br>
-                    <span class="text-red"> A base de Dados Possui Registros de
-                        <?php echo $arrayMensagem['MOVIMENTO_INICIAL']?> á <?php echo $arrayMensagem['MOVIMENTO_FINAL']?> </span>
-                    <br>
-                    <span> Ultima importação: <?php echo $arrayMensagem['ULTIMA_IMPORTACAO']?> </span>
-
-                </div>
+                
                 <br>
 
                 <div class="row">
@@ -390,60 +273,9 @@ function buscaValorCombustivelUnidade($unidade,$dataInicial,$dataFinal,$tipoComb
                                 <i class="fa fa-table"></i> EVOLUÇÃO MENSAL PREÇO MÉDIO COMBUSTÍVEL (30/60/90 DIAS)
                             </div>
                             <div class="card-body">
-                                <canvas id="barChart2"></canvas>
+                                 
 
-                                <?php  
-                $dataInicial1 = $_POST['datai'];
-                $dataFinal1   = $_POST['dataf']; 
-                        
-                $diferenca = strtotime($dataFinal1) - strtotime($dataInicial1);
-                $dias = floor($diferenca / (60 * 60 * 24));
-
-                //Busca Quantidade Por Unidade 
-
-                $quantidadeGasolinaParacatu    = buscaQuantidadeCombustivelUnidade('PARACATU',$dataInicial1,$dataFinal1,'GASOLINA');
-                $quantidadeEtanolParacatu      = buscaQuantidadeCombustivelUnidade('PARACATU',$dataInicial1,$dataFinal1,'ETANOL');
-                $quantidadeDieselParacatu      = buscaQuantidadeCombustivelUnidade('PARACATU',$dataInicial1,$dataFinal1,'DIESEL');
-
-                $quantidadeGasolinaPirapora    = buscaQuantidadeCombustivelUnidade('PIRAPORA',$dataInicial1,$dataFinal1,'GASOLINA');
-                $quantidadeEtanolPirapora      = buscaQuantidadeCombustivelUnidade('PIRAPORA',$dataInicial1,$dataFinal1,'ETANOL');
-                $quantidadeDieselPirapora      = buscaQuantidadeCombustivelUnidade('PIRAPORA',$dataInicial1,$dataFinal1,'DIESEL');
-
-                $quantidadeGasolinaUnai        = buscaQuantidadeCombustivelUnidade('UNAI',$dataInicial1,$dataFinal1,'GASOLINA');
-                $quantidadeEtanolUnai          = buscaQuantidadeCombustivelUnidade('UNAI',$dataInicial1,$dataFinal1,'ETANOL'); 
-                $quantidadeDieselUnai          = buscaQuantidadeCombustivelUnidade('UNAI',$dataInicial1,$dataFinal1,'DIESEL');
-                        
-                $quantidadeConsolidadaEtanol   = ($quantidadeEtanolUnai['QUANTIDADE']+ $quantidadeEtanolParacatu['QUANTIDADE'] + $quantidadeEtanolPirapora['QUANTIDADE'])/3  ;
-
-                $quantidadeConsolidadaGasolina = ($quantidadeGasolinaUnai['QUANTIDADE'] + $quantidadeGasolinaParacatu['QUANTIDADE'] + $quantidadeGasolinaPirapora['QUANTIDADE'])/3;
-
-                $quantidadeConsolidadaDiesel   = ($quantidadeDieselUnai['QUANTIDADE'] + $quantidadeDieselPirapora['QUANTIDADE'] + $quantidadeDieselParacatu['QUANTIDADE']); 
-                        
-                        
-                for ($i=$dias;$i>=0;$i--){
-                  $data= date('Y-m-d',time() - ($i * 24 * 60 * 60));
-                  $data_movimento= buscaData('',$i);
-                     
-                  $gasolinaUnai                  = buscaValorCombustivelUnidade('UNAI',$data,$data,'GASOLINA');
-                  $etanolUnai                    = buscaValorCombustivelUnidade('UNAI',$data,$data,'ETANOL');
-                  $dieselUnai                    = buscaValorCombustivelUnidade('UNAI',$data,$data,'DIESEL');
-
-                  $gasolinaParacatu              = buscaValorCombustivelUnidade('PARACATU',$data,$data,'GASOLINA');
-                  $etanolParacatu                = buscaValorCombustivelUnidade('PARACATU',$data,$data,'ETANOL');
-                  $dieselParacatu                = buscaValorCombustivelUnidade('PARACATU',$data,$data,'DIESEL');
-
-                  $gasolinaPirapora              = buscaValorCombustivelUnidade('PIRAPORA',$data,$data,'GASOLINA');
-                  $etanolPirapora                = buscaValorCombustivelUnidade('PIRAPORA',$data,$data,'ETANOL');
-                  $dieselPirapora                = buscaValorCombustivelUnidade('PIRAPORA',$data,$data,'DIESEL');
-                    
-                  $arrayVlrDiesel[]= number_format(($dieselUnai['VALOR'] + $dieselParacatu['VALOR']+$dieselPirapora['VALOR'])/3,2)  ;
-                  $arrayVlrGasolina[] = number_format(($gasolinaUnai['VALOR'] + $gasolinaParacatu['VALOR'] +$gasolinaPirapora['VALOR'])/3,2);
-                  $arrayVlrEtanol[] = number_format(($etanolUnai['VALOR']+ $etanolParacatu['VALOR'] + $etanolPirapora['VALOR'])/3,2)  ;
-                    
-                  $arrayData[] = "'$data_movimento'";                
-                     
-                } 
-            ?>
+                           
 
                             </div>
                             <div class="card-footer small text-muted"></div>
@@ -458,40 +290,6 @@ function buscaValorCombustivelUnidade($unidade,$dataInicial,$dataFinal,$tipoComb
                             </div>
 
                             <div class="card-body">
-
-                                <?php 
-                                
-                  function buscaMovimentoTrimestre(){
-                    $dataIni0= date('Y-m-d',time() - (0 * 24 * 60 * 60));              
-                    $dataFin30= date('Y-m-d',time() - (30 * 24 * 60 * 60));
-                    $dataFin60= date('Y-m-d',time() - (60 * 24 * 60 * 60));
-                   $dataFin90= date('Y-m-d',time() - (90 * 24 * 60 * 60));
-                   
-                     
-                  $gasolinaUnai                  = buscaValorCombustivelUnidade('UNAI',$data,$data,'GASOLINA');
-                  $etanolUnai                    = buscaValorCombustivelUnidade('UNAI',$data,$data,'ETANOL');
-                  $dieselUnai                    = buscaValorCombustivelUnidade('UNAI',$data,$data,'DIESEL');
-
-                  $gasolinaParacatu              = buscaValorCombustivelUnidade('PARACATU',$data,$data,'GASOLINA');
-                  $etanolParacatu                = buscaValorCombustivelUnidade('PARACATU',$data,$data,'ETANOL');
-                  $dieselParacatu                = buscaValorCombustivelUnidade('PARACATU',$data,$data,'DIESEL');
-
-                  $gasolinaPirapora              = buscaValorCombustivelUnidade('PIRAPORA',$data,$data,'GASOLINA');
-                  $etanolPirapora                = buscaValorCombustivelUnidade('PIRAPORA',$data,$data,'ETANOL');
-                  $dieselPirapora                = buscaValorCombustivelUnidade('PIRAPORA',$data,$data,'DIESEL');
-                    
-                  $arrayVlrDiesel[]= number_format(($dieselUnai['VALOR'] + $dieselParacatu['VALOR']+$dieselPirapora['VALOR'])/3,2)  ;
-                  $arrayVlrGasolina[] = number_format(($gasolinaUnai['VALOR'] + $gasolinaParacatu['VALOR'] +$gasolinaPirapora['VALOR'])/3,2);
-                  $arrayVlrEtanol[] = number_format(($etanolUnai['VALOR']+ $etanolParacatu['VALOR'] + $etanolPirapora['VALOR'])/3,2)  ;
-                    
-                  $arrayData[] = "'$data_movimento'";  
-                                    
-                                    }
-                                
-                                
-                                
-                                
-                                ?>
                                 <canvas id="barChart"></canvas>
 
                             </div>
@@ -553,138 +351,7 @@ function buscaValorCombustivelUnidade($unidade,$dataInicial,$dataFinal,$tipoComb
 
             </script>
 
-            <script>
-                var ctx1 = document.getElementById("barChart").getContext('2d');
-                var barChart = new Chart(ctx1, {
-                    type: 'line',
-                    borderWidth: 10,
-                    data: {
-                        labels: [<?php echo implode(',', $arrayData);?>],
-                        datasets: [{
-                            label: 'DIESEL',
-                            data: [<?php echo implode(',',$arrayVlrDiesel);?>],
-                            responsive: true,
-                            fill: false,
-                            backgroundColor: ['rgba(96,167,0,0.9)'],
-                            borderColor: 'rgba(96,167,0,0.9)',
-
-                        }, {
-                            label: 'GASOLINA',
-                            data: [<?php echo implode(',',$arrayVlrGasolina)?>],
-                            responsive: true,
-                            fill: false,
-                            backgroundColor: 'rgba(255,167,0,0.9)',
-                            borderColor: ['rgba(255,167,0,0.9)'],
-
-                        }, {
-                            label: 'ETANOL',
-                            data: [<?php echo implode (',',$arrayVlrEtanol) ?>],
-                            responsive: true,
-                            fill: false,
-                            backgroundColor: 'rgba(78,149,212,0.9)',
-                            borderColor: 'rgba(78,149,212,0.9)',
-
-                        }]
-                    },
-                    options: {
-                        title: {
-                            display: true,
-                            text: 'REFERENCIA <?php echo $dataInicial1?> A <?php echo $dataFinal1?>'
-                        },
-
-                        tooltips: {
-                            enabled: true
-                        },
-                        animation: {
-                            duration: 3000,
-                            onComplete: function() {
-                                var chartInstance = this.chart,
-                                    ctx = chartInstance.ctx;
-                                ctx.textAlign = 'center';
-                                ctx.fillStyle = 'rgba(25,0,0,0.9)';
-
-
-                                this.data.datasets.forEach(function(dataset, i) {
-                                    var meta = chartInstance.controller.getDatasetMeta(i);
-                                    meta.data.forEach(function(bar, index) {
-                                        var data = dataset.data[index];
-
-                                        ctx.fillText(data, bar._model.x, bar._model.y - 10);
-                                    });
-                                });
-                            },
-
-                            tooltips: true,
-                        },
-                    }
-                });
-
-                var ctx1 = document.getElementById("barChart2").getContext('2d');
-                var barChart = new Chart(ctx1, {
-                    type: 'line',
-                    borderWidth: 10,
-                    data: {
-                        labels: ["Janeiro","Fevereiro","Abril"],
-                        datasets: [{
-                            label: 'DIESEL',
-                            data: [<?php echo implode(',',$arrayVlrDiesel);?>],
-                            responsive: true,
-                            fill: false,
-                            backgroundColor: ['rgba(96,167,0,0.9)'],
-                            borderColor: 'rgba(96,167,0,0.9)',
-
-                        }, {
-                            label: 'GASOLINA',
-                            data: [<?php echo implode(',',$arrayVlrGasolina)?>],
-                            responsive: true,
-                            fill: false,
-                            backgroundColor: 'rgba(255,167,0,0.9)',
-                            borderColor: ['rgba(255,167,0,0.9)'],
-
-                        }, {
-                            label: 'ETANOL',
-                            data: [<?php echo implode (',',$arrayVlrEtanol) ?>],
-                            responsive: true,
-                            fill: false,
-                            backgroundColor: 'rgba(78,149,212,0.9)',
-                            borderColor: 'rgba(78,149,212,0.9)',
-
-                        }]
-                    },
-                    options: {
-                        title: {
-                            display: true,
-                            text: 'REFERENCIA <?php echo $dataInicial1?> A <?php echo $dataFinal1?>'
-                        },
-
-                        tooltips: {
-                            enabled: true
-                        },
-                        animation: {
-                            duration: 3000,
-                            onComplete: function() {
-                                var chartInstance = this.chart,
-                                    ctx = chartInstance.ctx;
-                                ctx.textAlign = 'center';
-                                ctx.fillStyle = 'rgba(25,0,0,0.9)';
-
-
-                                this.data.datasets.forEach(function(dataset, i) {
-                                    var meta = chartInstance.controller.getDatasetMeta(i);
-                                    meta.data.forEach(function(bar, index) {
-                                        var data = dataset.data[index];
-
-                                        ctx.fillText(data, bar._model.x, bar._model.y - 10);
-                                    });
-                                });
-                            },
-
-                            tooltips: true,
-                        },
-                    }
-                });
-
-            </script>
+            
             <!-- END Java Script for this page -->
 
 </body>

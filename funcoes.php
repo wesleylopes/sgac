@@ -4,7 +4,34 @@ function converteDateTimeMysql($dateTime){
 }
 
 function formataData($dateTime){
-  return date("d-m-Y", strtotime( $dateTime));
+  return date("d/m/Y", strtotime( $dateTime));
+}
+function iniciaSessao(){
+  session_start();
+require("conexao.php");
+header('Content-Type: text/html; charset=utf-8');
+ini_set('display_errors', 1);
+ini_set('display_startup_erros', 1);
+ini_set('max_execution_time', 0); 
+//unset($_POST['datai']);
+//unset($_POST['dataif']);
+
+
+if (isset($_POST['datai'] )==false or isset($_POST['dataf'] )==false){
+    $datai = 30;
+    $dataf = 0;
+    $_POST['datai']= date('Y-m-d',time() - ($datai * 24 * 60 * 60));
+    $_POST['dataf']= date('Y-m-d',time() - ($dataf * 24 * 60 * 60));
+
+}
+if (isset($_SESSION['ID'])==false){
+   header("location: login.php");
+  return false;
+}else{
+  echo "Carregando Àrea Restrita..."; 
+  return true;
+    
+  }
 }
 
 function ehVazio($valor){

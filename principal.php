@@ -1,6 +1,7 @@
 <?php
 require("funcoes.php");
-if (iniciaSessao()===true){  
+if (iniciaSessao()===true){
+ini_set('max_execution_time', 0); 
   
 $dti   = $_POST['datai'];  // Captura data Inicial Formulário
 $dtf   = $_POST['dataf'];  // Captura data Final Formulário
@@ -372,24 +373,28 @@ $qtdDieselConsolidado     = buscaValorQtCombConsolidado($dti,$dtf,'DIESEL')['QUA
                 ini_set('max_execution_time', 0); 
                  $datai = $_POST['datai'];
                  $dataf = $_POST['dataf'];
-    
+                
    
                 
                 
-                $diferenca = strtotime($dtf) - strtotime($dti);
+              //  $diferenca = strtotime($dtf) - strtotime($dti);
               
-                $dias = floor($diferenca / (60 * 60 * 24));
-
-                  
+                //$dias = floor($diferenca / (60 * 60 * 24));
+                 //echo $dias."<br>";
+                $dias=90;  
                 for ($i=$dias;$i>=0;$i--){
-                  $data= date('Y-m-d',time() - ($i * 24 * 60 * 60));                  
-                     
+                  $data = date('Y-m-d',strtotime("-$i day"));
+                 
+                  
+                  echo formataData($data);
+                  echo "<br>";
+                 /*    
                   echo $vlrGasolinaConsolidado   = buscaValorQtCombConsolidado($data,$data,'GASOLINA')['VALOR_COMBUSTIVEL'].' - Gasolina -  '.formataData($data);
                   echo "<br>";
                   echo $vlrEtanolConsolidado     = buscaValorQtCombConsolidado($data,$data,'ETANOL')['VALOR_COMBUSTIVEL'].' - Etanol - '.formataData($data);
                   echo "<br>";
                   echo $vlrDieselConsolidado     = buscaValorQtCombConsolidado($data,$data,'DIESEL')['VALOR_COMBUSTIVEL'].' - Diesel -  '.formataData($data);
-                  echo "<br>";
+                  echo "<br>";*/
                 
                   
                      

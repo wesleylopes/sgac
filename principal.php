@@ -412,38 +412,9 @@ $qtdDieselConsolidado     = buscaValorQtCombConsolidado($dti,$dtf,'DIESEL')['QUA
               <div class="card-header">
                 <i class="fa fa-table"></i> QTD/L - QUANTIDADE LITROS TOTAL
               </div>
-
-              <div class="card-body">
-                 <?php  
-                ini_set('max_execution_time', 0); 
-                 $datai = $_POST['datai'];
-                 $dataf = $_POST['dataf'];
+              
+              <div class="card-body"> 
                 
-   
-                
-               $date = '2019-03-11';
-	           // End date
-	           $end_date = '2019-04-10';
-
-	           while (strtotime($date) <= strtotime($end_date)) {
-                echo $vlrGasolinaConsolidado1   = buscaValorQtCombConsolidado($date,$date,'GASOLINA')['VALOR_COMBUSTIVEL'].' - Gasolina -  '.formataData($date);
-                  echo "<br>";
-                  echo $vlrEtanolConsolidado1     = buscaValorQtCombConsolidado($date,$date,'ETANOL')['VALOR_COMBUSTIVEL'].' - Etanol - '.formataData($date);
-                  echo "<br>";
-                  echo $vlrDieselConsolidado1     = buscaValorQtCombConsolidado($date,$date,'DIESEL')['VALOR_COMBUSTIVEL'].' - Diesel -  '.formataData($date);
-                  echo "<br>";
-                 
-                $date = date ("Y-m-d", strtotime("+1 day", strtotime($date)));
-                 
-                 
-                 
-                 
-                 
-      echo "<br>";
-	}
-            ?>
-
-
               </div>
 
               <br>

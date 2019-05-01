@@ -369,37 +369,7 @@ $qtdDieselConsolidado     = buscaValorQtCombConsolidado($dti,$dtf,'DIESEL')['QUA
 
               <div class="card-body">
                 <canvas id="grafico2"></canvas>
-                   <?php  
-                ini_set('max_execution_time', 0); 
-                 $datai = $_POST['datai'];
-                 $dataf = $_POST['dataf'];
-                
-   
-                
-                
-              //  $diferenca = strtotime($dtf) - strtotime($dti);
               
-                //$dias = floor($diferenca / (60 * 60 * 24));
-                 //echo $dias."<br>";
-                $dias=90;  
-                for ($i=$dias;$i>=0;$i--){
-                  $data = date('Y-m-d',strtotime("-$i day"));
-                 
-                  
-                  echo formataData($data);
-                  echo "<br>";
-                 /*    
-                  echo $vlrGasolinaConsolidado   = buscaValorQtCombConsolidado($data,$data,'GASOLINA')['VALOR_COMBUSTIVEL'].' - Gasolina -  '.formataData($data);
-                  echo "<br>";
-                  echo $vlrEtanolConsolidado     = buscaValorQtCombConsolidado($data,$data,'ETANOL')['VALOR_COMBUSTIVEL'].' - Etanol - '.formataData($data);
-                  echo "<br>";
-                  echo $vlrDieselConsolidado     = buscaValorQtCombConsolidado($data,$data,'DIESEL')['VALOR_COMBUSTIVEL'].' - Diesel -  '.formataData($data);
-                  echo "<br>";*/
-                
-                  
-                     
-                } 
-            ?>
               </div>
               <div class="card-footer small text-muted"></div>
             </div>
@@ -413,7 +383,7 @@ $qtdDieselConsolidado     = buscaValorQtCombConsolidado($dti,$dtf,'DIESEL')['QUA
                 <i class="fa fa-table"></i> QTD/L - QUANTIDADE LITROS POR UNIDADE
               </div>
 
-              <div class="card-body">                
+              <div class="card-body">
                 <canvas id="grafico3"></canvas>
               </div>
               <div class="card-footer small text-muted"></div>
@@ -428,8 +398,52 @@ $qtdDieselConsolidado     = buscaValorQtCombConsolidado($dti,$dtf,'DIESEL')['QUA
 
               <div class="card-body">
                 <canvas id="grafico4"></canvas>
+
+
+              </div>
+
+              <br>
+              <div class="card-footer small text-muted"></div>
+            </div>
+          </div>
+          
+          <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
+            <div class="card mb-3">
+              <div class="card-header">
+                <i class="fa fa-table"></i> QTD/L - QUANTIDADE LITROS TOTAL
+              </div>
+
+              <div class="card-body">
+                 <?php  
+                ini_set('max_execution_time', 0); 
+                 $datai = $_POST['datai'];
+                 $dataf = $_POST['dataf'];
                 
+   
                 
+               $date = '2019-03-11';
+	           // End date
+	           $end_date = '2019-04-10';
+
+	           while (strtotime($date) <= strtotime($end_date)) {
+                echo $vlrGasolinaConsolidado1   = buscaValorQtCombConsolidado($date,$date,'GASOLINA')['VALOR_COMBUSTIVEL'].' - Gasolina -  '.formataData($date);
+                  echo "<br>";
+                  echo $vlrEtanolConsolidado1     = buscaValorQtCombConsolidado($date,$date,'ETANOL')['VALOR_COMBUSTIVEL'].' - Etanol - '.formataData($date);
+                  echo "<br>";
+                  echo $vlrDieselConsolidado1     = buscaValorQtCombConsolidado($date,$date,'DIESEL')['VALOR_COMBUSTIVEL'].' - Diesel -  '.formataData($date);
+                  echo "<br>";
+                 
+                $date = date ("Y-m-d", strtotime("+1 day", strtotime($date)));
+                 
+                 
+                 
+                 
+                 
+      echo "<br>";
+	}
+            ?>
+
+
               </div>
 
               <br>
@@ -585,7 +599,7 @@ $qtdDieselConsolidado     = buscaValorQtCombConsolidado($dti,$dtf,'DIESEL')['QUA
 
         var ctx1 = document.getElementById("grafico2").getContext('2d');
         var barChart = new Chart(ctx1, {
-          type: 'bar',          
+          type: 'bar',
           data: {
             labels: ["DIESEL", "GASOLINA", "ETANOL"],
             datasets: [{
@@ -778,7 +792,7 @@ $qtdDieselConsolidado     = buscaValorQtCombConsolidado($dti,$dtf,'DIESEL')['QUA
               animationDuration: 1
             },
             responsive: true,
-            
+
             scales: {
               yAxes: [{
                 ticks: {
@@ -791,7 +805,7 @@ $qtdDieselConsolidado     = buscaValorQtCombConsolidado($dti,$dtf,'DIESEL')['QUA
             }
           }
         });
-        
+
       </script>
       <!-- END Java Script for this page -->
 

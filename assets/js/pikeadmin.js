@@ -11,7 +11,7 @@ $( document ).ready(function() {
 	
     var Sidemenu = function() {
         this.$body = $("body"),
-        this.$openLeftBtn = $(".open-l"),
+        this.$openLeftBtn = $(".open-left"),
         this.$menuItem = $("#sidebar-menu a")
     };
     Sidemenu.prototype.openLeftBar = function() {
@@ -149,15 +149,17 @@ var changeptype = function(){
     if(jQuery.browser.mobile === true){
         $("body").addClass("mobile").removeClass("adminbody");
     }
-
+   
     if(!$("#main").hasClass("forced")){
-      if(w > 990){
+      if(w > 990){  
+      
         $("body").removeClass("smallscreen").addClass("widescreen");
           $("#main").removeClass("enlarged");
       }else{
         $("body").removeClass("widescreen").addClass("smallscreen");
         $("#main").addClass("enlarged");
         $(".left ul").removeAttr("style");
+        
       }
       if($("#main").hasClass("enlarged") && $("body").hasClass("adminbody")){
         $("body").removeClass("adminbody").addClass("adminbody-void");

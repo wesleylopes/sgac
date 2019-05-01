@@ -63,9 +63,10 @@ BEGIN
   -- Retorna para a primeira linha do loop
   END LOOP cursorMovimentoVeiculos;
   
-  SET qtdCombustivel = IF (ROUND(somaQuantidade)>1000,REPLACE(FORMAT(ROUND(somaQuantidade),0), ',', '.'), CONCAT("0.", round(somaQuantidade)));
+  SET qtdCombustivel = IF (ROUND(somaQuantidade)>1000,REPLACE(FORMAT(ROUND(somaQuantidade),0), ',', '.'), CONCAT(".", round(somaQuantidade)));
   -- Setando a variável com o resultado final
-  /*IF p_tipoconsulta=0 THEN
+ 
+ /*IF p_tipoconsulta=0 THEN
   SET p_comb = 'PASSOU AQUI'; else
    SET p_comb= 'NAO PASSOU AQUI';
   END IF;*/

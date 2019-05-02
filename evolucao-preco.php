@@ -11,28 +11,37 @@ $end_date = $dtf;
 
 $arrayVlrDiesel=array();
 $arrayVlrGasolina=array();
-$arrayVlrEtanol=array();
+$arrayVlrEtanol=array();    
+ 
+$dti30 = date('Y-m-d',strtotime($dti) - (0 * 24 * 60 * 60));
+$dtf30 = date('Y-m-d',strtotime($dtf) - (0 * 24 * 60 * 60)); 
     
- $dti30 = date('Y-m-d',time() - (31 * 24 * 60 * 60));
- $dtf30 = date('Y-m-d',time() - (0 * 24 * 60 * 60));
+$dti60 = date('Y-m-d',strtotime($dti) - (28 * 24 * 60 * 60));                 
+$dtf60 = date('Y-m-d',strtotime($dtf) - (31 * 24 * 60 * 60)); 
     
- $dti60 = date('Y-m-d',time() - (61 * 24 * 60 * 60)); 
- $dtf60 = date('Y-m-d',time() - (30 * 24 * 60 * 60));
+$dti90 = date('Y-m-d',strtotime($dti) - (59 * 24 * 60 * 60));
+$dtf90 = date('Y-m-d',strtotime($dtf) - (59 * 24 * 60 * 60));                
     
- $dti90 = date('Y-m-d',time() - (90 * 24 * 60 * 60));
- $dtf90 = date('Y-m-d',time() - (61 * 24 * 60 * 60));
+ 
+$vlrGasolinaConsolidado30Dias   = buscaValorQtCombConsolidado($dti30,$dtf30,'GASOLINA')['VALOR_COMBUSTIVEL'];
+
+$vlrEtanolConsolidado30Dias     = buscaValorQtCombConsolidado($dti30,$dtf30,'ETANOL')['VALOR_COMBUSTIVEL'];
+
+$vlrDieselConsolidado30Dias     = buscaValorQtCombConsolidado($dti30,$dtf30,'DIESEL')['VALOR_COMBUSTIVEL'];
+  
+$vlrGasolinaConsolidado60Dias   = buscaValorQtCombConsolidado($dti60,$dtf60,'GASOLINA')['VALOR_COMBUSTIVEL'];
+ 
+$vlrEtanolConsolidado60Dias     = buscaValorQtCombConsolidado($dti60,$dtf60,'ETANOL')['VALOR_COMBUSTIVEL'];
+  
+$vlrDieselConsolidado60Dias     = buscaValorQtCombConsolidado($dti60,$dtf60,'DIESEL')['VALOR_COMBUSTIVEL'];
+   
+$vlrGasolinaConsolidado90Dias   = buscaValorQtCombConsolidado($dti90,$dtf90,'GASOLINA')['VALOR_COMBUSTIVEL'];
+  
+$vlrEtanolConsolidado90Dias     = buscaValorQtCombConsolidado($dti90,$dtf90,'ETANOL')['VALOR_COMBUSTIVEL'];
+
+$vlrDieselConsolidado90Dias     = buscaValorQtCombConsolidado($dti90,$dtf90,'DIESEL')['VALOR_COMBUSTIVEL'];
     
- $vlrGasolinaConsolidado30Dias  = buscaValorQtCombConsolidado($dti30,$dtf30,'GASOLINA')['VALOR_COMBUSTIVEL'];
- $vlrEtanolConsolidado30Dias    = buscaValorQtCombConsolidado($dti30,$dtf30,'ETANOL')['VALOR_COMBUSTIVEL'];
- $vlrDieselConsolidado30Dias     = buscaValorQtCombConsolidado($dti30,$dtf30,'DIESEL')['VALOR_COMBUSTIVEL'];
-    
- $vlrGasolinaConsolidado60Dias  = buscaValorQtCombConsolidado($dti60,$dtf60,'GASOLINA')['VALOR_COMBUSTIVEL'];
- $vlrEtanolConsolidado60Dias    = buscaValorQtCombConsolidado($dti60,$dtf60,'ETANOL')['VALOR_COMBUSTIVEL'];
- $vlrDieselConsolidado60Dias     = buscaValorQtCombConsolidado($dti60,$dtf60,'DIESEL')['VALOR_COMBUSTIVEL'];
-    
- $vlrGasolinaConsolidado90Dias  = buscaValorQtCombConsolidado($dti90,$dtf90,'GASOLINA')['VALOR_COMBUSTIVEL'];
- $vlrEtanolConsolidado90Dias    = buscaValorQtCombConsolidado($dti90,$dtf90,'ETANOL')['VALOR_COMBUSTIVEL'];
- $vlrDieselConsolidado60Dias     = buscaValorQtCombConsolidado($dti90,$dtf90,'DIESEL')['VALOR_COMBUSTIVEL'];
+?>
     
 // Verifica se Houve Movimento no dia se não houver Repete o ultimo Preço de Combustivel abastecido.    
 function verificaVazioPegaVlrAnterior($array,$valor){
@@ -369,10 +378,47 @@ while (strtotime($date) <= strtotime($end_date)) {
                   <i class="fa fa-table"></i> EVOLUÇÃO MENSAL PREÇO MÉDIO COMBUSTÍVEL (30/60/90 DIAS)
                 </div>
                 <div class="card-body">
+                  <?php /*
+ 
+ echo "<br>"; 
+ echo $dti30 = date('Y-m-d',strtotime($dti) - (0 * 24 * 60 * 60));
+                  echo "<br>"; 
+ echo $dtf30 = date('Y-m-d',strtotime($dtf) - (0 * 24 * 60 * 60));
+                  echo "<br>"; 
+    
+ echo $dti60 = date('Y-m-d',strtotime($dti) - (28 * 24 * 60 * 60));
+                  echo "<br>"; 
+ echo $dtf60 = date('Y-m-d',strtotime($dtf) - (31 * 24 * 60 * 60));
+                  echo "<br>"; 
+    
+ echo $dti90 = date('Y-m-d',strtotime($dti) - (59 * 24 * 60 * 60));
+                  echo "<br>"; 
+ echo $dtf90 = date('Y-m-d',strtotime($dtf) - (59 * 24 * 60 * 60));
+                  echo "<br>"; 
+    
+  echo "<br>";    
+  echo  $vlrGasolinaConsolidado30Dias  = buscaValorQtCombConsolidado($dti30,$dtf30,'GASOLINA')['VALOR_COMBUSTIVEL'];
+  echo "<br>";
+  echo  $vlrEtanolConsolidado30Dias    = buscaValorQtCombConsolidado($dti30,$dtf30,'ETANOL')['VALOR_COMBUSTIVEL'];
+  echo "<br>";
+  echo  $vlrDieselConsolidado30Dias     = buscaValorQtCombConsolidado($dti30,$dtf30,'DIESEL')['VALOR_COMBUSTIVEL'];
+  echo "<br>";    
+  echo  $vlrGasolinaConsolidado60Dias  = buscaValorQtCombConsolidado($dti60,$dtf60,'GASOLINA')['VALOR_COMBUSTIVEL'];
+  echo "<br>";
+  echo  $vlrEtanolConsolidado60Dias    = buscaValorQtCombConsolidado($dti60,$dtf60,'ETANOL')['VALOR_COMBUSTIVEL'];
+  echo "<br>";
+  echo  $vlrDieselConsolidado60Dias     = buscaValorQtCombConsolidado($dti60,$dtf60,'DIESEL')['VALOR_COMBUSTIVEL'];
+  echo "<br>";    
+  echo  $vlrGasolinaConsolidado90Dias  = buscaValorQtCombConsolidado($dti90,$dtf90,'GASOLINA')['VALOR_COMBUSTIVEL'];
+  echo "<br>";
+  echo  $vlrEtanolConsolidado90Dias    = buscaValorQtCombConsolidado($dti90,$dtf90,'ETANOL')['VALOR_COMBUSTIVEL'];
+  echo "<br>";
+  echo  $vlrDieselConsolidado90Dias     = buscaValorQtCombConsolidado($dti90,$dtf90,'DIESEL')['VALOR_COMBUSTIVEL'];
+  echo "<br>";
+             */     
+?>
                   <canvas id="grafico1"></canvas>
-
-
-
+                 
                 </div>
                 <div class="card-footer small text-muted"></div>
               </div>
@@ -455,134 +501,138 @@ while (strtotime($date) <= strtotime($end_date)) {
             type: 'line',
             borderWidth: 10,
             data: {
-              labels: ["Janeiro", "Fevereiro", "Março"],
+              labels: ["<?php echo extrairMesAnoPorExtenso($dti90);?>","<?php echo extrairMesAnoPorExtenso($dti60);?>","<?php echo extrairMesAnoPorExtenso($dti30);?>"],
               datasets: [{
                 label: 'DIESEL',
-                data: [<?php echo $vlrDieselConsolidado30Dias;?>, 
-                       <?php echo $vlrDieselConsolidado60Dias;?>,
-                       <?php echo $vlrDieselConsolidado90Dias;?> ],
-                responsive: true,
-                fill: false,
-                backgroundColor: ['rgba(96,167,0,0.9)'],
-                borderColor: 'rgba(96,167,0,0.9)',
-              }, {
-                label: 'GASOLINA',
-                data: [<?php echo $vlrGasolinaConsolidado30Dias;?>, 
-                       <?php echo $vlrGasolinaConsolidado60Dias;?>,
-                       <?php echo $vlrGasolinaConsolidado90Dias;?> ],
-                responsive: true,
-                fill: false,
-                backgroundColor: 'rgba(255,167,0,0.9)',
-                borderColor: ['rgba(255,167,0,0.9)'],
-              }, {
-                label: 'ETANOL',
-                data: [<?php echo $vlrEtanolConsolidado30Dias;?>, 
-                       <?php echo $vlrEtanolConsolidado60Dias;?>,
-                       <?php echo $vlrEtanolConsolidado90Dias;?> ],
-                responsive: true,
-                fill: false,
-                backgroundColor: 'rgba(78,149,212,0.9)',
-                borderColor: 'rgba(78,149,212,0.9)',
-              }],
-            },
-            options: {
-              title: {
-                display: false,
+                data: [<?php echo $vlrDieselConsolidado90Dias;?>,
+                  <?php echo $vlrDieselConsolidado60Dias;?>,
+                  <?php echo $vlrDieselConsolidado30Dias;?>
+                  ],
+                  responsive: true,
+                  fill: false,
+                  backgroundColor: ['rgba(96,167,0,0.9)'],
+                  borderColor: 'rgba(96,167,0,0.9)',
+                  }, {
+                  label: 'GASOLINA',
+                  data: [<?php echo $vlrGasolinaConsolidado90Dias;?>,
+                  <?php echo $vlrGasolinaConsolidado60Dias;?>,
+                  <?php echo $vlrGasolinaConsolidado30Dias;?>
+                  ],
+                  responsive: true,
+                  fill: false,
+                  backgroundColor: 'rgba(255,167,0,0.9)',
+                  borderColor: ['rgba(255,167,0,0.9)'],
+                  }, {
+                  label: 'ETANOL',
+                  data: [<?php echo $vlrEtanolConsolidado90Dias;?>,
+                  <?php echo $vlrEtanolConsolidado60Dias;?>,
+                  <?php echo $vlrEtanolConsolidado30Dias;?>
+                  ],
+                  responsive: true,
+                  fill: false,
+                  backgroundColor: 'rgba(78,149,212,0.9)',
+                  borderColor: 'rgba(78,149,212,0.9)',
+                  }],
+                  },
+                  options: {
+                  title: {
+                  display: false,
 
-              },
-              scales: {
-                xAxes: [{
+                  },
+                  scales: {
+                  xAxes: [{
                   display: true,
-                }],
-                yAxes: [{
+                  }],
+                  yAxes: [{
                   display: true,
-                }]
-              },
-              animation: {
-                duration: 1000,
-                onComplete: function() {
+                  }]
+                  },
+                  animation: {
+                  duration: 1000,
+                  onComplete: function() {
                   var chartInstance = this.chart,
-                    ctx = chartInstance.ctx;
+                  ctx = chartInstance.ctx;
                   ctx.textAlign = 'center';
                   ctx.fillStyle = 'rgba(25,0,0,0.9)';
                   this.data.datasets.forEach(function(dataset, i) {
-                    var meta = chartInstance.controller.getDatasetMeta(i);
-                    meta.data.forEach(function(bar, index) {
-                      var data = dataset.data[index];
-                      ctx.fillText(data, bar._model.x - 5, bar._model.y - 15);
-                    });
+                  var meta = chartInstance.controller.getDatasetMeta(i);
+                  meta.data.forEach(function(bar, index) {
+                  var data = dataset.data[index];
+                  ctx.fillText(data, bar._model.x - 5, bar._model.y - 15);
                   });
-                },
-              },
-            }
-          });
-
-        </script>
-
-        <script>
-          var ctx1 = document.getElementById("grafico2").getContext('2d');
-          var barChart = new Chart(ctx1, {
-            type: 'line',
-            borderWidth: 10,
-            data: {
-              labels: [<?php echo implode(',', $arrayData);?>],
-              datasets: [{
-                label: 'DIESEL',
-                data: [<?php echo implode(',',$arrayVlrDiesel);?>],
-                responsive: true,
-                fill: false,
-                backgroundColor: ['rgba(96,167,0,0.9)'],
-                borderColor: 'rgba(96,167,0,0.9)',
-              }, {
-                label: 'GASOLINA',
-                data: [<?php echo implode(',',$arrayVlrGasolina)?>],
-                responsive: true,
-                fill: false,
-                backgroundColor: 'rgba(255,167,0,0.9)',
-                borderColor: ['rgba(255,167,0,0.9)'],
-              }, {
-                label: 'ETANOL',
-                data: [<?php echo implode (',',$arrayVlrEtanol) ?>],
-                responsive: true,
-                fill: false,
-                backgroundColor: 'rgba(78,149,212,0.9)',
-                borderColor: 'rgba(78,149,212,0.9)',
-              }]
-            },
-            options: {
-              title: {
-                display: false,
-
-              },
-              scales: {
-                xAxes: [{
-                  display: true,
-                }],
-                yAxes: [{
-                  display: true,
-                }]
-              },
-              animation: {
-                duration: 1000,
-                onComplete: function() {
-                  var chartInstance = this.chart,
-                    ctx = chartInstance.ctx;
-                  ctx.textAlign = 'center';
-                  ctx.fillStyle = 'rgba(25,0,0,0.9)';
-                  this.data.datasets.forEach(function(dataset, i) {
-                    var meta = chartInstance.controller.getDatasetMeta(i);
-                    meta.data.forEach(function(bar, index) {
-                      var data = dataset.data[index];
-                      ctx.fillText(data, bar._model.x - 5, bar._model.y - 15);
-                    });
                   });
-                },
-              },
-            }
-          });
+                  },
+                  },
+                  }
+                  });
 
-        </script>
-        <!-- END Java Script Pagina -->
+                  </script>
+
+                  <script>
+                    var ctx1 = document.getElementById("grafico2").getContext('2d');
+                    var barChart = new Chart(ctx1, {
+                      type: 'line',
+                      borderWidth: 10,
+                      data: {
+                        labels: [<?php echo implode(',', $arrayData);?>],
+                        datasets: [{
+                          label: 'DIESEL',
+                          data: [<?php echo implode(',',$arrayVlrDiesel);?>],
+                          responsive: true,
+                          fill: false,
+                          backgroundColor: ['rgba(96,167,0,0.9)'],
+                          borderColor: 'rgba(96,167,0,0.9)',
+                        }, {
+                          label: 'GASOLINA',
+                          data: [<?php echo implode(',',$arrayVlrGasolina)?>],
+                          responsive: true,
+                          fill: false,
+                          backgroundColor: 'rgba(255,167,0,0.9)',
+                          borderColor: ['rgba(255,167,0,0.9)'],
+                        }, {
+                          label: 'ETANOL',
+                          data: [<?php echo implode (',',$arrayVlrEtanol) ?>],
+                          responsive: true,
+                          fill: false,
+                          backgroundColor: 'rgba(78,149,212,0.9)',
+                          borderColor: 'rgba(78,149,212,0.9)',
+                        }]
+                      },
+                      options: {
+                        title: {
+                          display: false,
+
+                        },
+                        scales: {
+                          xAxes: [{
+                            display: true,
+                          }],
+                          yAxes: [{
+                            display: true,
+                          }]
+                        },
+                        animation: {
+                          duration: 1000,
+                          onComplete: function() {
+                            var chartInstance = this.chart,
+                              ctx = chartInstance.ctx;
+                            ctx.textAlign = 'center';
+                            ctx.fillStyle = 'rgba(25,0,0,0.9)';
+                            this.data.datasets.forEach(function(dataset, i) {
+                              var meta = chartInstance.controller.getDatasetMeta(i);
+                              meta.data.forEach(function(bar, index) {
+                                var data = dataset.data[index];
+                                ctx.fillText(data, bar._model.x - 5, bar._model.y - 15);
+                              });
+                            });
+                          },
+                        },
+                      }
+                    });
+
+                  </script>
+                  <!-- END Java Script Pagina -->
+          <?php }?>
 
 </body>
 

@@ -16,8 +16,8 @@ $arrayVlrEtanol=array();
     
 // Verifica se Houve Movimento no dia se não houver Repete o ultimo Preço de Combustivel abastecido.    
 function verificaVazioPegaVlrAnterior($array,$valor){
-if (isset($valor)&& $valor == 0.00){
-    return $array[count($array)-1];
+  if (isset($valor)&& $valor == 0.00){
+      return $array[count($array)-1];
   } else{
     return $valor;
   }
@@ -198,40 +198,79 @@ while (strtotime($date) <= strtotime($end_date)) {
     <!-- Left Sidebar -->
     <div class="left main-sidebar">
       <div class="sidebar-inner leftscroll">
-        <br>
-        <div class="container">
+           <div id="sidebar-menu">
 
-          <form method="POST" action>
-            <div class="form-group">
-              <label class="label" for="InputDatai">Data Inicial </label>
-              <input type="date" class="form-control" value="<?php echo $_POST['datai'];?>" id="InputDatai" name="datai" aria-describedby="emailHelp" placeholder="Data inicial">
-            </div>
-
-            <div class="form-group">
-              <label class="label" for="InputDataf">Data Final </label>
-              <input type="date" class="form-control" value="<?php echo $_POST['dataf'];?>" id="InputDataf" name="dataf" placeholder="Data final">
-            </div>
-
-            <br>
-            <button type="submit" class="btn btn-primary  btn-block"><i class="fa fa-refresh"></i> Atualizar Graficos</button>
-
-            <br>
-            <br>
-          </form>
-
-        </div>
-        <div id="sidebar-menu">
           <ul>
-            <li class="submenu1">
-              <a href="sgac/principal.php"><i class="fa fa-fw fa-tachometer"></i><span> Dashboard Principal </span> </a>
-              <a href="../index.php"><i class="fa fa-fw fa-bar-chart"></i><span> Preço Médio por Posto </span> </a>
-              <a class="active" href="index.php"><i class="fa fa-fw fa-line-chart"></i><span> Evolução de Preço </span> </a>
-              <a href="importa/index.php"><i class="fa fa-fw fa-cloud-upload"></i><span>Upload de arquivos (Excel) </span> </a>
+            <li class="submenu">
+              <a class="active" href="index.php"><i class="fa fa-fw fa-tachometer"></i><span> VISÃO GERAL </span> </a>
+              <a href="#"><i class="fa fa-filter"></i> <span> FILTROS / PESQUISAR</span> <span class="menu-arrow"></span></a>
+              <ul class="list-unstyled">
+                <li>
+                  <div class="container">
+                    <br>
+                    <form method="POST">
+                      <div class="form-group">
+                        <label class="label" for="InputDatai">Data Inicial </label>
+                        <input type="date" class="form-control" value="<?php echo $_POST['datai'];?>" id="InputDatai" name="datai" aria-describedby="emailHelp" placeholder="Data inicial">
+                      </div>
+
+                      <div class="form-group">
+                        <label class="label" for="InputDataf">Data Final </label>
+                        <input type="date" class="form-control" value="<?php echo $_POST['dataf'];?>" id="InputDataf" name="dataf" placeholder="Data final">
+                      </div>
+
+                      <br>
+                      <button type="submit" class="btn btn-primary  btn-block"><i class="fa fa-refresh"></i> Atualizar Graficos</button>
+
+                      <br>
+                      <br>
+                    </form>
+                  </div>
+                </li>
+              </ul>
+            </li>
+            <li class="submenu">
+              <a class="active2" href="index.php"><i class="fa fa-fw fa-bullhorn"></i><span> PAINEL DE ALERTAS </span><span class="badge badge-danger"> 0 </span> </a>
+              <a class="active2" href="index.php"><i class="fa fa-fw fa-bar-chart"></i><span> PREÇO MÉDIO POSTO </span> </a>
+              <a class="active2" href="evolucao-preco.php"><i class="fa fa-fw fa-line-chart"></i><span> EVOLUÇÃO DE PREÇO</span> </a>
+              <a class="active2" href="index.php"><i class="fa fa-fw fa-file-excel-o"></i><span>IMPORTAR DADOS (EXCEL) </span> </a>
+            </li>
+
+            <li class="submenu">
+              <a href="#"><i class="fa fa-archive"></i> <span> CADASTROS</span> <span class="menu-arrow"></span></a>
+              <ul class="list-unstyled">
+                <li><a href="tables-basic.html"><i class="fa fa-fw fa-tachometer"></i>Entradas e Saidas</a></li>
+                <a href="#"><i class="fa fa-fw fa-tachometer"></i> <span> Analise por Periodo </span> <span class="menu-arrow"></span></a>
+                <ul class="list-unstyled">
+                  <li><a href="tables-basic.html">Entradas</a></li>
+                </ul>
+                <li><a href="tables-datatable.html">Posição de Estoque</a></li>
+              </ul>
+            </li>
+
+
+
+
+            <li class="submenu">
+              <a href="#"><i class="fa fa-wpforms"></i> <span> RELATÓRIOS</span> <span class="menu-arrow"></span></a>
+              <ul class="list-unstyled">
+                <li><a href="tables-basic.html">RELATÓRIO 1</a></li>
+                <a href="#"> <span> Analise por Periodo </span> <span class="menu-arrow"></span></a>
+                <ul class="list-unstyled">
+                  <li><a href="tables-basic.html">Entradas</a></li>
+                </ul>
+                <li><a href="tables-datatable.html">Posição de Estoque</a></li>
+              </ul>
+            </li>
+
+            <li class="submenu">
+              <a href="sair.php"><i class="fa fa-sign-out"></i> <span> SAIR</span></a>
             </li>
 
             <div class="clearfix">
             </div>
           </ul>
+
         </div>
       </div>
       <div class="clearfix"></div>
@@ -263,8 +302,44 @@ while (strtotime($date) <= strtotime($end_date)) {
 
     <div class="container">
       <div class="container">
+        <div class="card-footer small text-muted">Ultima Sincronização de Tela:
+          <?php echo buscaDataHora();                    
+                    $arrayMensagem = verificaAtualizacaoPeriodoDadosSistema();
+                    ?>
+          <br>
+          <span class="text-red"> A base de Dados Possui Registros de
+            <?php echo $arrayMensagem['MOVIMENTO_INICIAL']?> á <?php echo $arrayMensagem['MOVIMENTO_FINAL']?> </span>
+          <br>
+          <span> Ultima importação: <?php echo $arrayMensagem['ULTIMA_IMPORTACAO']?> </span>
 
+        </div>
         <br>
+        <div class="row">
+          <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-12">
+            <div class="card-header">
+              <i class="fa fa-filter"></i> FILTRAR PERIODO DE <> ATÉ
+            </div>
+            <br>
+
+            <form method="POST">
+              <div class="row">
+                <div class="col">
+                  <div class="form-group">
+                    <input type="date" class="form-control" value="<?php echo $_POST['datai'];?>" id="InputDatai" name="datai" aria-describedby="emailHelp" placeholder="Data inicial">
+                  </div>
+                </div>
+                <div class="col">
+                  <div class="form-group">
+                    <input type="date" class="form-control" value="<?php echo $_POST['dataf'];?>" id="InputDataf" name="dataf" placeholder="Data final">
+                  </div>
+                </div>
+
+                <div class="col">
+                  <button type="submit" class="btn btn-primary  btn-block"><i class="fa fa-refresh"></i> Atualizar Graficos</button>
+                </div>
+              </div>
+            </form>
+          </div>
 
         <div class="row">
           <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
@@ -273,7 +348,7 @@ while (strtotime($date) <= strtotime($end_date)) {
                 <i class="fa fa-table"></i> EVOLUÇÃO MENSAL PREÇO MÉDIO COMBUSTÍVEL (30/60/90 DIAS)
               </div>
               <div class="card-body">
-               
+
 
 
 
@@ -290,7 +365,7 @@ while (strtotime($date) <= strtotime($end_date)) {
               </div>
 
               <div class="card-body">
-                
+
                 <canvas id="grafico1"></canvas>
 
 
@@ -352,66 +427,71 @@ while (strtotime($date) <= strtotime($end_date)) {
         }
 
       </script>
-      
+
       <script>
-                var ctx1 = document.getElementById("grafico1").getContext('2d');
-                var barChart = new Chart(ctx1, {
-                    type: 'line',
-                    borderWidth: 10,
-                    data: {
-                        labels: [<?php echo implode(',', $arrayData);?>],
-                        datasets: [{
-                            label: 'DIESEL',
-                            data: [<?php echo implode(',',$arrayVlrDiesel);?>],
-                            responsive: true,
-                            fill: false,
-                            backgroundColor: ['rgba(96,167,0,0.9)'],
-                            borderColor: 'rgba(96,167,0,0.9)',
-                        }, {
-                            label: 'GASOLINA',
-                            data: [<?php echo implode(',',$arrayVlrGasolina)?>],
-                            responsive: true,
-                            fill: false,
-                            backgroundColor: 'rgba(255,167,0,0.9)',
-                            borderColor: ['rgba(255,167,0,0.9)'],
-                        }, {
-                            label: 'ETANOL',
-                            data: [<?php echo implode (',',$arrayVlrEtanol) ?>],
-                            responsive: true,
-                            fill: false,
-                            backgroundColor: 'rgba(78,149,212,0.9)',
-                            borderColor: 'rgba(78,149,212,0.9)',
-                        }]
-                    },
-                    options: {
-                        title: {
-                            display: true,
-                            
-                        },
-                        tooltips: {
-                            enabled: true
-                        },
-                        animation: {
-                            duration: 3000,
-                            onComplete: function() {
-                                var chartInstance = this.chart,
-                                    ctx = chartInstance.ctx;
-                                ctx.textAlign = 'center';
-                                ctx.fillStyle = 'rgba(25,0,0,0.9)';
-                                this.data.datasets.forEach(function(dataset, i) {
-                                    var meta = chartInstance.controller.getDatasetMeta(i);
-                                    meta.data.forEach(function(bar, index) {
-                                        var data = dataset.data[index];
-                                        ctx.fillText(data, bar._model.x, bar._model.y - 10);
-                                    });
-                                });
-                            },
-                        },
-                    }
+        var ctx1 = document.getElementById("grafico1").getContext('2d');
+        var barChart = new Chart(ctx1, {
+          type: 'line',
+          borderWidth: 10,
+          data: {
+            labels: [<?php echo implode(',', $arrayData);?>],
+            datasets: [{
+              label: 'DIESEL',
+              data: [<?php echo implode(',',$arrayVlrDiesel);?>],
+              responsive: true,
+              fill: false,
+              backgroundColor: ['rgba(96,167,0,0.9)'],
+              borderColor: 'rgba(96,167,0,0.9)',
+            }, {
+              label: 'GASOLINA',
+              data: [<?php echo implode(',',$arrayVlrGasolina)?>],
+              responsive: true,
+              fill: false,
+              backgroundColor: 'rgba(255,167,0,0.9)',
+              borderColor: ['rgba(255,167,0,0.9)'],
+            }, {
+              label: 'ETANOL',
+              data: [<?php echo implode (',',$arrayVlrEtanol) ?>],
+              responsive: true,
+              fill: false,
+              backgroundColor: 'rgba(78,149,212,0.9)',
+              borderColor: 'rgba(78,149,212,0.9)',
+            }]
+          },
+          options: {
+            title: {
+              display: false,
+              
+            },
+            scales: {
+              xAxes: [{
+                display: true,
+              }],
+              yAxes: [{
+                display: true,
+              }]
+            },
+            animation: {
+              duration: 1000,
+              onComplete: function() {
+                var chartInstance = this.chart,
+                  ctx = chartInstance.ctx;
+                ctx.textAlign = 'center';
+                ctx.fillStyle = 'rgba(25,0,0,0.9)';
+                this.data.datasets.forEach(function(dataset, i) {
+                  var meta = chartInstance.controller.getDatasetMeta(i);
+                  meta.data.forEach(function(bar, index) {
+                    var data = dataset.data[index];
+                    ctx.fillText(data, bar._model.x - 5, bar._model.y - 15);
+                  });
                 });
+              },
+            },
+          }
+        });
 
       </script>
-      <!-- END Java Script for this page -->
+      <!-- END Java Script Pagina -->
 
 </body>
 

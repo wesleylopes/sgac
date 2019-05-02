@@ -24,6 +24,7 @@ if (isset($_POST['datai'] )==false or isset($_POST['dataf'] )==false){
     $_POST['dataf']= date('Y-m-d',time() - ($dataf * 24 * 60 * 60));
 
 }
+  
 if (isset($_SESSION['ID'])==false){
    header("location: login.php");
   return false;
@@ -133,4 +134,4 @@ function buscaValorQtCombConsolidado($dataInicial,$dataFinal,$tipoCombustivel){
     }  
 
 
-//echo formataNumero();
+

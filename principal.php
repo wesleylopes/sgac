@@ -405,22 +405,7 @@ $qtdDieselConsolidado     = buscaValorQtCombConsolidado($dti,$dtf,'DIESEL')['QUA
               <br>
               <div class="card-footer small text-muted"></div>
             </div>
-          </div>
-          
-          <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
-            <div class="card mb-3">
-              <div class="card-header">
-                <i class="fa fa-table"></i> QTD/L - QUANTIDADE LITROS TOTAL
-              </div>
-              
-              <div class="card-body"> 
-                
-              </div>
-
-              <br>
-              <div class="card-footer small text-muted"></div>
-            </div>
-          </div>
+          </div>  
         </div>
 
         <footer class="footer">

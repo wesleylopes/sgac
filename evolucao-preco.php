@@ -41,7 +41,7 @@ $vlrEtanolConsolidado90Dias     = buscaValorQtCombConsolidado($dti90,$dtf90,'ETA
 
 $vlrDieselConsolidado90Dias     = buscaValorQtCombConsolidado($dti90,$dtf90,'DIESEL')['VALOR_COMBUSTIVEL'];
     
-?>
+
     
 // Verifica se Houve Movimento no dia se não houver Repete o ultimo Preço de Combustivel abastecido.    
 function verificaVazioPegaVlrAnterior($array,$valor){
@@ -378,45 +378,7 @@ while (strtotime($date) <= strtotime($end_date)) {
                   <i class="fa fa-table"></i> EVOLUÇÃO MENSAL PREÇO MÉDIO COMBUSTÍVEL (30/60/90 DIAS)
                 </div>
                 <div class="card-body">
-                  <?php /*
- 
- echo "<br>"; 
- echo $dti30 = date('Y-m-d',strtotime($dti) - (0 * 24 * 60 * 60));
-                  echo "<br>"; 
- echo $dtf30 = date('Y-m-d',strtotime($dtf) - (0 * 24 * 60 * 60));
-                  echo "<br>"; 
-    
- echo $dti60 = date('Y-m-d',strtotime($dti) - (28 * 24 * 60 * 60));
-                  echo "<br>"; 
- echo $dtf60 = date('Y-m-d',strtotime($dtf) - (31 * 24 * 60 * 60));
-                  echo "<br>"; 
-    
- echo $dti90 = date('Y-m-d',strtotime($dti) - (59 * 24 * 60 * 60));
-                  echo "<br>"; 
- echo $dtf90 = date('Y-m-d',strtotime($dtf) - (59 * 24 * 60 * 60));
-                  echo "<br>"; 
-    
-  echo "<br>";    
-  echo  $vlrGasolinaConsolidado30Dias  = buscaValorQtCombConsolidado($dti30,$dtf30,'GASOLINA')['VALOR_COMBUSTIVEL'];
-  echo "<br>";
-  echo  $vlrEtanolConsolidado30Dias    = buscaValorQtCombConsolidado($dti30,$dtf30,'ETANOL')['VALOR_COMBUSTIVEL'];
-  echo "<br>";
-  echo  $vlrDieselConsolidado30Dias     = buscaValorQtCombConsolidado($dti30,$dtf30,'DIESEL')['VALOR_COMBUSTIVEL'];
-  echo "<br>";    
-  echo  $vlrGasolinaConsolidado60Dias  = buscaValorQtCombConsolidado($dti60,$dtf60,'GASOLINA')['VALOR_COMBUSTIVEL'];
-  echo "<br>";
-  echo  $vlrEtanolConsolidado60Dias    = buscaValorQtCombConsolidado($dti60,$dtf60,'ETANOL')['VALOR_COMBUSTIVEL'];
-  echo "<br>";
-  echo  $vlrDieselConsolidado60Dias     = buscaValorQtCombConsolidado($dti60,$dtf60,'DIESEL')['VALOR_COMBUSTIVEL'];
-  echo "<br>";    
-  echo  $vlrGasolinaConsolidado90Dias  = buscaValorQtCombConsolidado($dti90,$dtf90,'GASOLINA')['VALOR_COMBUSTIVEL'];
-  echo "<br>";
-  echo  $vlrEtanolConsolidado90Dias    = buscaValorQtCombConsolidado($dti90,$dtf90,'ETANOL')['VALOR_COMBUSTIVEL'];
-  echo "<br>";
-  echo  $vlrDieselConsolidado90Dias     = buscaValorQtCombConsolidado($dti90,$dtf90,'DIESEL')['VALOR_COMBUSTIVEL'];
-  echo "<br>";
-             */     
-?>
+
                   <canvas id="grafico1"></canvas>
                  
                 </div>
@@ -632,7 +594,7 @@ while (strtotime($date) <= strtotime($end_date)) {
 
                   </script>
                   <!-- END Java Script Pagina -->
-          <?php }?>
+          
 
 </body>
 

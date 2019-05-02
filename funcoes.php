@@ -133,9 +133,10 @@ function buscaValorQtCombConsolidado($dataInicial,$dataFinal,$tipoCombustivel){
       }
     } 
 
-function extrairMesAnoPorExtenso($data){
-  setlocale(LC_ALL, "pt_BR", "pt_BR.iso-8859-1", "pt_BR.utf-8", "portuguese");
+function extrairMesAnoPorExtenso($data){   
+  setlocale(LC_ALL, "pt_BR", "pt_BR.iso-8859-1", "pt_BR.utf-8","Portuguese_Brazilian","Portuguese_Brazil");
   date_default_timezone_set('America/Sao_Paulo');
+ 
   
   return ucfirst(strftime("%B de %Y", strtotime($data)));                
 }

@@ -60,8 +60,7 @@ return $resultado;
 function buscaDataHora(){ 
   date_default_timezone_set('America/Sao_Paulo');        
   return date('d/m/Y H:i:s');
-}  
-
+} 
 
 function verificaAtualizacaoPeriodoDadosSistema(){
    require("conexao.php");           
@@ -77,6 +76,7 @@ function verificaAtualizacaoPeriodoDadosSistema(){
             echo "<br>";
             echo "<br>";
             */
+  
          $sql = $db->query($sql);            
          $registros = $sql->fetchAll();       
             

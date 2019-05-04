@@ -235,11 +235,12 @@ $qtdDieselConsolidado     = buscaValorQtCombConsolidado($dti,$dtf,'DIESEL')['QUA
               </ul>
             </li>
             <li class="submenu">
-              <a class="active2" href="index.php"><i class="fa fa-fw fa-bullhorn"></i><span> PAINEL DE ALERTAS </span><span class="badge badge-danger"> 0 </span> </a>
-              <a class="active2" href="index.php"><i class="fa fa-fw fa-bar-chart"></i><span> PREÇO MÉDIO POSTO </span> </a>
-              <a class="active2" href="evolucao-preco.php"><i class="fa fa-fw fa-line-chart"></i><span> EVOLUÇÃO DE PREÇO</span> </a>
-              <a class="active2" href="index.php"><i class="fa fa-fw fa-file-excel-o"></i><span>IMPORTAR DADOS (EXCEL) </span> </a>
-            </li>
+              <a class="active2" href="#"><i class="fa fa-fw fa-bullhorn"></i><span> PAINEL DE ALERTAS</span>                
+              <span class="badge badge-danger"> 0 </span> </a>
+              <a class="active2" href="#"><i class="fa fa-fw fa-bar-chart"></i><span> PREÇO MÉDIO POSTO </span></a>
+              <a class="active2" href="evolucao-preco.php"><i class="fa fa-fw fa-line-chart"></i><span> EVOLUÇÃO DE PREÇO</span></a>
+              <a class="active2" href="importa/index.php"><i class="fa fa-fw fa-file-excel-o"></i><span>IMPORTAR DADOS (EXCEL)</span></a>
+            </li>            
 
             <li class="submenu">
               <a href="#"><i class="fa fa-archive"></i> <span> CADASTROS</span> <span class="menu-arrow"></span></a>
@@ -252,9 +253,6 @@ $qtdDieselConsolidado     = buscaValorQtCombConsolidado($dti,$dtf,'DIESEL')['QUA
                 <li><a href="tables-datatable.html">Posição de Estoque</a></li>
               </ul>
             </li>
-
-
-
 
             <li class="submenu">
               <a href="#"><i class="fa fa-wpforms"></i> <span> RELATÓRIOS</span> <span class="menu-arrow"></span></a>
@@ -275,7 +273,6 @@ $qtdDieselConsolidado     = buscaValorQtCombConsolidado($dti,$dtf,'DIESEL')['QUA
             <div class="clearfix">
             </div>
           </ul>
-
         </div>
       </div>
       <div class="clearfix"></div>

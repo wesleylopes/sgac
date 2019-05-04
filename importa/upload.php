@@ -57,7 +57,7 @@ if (!empty($_FILES['excel']['tmp_name'])) {
         $CENTRO_CUSTO        = $objWorksheet->getCellByColumnAndRow(23, $row)->getValue();
         
         try {
-            $sql = " DELETE FROM movimento_veiculos WHERE 
+            $sql = "DELETE FROM movimento_veiculos WHERE 
                             PLACA_VEICULO = '$PLACA_VEICULO'
                         AND NUMERO_CARTAO =  '$NUMERO_CARTAO'
                         AND DATA_MOVIMENTO = '$DATA_MOVIMENTO' 
@@ -110,7 +110,8 @@ if (!empty($_FILES['excel']['tmp_name'])) {
     
     echo "<br>";
     echo "---------------------------------------------<br>";
-    echo "Total de " . ($contador) . " Registros Importados <br>";   
+    echo " Total de " . ($contador) . " Registros Importados <br>"; 
+    echo " <a href='#' onclick= 'javascript:history.back(-1);'> Voltar</a>";
     
 } else {
     echo "Selecione um arquivo para upload";

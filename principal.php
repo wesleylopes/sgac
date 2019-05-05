@@ -237,8 +237,9 @@ $qtdDieselConsolidado     = buscaValorQtCombConsolidado($dti,$dtf,'DIESEL')['QUA
             <li class="submenu">
               <a class="active2" href="#"><i class="fa fa-fw fa-bullhorn"></i><span> PAINEL DE ALERTAS</span>                
               <span class="badge badge-danger"> 0 </span> </a>
-              <a class="active2" href="#"><i class="fa fa-fw fa-bar-chart"></i><span> PREÇO MÉDIO POSTO </span></a>
-              <a class="active2" href="evolucao-preco.php"><i class="fa fa-fw fa-line-chart"></i><span> EVOLUÇÃO DE PREÇO</span></a>
+              <a class="active2" href="cidade-preco.php"><i class="fa fa-fw fa-bar-chart"></i><span> ANALISE POR CIDADE </span></a>
+              <a class="active2" href="evolucao-preco.php"><i class="fa fa-fw fa-line-chart"></i><span> EVOLUÇÃO PREÇO</span></a>
+              <a class="active2" href="evolucao-preco.php"><i class="fa fa-fw fa fa-tint"></i><span> EVOLUÇÃO QUANTIDADE</span></a>
               <a class="active2" href="importa/index.php"><i class="fa fa-fw fa-file-excel-o"></i><span>IMPORTAR DADOS (EXCEL)</span></a>
             </li>            
 

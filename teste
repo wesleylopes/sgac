@@ -1,102 +1,73 @@
 <?php
 require("funcoes.php");
-require("conexao.php");
   if (iniciaSessao()===true){ 
   ini_set('max_execution_time', 0); 
   
 $dti   = $_POST['datai'];  // Captura data Inicial Formulário
 $dtf   = $_POST['dataf'];  // Captura data Final Formulário
 
-$sql="SELECT DISTINCT(CIDADE) FROM movimento_veiculos WHERE DATE(DATA_MOVIMENTO) between '$dti' and '$dtf'"; 
+$date     = $dti;	        
+$end_date = $dtf;
+
+$arrayVlrDiesel=array();
+$arrayVlrGasolina=array();
+$arrayVlrEtanol=array();    
+ 
+$dti30 = date('Y-m-d',strtotime($dti) - (0 * 24 * 60 * 60));
+$dtf30 = date('Y-m-d',strtotime($dtf) - (0 * 24 * 60 * 60)); 
+    
+$dti60 = date('Y-m-d',strtotime($dti) - (28 * 24 * 60 * 60));                 
+$dtf60 = date('Y-m-d',strtotime($dtf) - (31 * 24 * 60 * 60)); 
+    
+$dti90 = date('Y-m-d',strtotime($dti) - (59 * 24 * 60 * 60));
+$dtf90 = date('Y-m-d',strtotime($dtf) - (59 * 24 * 60 * 60));                
+    
+ 
+$vlrGasolinaConsolidado30Dias   = buscaValorQtCombConsolidado($dti30,$dtf30,'GASOLINA')['VALOR_COMBUSTIVEL'];
+
+$vlrEtanolConsolidado30Dias     = buscaValorQtCombConsolidado($dti30,$dtf30,'ETANOL')['VALOR_COMBUSTIVEL'];
+
+$vlrDieselConsolidado30Dias     = buscaValorQtCombConsolidado($dti30,$dtf30,'DIESEL')['VALOR_COMBUSTIVEL'];
   
-$sql = $db->query($sql);            
-$registros = $sql->fetchAll();       
-            
-foreach ($registros as $registro){
-  $cidade =  $registro['CIDADE']; 
+$vlrGasolinaConsolidado60Dias   = buscaValorQtCombConsolidado($dti60,$dtf60,'GASOLINA')['VALOR_COMBUSTIVEL'];
+ 
+$vlrEtanolConsolidado60Dias     = buscaValorQtCombConsolidado($dti60,$dtf60,'ETANOL')['VALOR_COMBUSTIVEL'];
   
-  $arrayGasolinaConsolidado[]   = buscaValorQtCombCidadeConsolidado($dti,$dtf,'GASOLINA',$cidade);
-  $arrayEtanolConsolidado[]     = buscaValorQtCombCidadeConsolidado($dti,$dtf,'ETANOL',$cidade);
-  $arrayDieselConsolidado[]     = buscaValorQtCombCidadeConsolidado($dti,$dtf,'DIESEL',$cidade); 
-}  
+$vlrDieselConsolidado60Dias     = buscaValorQtCombConsolidado($dti60,$dtf60,'DIESEL')['VALOR_COMBUSTIVEL'];
+   
+$vlrGasolinaConsolidado90Dias   = buscaValorQtCombConsolidado($dti90,$dtf90,'GASOLINA')['VALOR_COMBUSTIVEL'];
+  
+$vlrEtanolConsolidado90Dias     = buscaValorQtCombConsolidado($dti90,$dtf90,'ETANOL')['VALOR_COMBUSTIVEL'];
 
-// Remove Registros Duplicados e Agrupa as quantidades   
-function agrupaArray($array) {
-    $agrupador = array();
-    foreach ($array as $item) {
-        $key = $item['CIDADE'];
-      if (isset($key)){ 
-        if (!isset($agrupador[$key])) {
-            $agrupador[$key] = array(
-                'CIDADE' => $key,
-                'VALOR_COMBUSTIVEL' => $item['VALOR_COMBUSTIVEL'],
-                'TIPO_COMBUSTIVEL_BUSCA' => $item['TIPO_COMBUSTIVEL_BUSCA'],
-                'QUANTIDADE_LITROS' => $item['QUANTIDADE_LITROS'],
-            );
-        } 
-      }
-    }  
-   return $agrupador;
-} 
-    
- $arrayValorGasolinaAgrupado = agrupaArray($arrayGasolinaConsolidado);
- $arrayvalorEtanolAgrupado   = agrupaArray($arrayEtanolConsolidado); 
- $arrayValorDieselAgrupado   = agrupaArray($arrayDieselConsolidado);
-    
- $arrayQuantidadeGasolinaAgrupado = agrupaArray($arrayGasolinaConsolidado);
- $arrayQuantidadeEtanolAgrupado   = agrupaArray($arrayEtanolConsolidado); 
- $arrayQuantidadeDieselAgrupado   = agrupaArray($arrayDieselConsolidado);
- 
- function ordenaArrayValorCombustivel($a, $b) { 
-    return $a['VALOR_COMBUSTIVEL'] < $b['VALOR_COMBUSTIVEL']; 
- }
-    
-function ordenaArrayQuantidadeCombustivel($a, $b) { 
-    return $a['QUANTIDADE_LITROS'] < $b['QUANTIDADE_LITROS']; 
- }   
-    
- usort($arrayValorGasolinaAgrupado,'ordenaArrayValorCombustivel');
- usort($arrayValorEtanolAgrupado,'ordenaArrayValorCombustivel');
-usort($arrayValorDieselAgrupado,'ordenaArrayValorCombustivel');
-    
- usort($arrayQuantidadeGasolinaAgrupado,'ordenaArrayQuantidadeCombustivel');
- usort($arrayQuantidadeEtanolAgrupado,'ordenaArrayQuantidadeCombustivel');
- usort($arrayQuantidadeDieselAgrupado,'ordenaArrayQuantidadeCombustivel');
-    
-/*    
- echo "<pre>";
- echo "<br>";
-   print_r($arrayQuantidadeDieselAgrupado);
- echo "</pre>";
- 
-    echo "<br>";
-      echo "<-------------------------------------------------------->";
-  echo "<pre>";
- echo "<br>";
-   print_r($arrayValorDieselAgrupado);
- echo "</pre>";*/
-    
-function montaGraficoValor($array){
-return implode(', ', array_map(function ($entry) {
- 
-return $entry['VALOR_COMBUSTIVEL']; }, $array));  
-  } 
-    
-function montaGraficoCidade($array){
-return implode('","', array_map(function ($entry) {
-
-return $entry['CIDADE']; }, $array));  
-  } 
-    
-function montaGraficoQuantidade($array){
-return implode(', ', array_map(function ($entry) {
- 
-return $entry['QUANTIDADE_LITROS']; }, $array));  
-  } 
+$vlrDieselConsolidado90Dias     = buscaValorQtCombConsolidado($dti90,$dtf90,'DIESEL')['VALOR_COMBUSTIVEL'];
     
 
     
-}  
+// Verifica se Houve Movimento no dia se não houver Repete o ultimo Preço de Combustivel abastecido.    
+function verificaVazioPegaVlrAnterior($array,$valor){
+  if (isset($valor)&& $valor == 0.00){
+      return $array[count($array)-1];
+  } else{
+    return $valor;
+  }
+}
+//De data Inicial á data Final busca valores na base de Dados e Alimenta Arrays de Exibição   
+while (strtotime($date) <= strtotime($end_date)) {
+  
+  $vlrGasolinaConsolidado1   = buscaValorQtCombConsolidado($date,$date,'GASOLINA')['VALOR_COMBUSTIVEL'];
+  $vlrEtanolConsolidado1     = buscaValorQtCombConsolidado($date,$date,'ETANOL')['VALOR_COMBUSTIVEL'];
+  $vlrDieselConsolidado1     = buscaValorQtCombConsolidado($date,$date,'DIESEL')['VALOR_COMBUSTIVEL'];
+  
+  $arrayVlrDiesel[]          = verificaVazioPegaVlrAnterior($arrayVlrDiesel,$vlrDieselConsolidado1);  
+  $arrayVlrGasolina[]        = verificaVazioPegaVlrAnterior($arrayVlrGasolina,$vlrGasolinaConsolidado1);  
+  $arrayVlrEtanol[]          = verificaVazioPegaVlrAnterior($arrayVlrEtanol,$vlrEtanolConsolidado1);
+  
+  $dataFormatada= formataData($date);  
+  $arrayData[] = "'$dataFormatada'"; 
+  
+  $date = date ("Y/m/d", strtotime("+1 day", strtotime($date)));  
+  }     
+}
 
 ?>
 
@@ -406,9 +377,9 @@ return $entry['QUANTIDADE_LITROS']; }, $array));
                 <div class="card-header">
                   <i class="fa fa-table"></i> EVOLUÇÃO MENSAL PREÇO MÉDIO COMBUSTÍVEL (90/60/30 DIAS)
                 </div>
-                <div class="card-body">                 
+                <div class="card-body">
+
                   <canvas id="grafico1"></canvas>
-                  <canvas id="grafico2"></canvas>
                  
                 </div>
                 <div class="card-footer small text-muted"></div>
@@ -426,7 +397,7 @@ return $entry['QUANTIDADE_LITROS']; }, $array));
 
                   <canvas id="grafico2"></canvas>
 
-                
+
                 </div>
                 <div class="card-footer small text-muted"></div>
               </div>
@@ -492,15 +463,38 @@ return $entry['QUANTIDADE_LITROS']; }, $array));
             type: 'horizontalBar',
             borderWidth: 10,
             data: {
-              labels: ["<?php echo  montaGraficoCidade($arrayValorDieselAgrupado);?>"],
+              labels: ["<?php echo extrairMesAnoPorExtenso($dti90);?>","<?php echo extrairMesAnoPorExtenso($dti60);?>","<?php echo extrairMesAnoPorExtenso($dti30);?>"],
               datasets: [{
-                label: 'DIESEL Pç. Médio p/ Cidade (DIESEL)',
-                data: [ <?php echo  montaGraficoValor($arrayValorDieselAgrupado); ?>],
+                label: 'DIESEL',
+                data: [<?php echo $vlrDieselConsolidado90Dias;?>,
+                  <?php echo $vlrDieselConsolidado60Dias;?>,
+                  <?php echo $vlrDieselConsolidado30Dias;?>
+                  ],
                   responsive: true,
                   fill: false,
-                  backgroundColor: 'rgba(96,167,0,0.9)',
+                  backgroundColor: ['rgba(96,167,0,0.9)'],
                   borderColor: 'rgba(96,167,0,0.9)',
-                  },],
+                  }, {
+                  label: 'GASOLINA',
+                  data: [<?php echo $vlrGasolinaConsolidado90Dias;?>,
+                  <?php echo $vlrGasolinaConsolidado60Dias;?>,
+                  <?php echo $vlrGasolinaConsolidado30Dias;?>
+                  ],
+                  responsive: true,
+                  fill: false,
+                  backgroundColor: 'rgba(255,167,0,0.9)',
+                  borderColor: ['rgba(255,167,0,0.9)'],
+                  }, {
+                  label: 'ETANOL',
+                  data: [<?php echo $vlrEtanolConsolidado90Dias;?>,
+                  <?php echo $vlrEtanolConsolidado60Dias;?>,
+                  <?php echo $vlrEtanolConsolidado30Dias;?>
+                  ],
+                  responsive: true,
+                  fill: false,
+                  backgroundColor: 'rgba(78,149,212,0.9)',
+                  borderColor: 'rgba(78,149,212,0.9)',
+                  }],
                   },
                   options: {
                   title: {
@@ -526,57 +520,7 @@ return $entry['QUANTIDADE_LITROS']; }, $array));
                   var meta = chartInstance.controller.getDatasetMeta(i);
                   meta.data.forEach(function(bar, index) {
                   var data = dataset.data[index];
-                  ctx.fillText(data, bar._model.x - 5, bar._model.y);
-                  });
-                  });
-                  },
-                  },
-                  }
-                  });
-
-                  </script>
-            
-            <script>
-          var ctx1 = document.getElementById("grafico2").getContext('2d');
-          var barChart = new Chart(ctx1, {
-            type: 'horizontalBar',
-            borderWidth: 10,
-            data: {
-              labels: ["<?php echo  montaGraficoCidade($arrayQuantidadeDieselAgrupado);?>"],
-              datasets: [{
-                label: ' Qtd. Lts p/ Cidade (DIESEL)',
-                data: [ <?php echo  montaGraficoQuantidade($arrayQuantidadeDieselAgrupado); ?>],
-                  responsive: true,
-                  fill: false,
-                  backgroundColor: 'rgba(53,93,162,0.9)',
-                  borderColor: 'rgba(96,167,0,0.9)',
-                  },],
-                  },
-                  options: {
-                  title: {
-                  display: false,
-
-                  },
-                  scales: {
-                  xAxes: [{
-                  display: true,
-                  }],
-                  yAxes: [{
-                  display: true,
-                  }]
-                  },
-                  animation: {
-                  duration: 1000,
-                  onComplete: function() {
-                  var chartInstance = this.chart,
-                  ctx = chartInstance.ctx;
-                  ctx.textAlign = 'center';
-                  ctx.fillStyle = 'rgba(25,0,0,0.9)';
-                  this.data.datasets.forEach(function(dataset, i) {
-                  var meta = chartInstance.controller.getDatasetMeta(i);
-                  meta.data.forEach(function(bar, index) {
-                  var data = dataset.data[index];
-                  ctx.fillText(data, bar._model.x - 5, bar._model.y);
+                  ctx.fillText(data, bar._model.x - 5, bar._model.y - 15);
                   });
                   });
                   },
@@ -586,8 +530,69 @@ return $entry['QUANTIDADE_LITROS']; }, $array));
 
                   </script>
 
+                  <script>
+                    var ctx1 = document.getElementById("grafico2").getContext('2d');
+                    var barChart = new Chart(ctx1, {
+                      type: 'horizontalBar',
+                      borderWidth: 10,
+                      data: {
+                        labels: [<?php echo implode(',', $arrayData);?>],
+                        datasets: [{
+                          label: 'DIESEL',
+                          data: [<?php echo implode(',',$arrayVlrDiesel);?>],
+                          responsive: true,
+                          fill: false,
+                          backgroundColor: ['rgba(96,167,0,0.9)'],
+                          borderColor: 'rgba(96,167,0,0.9)',
+                        }, {
+                          label: 'GASOLINA',
+                          data: [<?php echo implode(',',$arrayVlrGasolina)?>],
+                          responsive: true,
+                          fill: false,
+                          backgroundColor: 'rgba(255,167,0,0.9)',
+                          borderColor: ['rgba(255,167,0,0.9)'],
+                        }, {
+                          label: 'ETANOL',
+                          data: [<?php echo implode (',',$arrayVlrEtanol) ?>],
+                          responsive: true,
+                          fill: false,
+                          backgroundColor: 'rgba(78,149,212,0.9)',
+                          borderColor: 'rgba(78,149,212,0.9)',
+                        }]
+                      },
+                      options: {
+                        title: {
+                          display: false,
 
-                  
+                        },
+                        scales: {
+                          xAxes: [{
+                            display: true,
+                          }],
+                          yAxes: [{
+                            display: true,
+                          }]
+                        },
+                        animation: {
+                          duration: 1000,
+                          onComplete: function() {
+                            var chartInstance = this.chart,
+                              ctx = chartInstance.ctx;
+                            ctx.textAlign = 'center';
+                            ctx.fillStyle = 'rgba(25,0,0,0.9)';
+                            this.data.datasets.forEach(function(dataset, i) {
+                              var meta = chartInstance.controller.getDatasetMeta(i);
+                              meta.data.forEach(function(bar, index) {
+                                var data = dataset.data[index];
+                                ctx.fillText(data, bar._model.x - 5, bar._model.y - 15);
+                              });
+                            });
+                          },
+                        },
+                      }
+                    });
+
+                  </script>
                   <!-- END Java Script Pagina -->
           
 

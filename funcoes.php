@@ -89,11 +89,11 @@ function buscaValorQtComb($unidade,$dataInicial,$dataFinal,$tipoCombustivel){
         
     $sql= "call buscaPrecoQtdUnidade('$unidade','$tipoCombustivel','$dataInicial','$dataFinal')";
     // $sql= "call buscaPrecoQtdConsolidado('$tipoCombustivel','$dataInicial','$dataFinal')";
-       /*
+       
          echo $sql;
             echo "<br>";
             echo "<br>";
-            echo "<br>";*/
+            echo "<br>";
             
     $sql = $db->query($sql);            
     $dados = $sql->fetchAll(); 
@@ -128,6 +128,31 @@ function buscaValorQtCombConsolidado($dataInicial,$dataFinal,$tipoCombustivel){
         'VALOR_COMBUSTIVEL'      => $quantidade['VALOR_COMBUSTIVEL'],
         'TIPO_COMBUSTIVEL_BUSCA' => $quantidade['TIPO_COMBUSTIVEL_BUSCA'],
         'QUANTIDADE_LITROS'      => $quantidade['QUANTIDADE_LITROS']
+          
+        );             
+      }
+    } 
+
+function buscaValorQtCombCidadeConsolidado($dataInicial,$dataFinal,$tipoCombustivel,$cidade){        
+   require("conexao.php");           
+        
+    //$sql= "call buscaPrecoQtdConsolidado('$tipoCombustivel','$dataInicial','$dataFinal')";
+    $sql= "call buscaPrecoQtdCidadeConsolidado('$tipoCombustivel','$dataInicial','$dataFinal','$cidade')";
+    /*   
+    echo $sql;
+    echo "<br>";
+    echo "<br>";
+    echo "<br>";*/
+            
+    $sql = $db->query($sql);            
+    $dados = $sql->fetchAll(); 
+            
+    foreach ($dados as $quantidade){
+      return array(
+        'VALOR_COMBUSTIVEL'      => $quantidade['VALOR_COMBUSTIVEL'],
+        'TIPO_COMBUSTIVEL_BUSCA' => $quantidade['TIPO_COMBUSTIVEL_BUSCA'],
+        'QUANTIDADE_LITROS'      => $quantidade['QUANTIDADE_LITROS'],
+        'CIDADE'                 => $quantidade['CIDADE']
           
         );             
       }

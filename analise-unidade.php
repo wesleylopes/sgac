@@ -242,6 +242,7 @@ $qtdDieselConsolidado     = buscaValorQtCombConsolidado($dti,$dtf,'DIESEL')['QUA
       <!-- Counter-Up-->
       <script src="assets/plugins/waypoints/lib/jquery.waypoints.min.js"></script>
       <script src="assets/plugins/counterup/jquery.counterup.min.js"></script>
+      <script src="assets/js/funcoes.js"></script>
 
       <script>
         $(document).ready(function() {
@@ -488,8 +489,8 @@ $qtdDieselConsolidado     = buscaValorQtCombConsolidado($dti,$dtf,'DIESEL')['QUA
                   var meta = chartInstance.controller.getDatasetMeta(i);
                   meta.data.forEach(function(bar, index) {
                     var data = dataset.data[index];
-                    //ctx.font = "bold 90% calibri";
-                    ctx.fillText(data, bar._model.x, bar._model.y - 5);
+                    //ctx.font = "bold 90% calibri";                  
+                    ctx.fillText(formatNumber(data), bar._model.x, bar._model.y - 5);
                   });
                 });
               },
@@ -504,7 +505,7 @@ $qtdDieselConsolidado     = buscaValorQtCombConsolidado($dti,$dtf,'DIESEL')['QUA
                   beginAtZero: true,
                   fontColor: "white",
                   fontSize: 11,
-                  stepSize: 9,
+                  stepSize: 9000,
                   gridLines: {
                     lineWidth: 0
                   }

@@ -49,11 +49,10 @@ function virgulatoPonto($value){
 }
 
 function formataNumero($valor){
-    if ($valor > 1000){
-    $resultado = round($valor);
+  if ($valor > 1000){
+    $resultado = $valor;
 } else {
-        $resultado = round($valor);
-        
+    $resultado = $valor;        
   }
 return $resultado;
 }
@@ -127,7 +126,7 @@ function buscaValorQtCombConsolidado($dataInicial,$dataFinal,$tipoCombustivel){
     foreach ($dados as $quantidade){
       return array(
         'VALOR_COMBUSTIVEL'      => $quantidade['VALOR_COMBUSTIVEL'],
-        'TIPO_COMBUSTIVEL_BUSCA' => $quantidade['TIPO_COMBUSTIVEL_BUSCA'],
+        'TIPO_COMBUSTIVEL_BUSCA' => formataNumero($quantidade['TIPO_COMBUSTIVEL_BUSCA']),
         'QUANTIDADE_LITROS'      => $quantidade['QUANTIDADE_LITROS']
           
         );             

@@ -72,7 +72,7 @@ BEGIN
   
   IF ROUND(somaValorCombustivel,2) <>0 THEN
   SELECT 
-    ROUND(somaValorCombustivel,2) as VALOR_COMBUSTIVEL, 
+    FORMAT(somaValorCombustivel,2) as VALOR_COMBUSTIVEL, 
 	qtdCombustivel as QUANTIDADE_LITROS,
     v_produto AS TIPO_COMBUSTIVEL,
     UPPER( p_tipoCombustivel) AS TIPO_COMBUSTIVEL_BUSCA,

@@ -72,10 +72,10 @@ BEGIN
   END IF;*/
   
   SELECT UPPER(v_centroResultado) as CENTRO_RESULTADO ,
-    format(somaValorCombustivel,2) as VALOR_COMBUSTIVEL, 
+    FORMAT(somaValorCombustivel,2) as VALOR_COMBUSTIVEL, 
 	qtdCombustivel as QUANTIDADE_LITROS,
     v_produto AS TIPO_COMBUSTIVEL,
-    UPPER( p_tipoCombustivel) AS TIPO_COMBUSTIVEL_BUSCA,v_cidade AS CIDADE;
+    UPPER( p_tipoCombustivel) AS TIPO_COMBUSTIVEL_BUSCA, v_cidade AS CIDADE;
 END $$
 
 

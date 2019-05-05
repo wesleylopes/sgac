@@ -23,23 +23,23 @@ $dti90 = date('Y-m-d',strtotime($dti) - (59 * 24 * 60 * 60));
 $dtf90 = date('Y-m-d',strtotime($dtf) - (59 * 24 * 60 * 60));                
     
  
-$vlrGasolinaConsolidado30Dias   = buscaValorQtCombConsolidado($dti30,$dtf30,'GASOLINA')['VALOR_COMBUSTIVEL'];
+$vlrGasolinaConsolidado30Dias   = buscaValorQtCombConsolidado($dti30,$dtf30,'GASOLINA')['QUANTIDADE_LITROS'];
 
-$vlrEtanolConsolidado30Dias     = buscaValorQtCombConsolidado($dti30,$dtf30,'ETANOL')['VALOR_COMBUSTIVEL'];
+$vlrEtanolConsolidado30Dias     = buscaValorQtCombConsolidado($dti30,$dtf30,'ETANOL')['QUANTIDADE_LITROS'];
 
-$vlrDieselConsolidado30Dias     = buscaValorQtCombConsolidado($dti30,$dtf30,'DIESEL')['VALOR_COMBUSTIVEL'];
+$vlrDieselConsolidado30Dias     = buscaValorQtCombConsolidado($dti30,$dtf30,'DIESEL')['QUANTIDADE_LITROS'];
   
-$vlrGasolinaConsolidado60Dias   = buscaValorQtCombConsolidado($dti60,$dtf60,'GASOLINA')['VALOR_COMBUSTIVEL'];
+$vlrGasolinaConsolidado60Dias   = buscaValorQtCombConsolidado($dti60,$dtf60,'GASOLINA')['QUANTIDADE_LITROS'];
  
-$vlrEtanolConsolidado60Dias     = buscaValorQtCombConsolidado($dti60,$dtf60,'ETANOL')['VALOR_COMBUSTIVEL'];
+$vlrEtanolConsolidado60Dias     = buscaValorQtCombConsolidado($dti60,$dtf60,'ETANOL')['QUANTIDADE_LITROS'];
   
-$vlrDieselConsolidado60Dias     = buscaValorQtCombConsolidado($dti60,$dtf60,'DIESEL')['VALOR_COMBUSTIVEL'];
+$vlrDieselConsolidado60Dias     = buscaValorQtCombConsolidado($dti60,$dtf60,'DIESEL')['QUANTIDADE_LITROS'];
    
-$vlrGasolinaConsolidado90Dias   = buscaValorQtCombConsolidado($dti90,$dtf90,'GASOLINA')['VALOR_COMBUSTIVEL'];
+$vlrGasolinaConsolidado90Dias   = buscaValorQtCombConsolidado($dti90,$dtf90,'GASOLINA')['QUANTIDADE_LITROS'];
   
-$vlrEtanolConsolidado90Dias     = buscaValorQtCombConsolidado($dti90,$dtf90,'ETANOL')['VALOR_COMBUSTIVEL'];
+$vlrEtanolConsolidado90Dias     = buscaValorQtCombConsolidado($dti90,$dtf90,'ETANOL')['QUANTIDADE_LITROS'];
 
-$vlrDieselConsolidado90Dias     = buscaValorQtCombConsolidado($dti90,$dtf90,'DIESEL')['VALOR_COMBUSTIVEL'];
+$vlrDieselConsolidado90Dias     = buscaValorQtCombConsolidado($dti90,$dtf90,'DIESEL')['QUANTIDADE_LITROS'];
     
 
     
@@ -54,9 +54,9 @@ function verificaVazioPegaVlrAnterior($array,$valor){
 //De data Inicial á data Final busca valores na base de Dados e Alimenta Arrays de Exibição   
 while (strtotime($date) <= strtotime($end_date)) {
   
-  $vlrGasolinaConsolidado1   = buscaValorQtCombConsolidado($date,$date,'GASOLINA')['VALOR_COMBUSTIVEL'];
-  $vlrEtanolConsolidado1     = buscaValorQtCombConsolidado($date,$date,'ETANOL')['VALOR_COMBUSTIVEL'];
-  $vlrDieselConsolidado1     = buscaValorQtCombConsolidado($date,$date,'DIESEL')['VALOR_COMBUSTIVEL'];
+  $vlrGasolinaConsolidado1   = buscaValorQtCombConsolidado($date,$date,'GASOLINA')['QUANTIDADE_LITROS'];
+  $vlrEtanolConsolidado1     = buscaValorQtCombConsolidado($date,$date,'ETANOL')['QUANTIDADE_LITROS'];
+  $vlrDieselConsolidado1     = buscaValorQtCombConsolidado($date,$date,'DIESEL')['QUANTIDADE_LITROS'];
   
   $arrayVlrDiesel[]          = verificaVazioPegaVlrAnterior($arrayVlrDiesel,$vlrDieselConsolidado1);  
   $arrayVlrGasolina[]        = verificaVazioPegaVlrAnterior($arrayVlrGasolina,$vlrGasolinaConsolidado1);  

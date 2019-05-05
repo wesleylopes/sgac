@@ -6,13 +6,14 @@ function converteDateTimeMysql($dateTime){
 function formataData($dateTime){
   return date("d/m/Y", strtotime( $dateTime));
 }
+
 function iniciaSessao(){
   session_start();
-require("conexao.php");
-header('Content-Type: text/html; charset=utf-8');
-ini_set('display_errors', 1);
-ini_set('display_startup_erros', 1);
-ini_set('max_execution_time', 0); 
+  require("conexao.php");
+  header('Content-Type: text/html; charset=utf-8');
+  ini_set('display_errors', 1);
+  ini_set('display_startup_erros', 1);
+  ini_set('max_execution_time', 0); 
 //unset($_POST['datai']);
 //unset($_POST['dataif']);
 
@@ -84,16 +85,16 @@ function verificaAtualizacaoPeriodoDadosSistema(){
        return array('MOVIMENTO_INICIAL' => $registro['MOVIMENTO_INICIAL'], 'MOVIMENTO_FINAL' => $registro['MOVIMENTO_FINAL'],'ULTIMA_IMPORTACAO' => $registro['ULTIMA_IMPORTACAO']); 
      }             
    }   
+
 function buscaValorQtComb($unidade,$dataInicial,$dataFinal,$tipoCombustivel){        
    require("conexao.php");           
         
-    $sql= "call buscaPrecoQtdUnidade('$unidade','$tipoCombustivel','$dataInicial','$dataFinal')";
-    // $sql= "call buscaPrecoQtdConsolidado('$tipoCombustivel','$dataInicial','$dataFinal')";
-       
-         echo $sql;
-            echo "<br>";
-            echo "<br>";
-            echo "<br>";
+    $sql= "call buscaPrecoQtdUnidade('$unidade','$tipoCombustivel','$dataInicial','$dataFinal')";   
+    /*
+    echo $sql;
+    echo "<br>";
+    echo "<br>";
+    echo "<br>";*/
             
     $sql = $db->query($sql);            
     $dados = $sql->fetchAll(); 
@@ -137,17 +138,17 @@ function buscaValorQtCombCidadeConsolidado($dataInicial,$dataFinal,$tipoCombusti
    require("conexao.php");           
         
     //$sql= "call buscaPrecoQtdConsolidado('$tipoCombustivel','$dataInicial','$dataFinal')";
-    $sql= "call buscaPrecoQtdCidadeConsolidado('$tipoCombustivel','$dataInicial','$dataFinal','$cidade')";
+   $sql= "call buscaPrecoQtdCidadeConsolidado('$tipoCombustivel','$dataInicial','$dataFinal','$cidade')";
     /*   
     echo $sql;
     echo "<br>";
     echo "<br>";
     echo "<br>";*/
             
-    $sql = $db->query($sql);            
-    $dados = $sql->fetchAll(); 
+   $sql = $db->query($sql);            
+   $dados = $sql->fetchAll(); 
             
-    foreach ($dados as $quantidade){
+   foreach ($dados as $quantidade){
       return array(
         'VALOR_COMBUSTIVEL'      => $quantidade['VALOR_COMBUSTIVEL'],
         'TIPO_COMBUSTIVEL_BUSCA' => $quantidade['TIPO_COMBUSTIVEL_BUSCA'],
@@ -159,9 +160,8 @@ function buscaValorQtCombCidadeConsolidado($dataInicial,$dataFinal,$tipoCombusti
     } 
 
 function extrairMesAnoPorExtenso($data){   
-  setlocale(LC_ALL, "pt_BR", "pt_BR.iso-8859-1", "pt_BR.utf-8","Portuguese_Brazilian","Portuguese_Brazil");
-  date_default_timezone_set('America/Sao_Paulo');
- 
+   setlocale(LC_ALL, "pt_BR", "pt_BR.iso-8859-1", "pt_BR.utf-8","Portuguese_Brazilian","Portuguese_Brazil");
+   date_default_timezone_set('America/Sao_Paulo'); 
   
   return ucfirst(strftime("%B de %Y", strtotime($data)));                
 }

@@ -406,10 +406,10 @@ return $entry['QUANTIDADE_LITROS']; }, $array));
                 <div class="card-header">
                   <i class="fa fa-table"></i> EVOLUÇÃO MENSAL PREÇO MÉDIO COMBUSTÍVEL (90/60/30 DIAS)
                 </div>
-                <div class="card-body">                 
+                <div class="card-body">
                   <canvas id="grafico1"></canvas>
                   <canvas id="grafico2"></canvas>
-                 
+
                 </div>
                 <div class="card-footer small text-muted"></div>
               </div>
@@ -426,7 +426,7 @@ return $entry['QUANTIDADE_LITROS']; }, $array));
 
                   <canvas id="grafico2"></canvas>
 
-                
+
                 </div>
                 <div class="card-footer small text-muted"></div>
               </div>
@@ -495,48 +495,51 @@ return $entry['QUANTIDADE_LITROS']; }, $array));
               labels: ["<?php echo  montaGraficoCidade($arrayValorDieselAgrupado);?>"],
               datasets: [{
                 label: 'DIESEL Pç. Médio p/ Cidade (DIESEL)',
-                data: [ <?php echo  montaGraficoValor($arrayValorDieselAgrupado); ?>],
-                  responsive: true,
-                  fill: false,
-                  backgroundColor: 'rgba(96,167,0,0.9)',
-                  borderColor: 'rgba(96,167,0,0.9)',
-                  },],
-                  },
-                  options: {
-                  title: {
-                  display: false,
+                data: [<?php echo  montaGraficoValor($arrayValorDieselAgrupado); ?>],
+                responsive: true,
+                fill: false,
+                backgroundColor: 'rgba(96,167,0,0.9)',
+                borderColor: 'rgba(96,167,0,0.9)',
+              }, ],
+            },
+            options: {
+              title: {
+                display: false,
 
-                  },
-                  scales: {
-                  xAxes: [{
+              },
+              scales: {
+                xAxes: [{
                   display: true,
-                  }],
-                  yAxes: [{
+                }],
+                yAxes: [{
                   display: true,
-                  }]
-                  },
-                  animation: {
-                  duration: 1000,
-                  onComplete: function() {
+                }]
+              },
+              animation: {
+                duration: 1000,
+                onComplete: function() {
                   var chartInstance = this.chart,
-                  ctx = chartInstance.ctx;
+                    ctx = chartInstance.ctx;
                   ctx.textAlign = 'center';
                   ctx.fillStyle = 'rgba(25,0,0,0.9)';
+                   ctx.font = "bold 11px Calibri";
+                  ctx.fillStyle = ['blue', 'red'];                
+                  ctx.strokeStyle = '#fff000';
                   this.data.datasets.forEach(function(dataset, i) {
-                  var meta = chartInstance.controller.getDatasetMeta(i);
-                  meta.data.forEach(function(bar, index) {
-                  var data = dataset.data[index];
-                  ctx.fillText(data, bar._model.x - 5, bar._model.y);
+                    var meta = chartInstance.controller.getDatasetMeta(i);
+                    meta.data.forEach(function(bar, index) {
+                      var data = dataset.data[index];
+                      ctx.fillText(data, bar._model.x + 20, bar._model.y);
+                    });
                   });
-                  });
-                  },
-                  },
-                  }
-                  });
+                },
+              },
+            }
+          });
 
-                  </script>
-            
-            <script>
+        </script>
+
+        <script>
           var ctx1 = document.getElementById("grafico2").getContext('2d');
           var barChart = new Chart(ctx1, {
             type: 'horizontalBar',
@@ -545,51 +548,54 @@ return $entry['QUANTIDADE_LITROS']; }, $array));
               labels: ["<?php echo  montaGraficoCidade($arrayQuantidadeDieselAgrupado);?>"],
               datasets: [{
                 label: ' Qtd. Lts p/ Cidade (DIESEL)',
-                data: [ <?php echo  montaGraficoQuantidade($arrayQuantidadeDieselAgrupado); ?>],
-                  responsive: true,
-                  fill: false,
-                  backgroundColor: 'rgba(53,93,162,0.9)',
-                  borderColor: 'rgba(96,167,0,0.9)',
-                  },],
-                  },
-                  options: {
-                  title: {
-                  display: false,
+                data: [<?php echo  montaGraficoQuantidade($arrayQuantidadeDieselAgrupado); ?>],
+                responsive: true,
+                fill: false,
+                backgroundColor: 'rgba(96,167,0,0.9)',
+                borderColor: 'rgba(96,167,0,0.9)'
+              }, ],
+            },
+            options: {
+              title: {
+                display: false,
 
-                  },
-                  scales: {
-                  xAxes: [{
+              },
+              scales: {
+                xAxes: [{
                   display: true,
-                  }],
-                  yAxes: [{
+                }],
+                yAxes: [{
                   display: true,
-                  }]
-                  },
-                  animation: {
-                  duration: 1000,
-                  onComplete: function() {
+                }]
+              },
+              animation: {
+                duration: 1000,
+                onComplete: function() {
                   var chartInstance = this.chart,
-                  ctx = chartInstance.ctx;
+                    ctx = chartInstance.ctx;
                   ctx.textAlign = 'center';
                   ctx.fillStyle = 'rgba(25,0,0,0.9)';
+                  ctx.font = "bold 11px Calibri";
+                  ctx.fillStyle = ['blue', 'red'];                
+                  ctx.strokeStyle = '#fff000';
                   this.data.datasets.forEach(function(dataset, i) {
-                  var meta = chartInstance.controller.getDatasetMeta(i);
-                  meta.data.forEach(function(bar, index) {
-                  var data = dataset.data[index];
-                  ctx.fillText(data, bar._model.x - 5, bar._model.y);
+                    var meta = chartInstance.controller.getDatasetMeta(i);
+                    meta.data.forEach(function(bar, index) {
+                      var data = dataset.data[index];
+                      ctx.fillText(data, bar._model.x + 20, bar._model.y);
+                    });
                   });
-                  });
-                  },
-                  },
-                  }
-                  });
+                },
+              },
+            }
+          });
 
-                  </script>
+        </script>
 
 
-                  
-                  <!-- END Java Script Pagina -->
-          
+
+        <!-- END Java Script Pagina -->
+
 
 </body>
 

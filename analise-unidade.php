@@ -104,8 +104,8 @@ $qtdDieselConsolidado     = buscaValorQtCombConsolidado($dti,$dtf,'DIESEL')['QUA
       </div>
     </div>
 
-    <div class="container">
-      <div class="container">
+    <div class="container-fluid">
+      <div class="container-fluid">
         <div class="card-footer small text-muted">Ultima Sincronização de Tela:
           <?php echo buscaDataHora();                    
                     $arrayMensagem = verificaAtualizacaoPeriodoDadosSistema();
@@ -520,7 +520,7 @@ $qtdDieselConsolidado     = buscaValorQtCombConsolidado($dti,$dtf,'DIESEL')['QUA
         var barChart = new Chart(ctx1, {
           type: 'doughnut',
           data: {
-            labels: ["DIESEL <?php echo $qtdDieselConsolidado ?>", "GASOLINA <?php echo $qtdGasolinaConsolidado?>", "ETANOL <?php echo $qtdEtanolConsolidado ?>"],
+            labels: ["DIESEL "+formatNumber(<?php echo $qtdDieselConsolidado ?>), "GASOLINA "+formatNumber(<?php echo $qtdGasolinaConsolidado?>), "ETANOL "+formatNumber(<?php echo $qtdEtanolConsolidado ?>)],
             datasets: [{
               label: '',
               data: ["<?php echo $qtdDieselConsolidado ?>", "<?php echo $qtdGasolinaConsolidado?>", "<?php echo $qtdEtanolConsolidado ?>"],

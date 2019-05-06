@@ -106,58 +106,70 @@ $qtdDieselConsolidado     = buscaValorQtCombConsolidado($dti,$dtf,'DIESEL')['QUA
               <div class="card-box noradius noborder bg-success">
                 <i class="fa fa-exchange float-right text-white"></i>
                 <h6 class="text-white text-uppercase m-b-10">Transações aprovadas no PERÍODO </h6>
-                <span class="text-white">Quantidade</span><h4 class="m-b-20 text-white counter">400</h4>
-                <span class="text-white">Valor R$</span><h4 class="m-b-20 text-white counter">100.000</h4>
+                <span class="text-white">Quantidade</span>
+                <h4 class="m-b-20 text-white counter">400</h4>
+                <span class="text-white">Valor R$</span>
+                <h4 class="m-b-20 text-white counter">100.000</h4>
                 <span class="text-white">Analise de Combustivel</span>
               </div>
             </div>
-            
-             <div class="col-xs-12 col-md-6 col-lg-6 col-xl-3">
+
+            <div class="col-xs-12 col-md-6 col-lg-6 col-xl-3">
               <div class="card-box noradius noborder bg-danger">
                 <i class="fa fa-exchange float-right text-white"></i>
                 <h6 class="text-white text-uppercase m-b-10">Transações negadas no PERÍODO </h6>
-                <span class="text-white">Quantidade</span><h4 class="m-b-20 text-white counter">400</h4>
-                <span class="text-white">Valor R$</span><h4 class="m-b-20 text-white counter">100.000</h4>
+                <span class="text-white">Quantidade</span>
+                <h4 class="m-b-20 text-white counter">400</h4>
+                <span class="text-white">Valor R$</span>
+                <h4 class="m-b-20 text-white counter">100.000</h4>
                 <span class="text-white">Analise de Combustivel</span>
               </div>
             </div>
-            
+
             <div class="col-xs-12 col-md-6 col-lg-6 col-xl-3">
               <div class="card-box noradius noborder bg-success">
                 <i class="fa fa-exchange float-right text-white"></i>
                 <h6 class="text-white text-uppercase m-b-10">TRANSAÇÕES APROVADAS (06/05/2019) </h6>
-                <span class="text-white">Quantidade</span><h4 class="m-b-20 text-white counter">400</h4>
-                <span class="text-white">Valor R$</span><h4 class="m-b-20 text-white counter">100.000</h4>
+                <span class="text-white">Quantidade</span>
+                <h4 class="m-b-20 text-white counter">400</h4>
+                <span class="text-white">Valor R$</span>
+                <h4 class="m-b-20 text-white counter">100.000</h4>
                 <span class="text-white">Analise de Combustivel</span>
               </div>
             </div>
-            
+
             <div class="col-xs-12 col-md-6 col-lg-6 col-xl-3">
               <div class="card-box noradius noborder bg-danger">
                 <i class="fa fa-exchange float-right text-white"></i>
                 <h6 class="text-white text-uppercase m-b-10">Transações negadas (06/05/2019) </h6>
-                <span class="text-white">Quantidade</span><h4 class="m-b-20 text-white counter">400</h4>
-                <span class="text-white">Valor R$</span><h4 class="m-b-20 text-white counter">100.000</h4>
+                <span class="text-white">Quantidade</span>
+                <h4 class="m-b-20 text-white counter">400</h4>
+                <span class="text-white">Valor R$</span>
+                <h4 class="m-b-20 text-white counter">100.000</h4>
                 <span class="text-white">Analise de Combustivel</span>
               </div>
-            </div> 
-            
-             <div class="col-xs-12 col-md-6 col-lg-6 col-xl-3">
+            </div>
+
+            <div class="col-xs-12 col-md-6 col-lg-6 col-xl-3">
               <div class="card-box noradius noborder bg-warning">
                 <i class="fa fa-car float-right text-white"></i>
                 <h6 class="text-white text-uppercase m-b-10"> RESUMO Veiculos </h6>
-                <span class="text-white">Cadastrados</span><h4 class="m-b-20 text-white counter">0</h4>
-                <span class="text-white">Ativos</span><h4 class="m-b-20 text-white counter">0</h4>
+                <span class="text-white">Cadastrados</span>
+                <h4 class="m-b-20 text-white counter">0</h4>
+                <span class="text-white">Ativos</span>
+                <h4 class="m-b-20 text-white counter">0</h4>
                 <span class="text-white">Cadastro de Veiculos</span>
               </div>
             </div>
-            
+
             <div class="col-xs-12 col-md-6 col-lg-6 col-xl-3">
               <div class="card-box noradius noborder bg-default">
                 <i class="fa fa-user-o float-right text-white"></i>
                 <h6 class="text-white text-uppercase m-b-10"> RESUMO MOTORISTAS</h6>
-                <span class="text-white">Cadastrados</span><h4 class="m-b-20 text-white counter">0</h4>
-                <span class="text-white">Ativos</span><h4 class="m-b-20 text-white counter">00</h4>
+                <span class="text-white">Cadastrados</span>
+                <h4 class="m-b-20 text-white counter">0</h4>
+                <span class="text-white">Ativos</span>
+                <h4 class="m-b-20 text-white counter">00</h4>
                 <span class="text-white">Cadastro de Motoristas</span>
               </div>
             </div>
@@ -169,9 +181,9 @@ $qtdDieselConsolidado     = buscaValorQtCombConsolidado($dti,$dtf,'DIESEL')['QUA
                 <h1 class="m-b-20 text-white counter">13</h1>
                 <span class="text-white">Notificações</span>
               </div>
-            </div>            
+            </div>
           </div>
-          
+
           <div class="row">
             <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-12">
               <div class="card mb-3">
@@ -182,50 +194,63 @@ $qtdDieselConsolidado     = buscaValorQtCombConsolidado($dti,$dtf,'DIESEL')['QUA
             </div>
             <hr>
 
-            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-4">
               <div class="card mb-3">
                 <div class="card-header">
-                  <i class="fa fa-table"></i> R$/L - CUSTO MÉDIO CONSOLIDADO
+                  <h3><i class="fa fa-line-chart"></i> Veículos com PIOR DESEMPENHO</h3>
+                  Baseado na distância percorrida por litro
                 </div>
 
                 <div class="card-body">
-                  <canvas id="grafico2"></canvas>
-
+                  <canvas id="lineChart"></canvas>
                 </div>
-                <div class="card-footer small text-muted"></div>
-              </div>
+                <div class="card-footer small text-muted">Atualizado Segunda feira ás 11:59</div>
+              </div><!-- end card-->
             </div>
 
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-4">
+              <div class="card mb-3">
+                <div class="card-header">
+                  <h3><i class="fa fa-line-chart"></i> Condutores com MAIOR DESPESA</h3>
+                  Baseado no total em R$
+                </div>
+
+                <div class="card-body">
+                  <canvas id="lineChart"></canvas>
+                </div>
+                <div class="card-footer small text-muted">Atualizado Segunda feira ás 11:59</div>
+              </div><!-- end card-->
+            </div>
+            
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-4">
+              <div class="card mb-3">
+                <div class="card-header">
+                  <h3><i class="fa fa-line-chart"></i> Últimos Veiculos ABASTECIDOS</h3>
+                  Baseado na data de abastecimento
+                </div>
+
+                <div class="card-body">
+                  <canvas id="lineChart"></canvas>
+                </div>
+                <div class="card-footer small text-muted">Atualizado Segunda feira ás 11:59</div>
+              </div><!-- end card-->
+            </div>
+            
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-4">
+              <div class="card mb-3">
+                <div class="card-header">
+                  <h3><i class="fa fa-line-chart"></i> Consumo por tipo de Combustivel</h3>
+                  Baseado na data de abastecimento
+                </div>
+
+                <div class="card-body">
+                  <canvas id="lineChart"></canvas>
+                </div>
+                <div class="card-footer small text-muted">Atualizado Segunda feira ás 11:59</div>
+              </div><!-- end card-->
+            </div>
           </div>
-          <div class="row">
-            <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8 col-xl-8">
-              <div class="card mb-3">
-                <div class="card-header">
-                  <i class="fa fa-table"></i> QTD/L - QUANTIDADE LITROS POR UNIDADE
-                </div>
 
-                <div class="card-body">
-                  <canvas id="grafico3"></canvas>
-                </div>
-                <div class="card-footer small text-muted"></div>
-              </div>
-            </div>
-
-            <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
-              <div class="card mb-3">
-                <div class="card-header">
-                  <i class="fa fa-table"></i> QTD/L - QUANTIDADE LITROS TOTAL
-                </div>
-
-                <div class="card-body">
-                  <canvas id="grafico4"></canvas>
-                </div>
-
-                <br>
-                <div class="card-footer small text-muted"></div>
-              </div>
-            </div>
-          </div>
           <!-- Start Barra Menu Lateral Esquerdo -->
           <?php require_once ("front-end/bar-footer.php"); ?>
           <!-- End Barra Menu Lateral Esquerdo -->

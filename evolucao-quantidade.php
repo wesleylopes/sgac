@@ -176,7 +176,7 @@ while (strtotime($date) <= strtotime($end_date)) {
               <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
                 <div class="card mb-3">
                   <div class="card-header">
-                    <i class="fa fa-table"></i> EVOLUÇÃO MENSAL PREÇO MÉDIO COMBUSTÍVEL (90/60/30 DIAS)
+                    <i class="fa fa-table"></i> EVOLUÇÃO MENSAL CONSUMO MÉDIO COMBUSTÍVEL EM LITROS (90/60/30 DIAS)
                   </div>
                   <div class="card-body">
 
@@ -191,7 +191,7 @@ while (strtotime($date) <= strtotime($end_date)) {
               <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-12">
                 <div class="card mb-3">
                   <div class="card-header">
-                    <i class="fa fa-table"></i> EVOLUÇÃO DIARIA PREÇO MÉDIO COMBUSTÍVEL
+                    <i class="fa fa-table"></i> EVOLUÇÃO DIARIA CONSUMO MÉDIO COMBUSTÍVEL EM LITROS
                   </div>
 
                   <div class="card-body">
@@ -273,7 +273,7 @@ while (strtotime($date) <= strtotime($end_date)) {
                   ],
                   responsive: true,
                   fill: false,
-                  backgroundColor: ['rgba(96,167,0,0.9)'],
+                  backgroundColor: 'rgba(96,167,0,0.9)',
                   borderColor: 'rgba(96,167,0,0.9)',
                 }, {
                   label: 'GASOLINA',
@@ -320,9 +320,8 @@ while (strtotime($date) <= strtotime($end_date)) {
                     this.data.datasets.forEach(function(dataset, i) {
                       var meta = chartInstance.controller.getDatasetMeta(i);
                       meta.data.forEach(function(bar, index) {
-                        var data = dataset.data[index];
-                        data2 = data.toPrecision();
-                        ctx.fillText(data2, bar._model.x - 5, bar._model.y - 15);
+                        var data = dataset.data[index];                      
+                        ctx.fillText(data, bar._model.x - 5, bar._model.y - 15);
                       });
                     });
                   },
@@ -381,13 +380,12 @@ while (strtotime($date) <= strtotime($end_date)) {
                       ctx = chartInstance.ctx;
                     ctx.textAlign = 'center';
                     ctx.fillStyle = 'rgba(25,0,0,0.9)';
-                    ctx.font = "bold 11px Calibri";
+                    ctx.font = "bold 14px Calibri";
                     this.data.datasets.forEach(function(dataset, i) {
                       var meta = chartInstance.controller.getDatasetMeta(i);
                       meta.data.forEach(function(bar, index) {
-                        var data = dataset.data[index];
-                        var data1 = data;
-                        ctx.fillText(data1, bar._model.x - 5, bar._model.y - 15);
+                        var data = dataset.data[index];                        
+                        ctx.fillText(data, bar._model.x - 5, bar._model.y - 15);
                       });
                     });
                   },

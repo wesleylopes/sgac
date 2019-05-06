@@ -1,4 +1,0 @@
-<div class="chart-container">
-  Diesel
-    <canvas id="chart"></canvas>
-</div>

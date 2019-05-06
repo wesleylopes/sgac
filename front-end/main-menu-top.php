@@ -34,7 +34,7 @@
 
          <li class="list-inline-item dropdown notif">
            <a class="nav-link dropdown-toggle arrow-none" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
-             <i class="fa fa-fw fa-bell-o"></i><span class="badge badge-warning-o"> 0 </span>
+             <i class="fa fa-fw fa-bell-o"></i><span class="badge badge-warning"> 13 </span>
            </a>
            <div class="dropdown-menu dropdown-menu-right dropdown-arrow dropdown-lg">
              <!-- item-->
@@ -94,8 +94,14 @@
 
              <!-- item-->
              <a href="pro-profile.html" class="dropdown-item notify-item">
+               <i class="fa fa fa-cog"></i> <span>Preferencias</span>
+             </a>
+             
+              <a href="pro-profile.html" class="dropdown-item notify-item">
                <i class="fa fa-user"></i> <span>Perfil</span>
              </a>
+                            
+             
 
              <!-- item-->
              <a href="sair.php" class="dropdown-item notify-item">

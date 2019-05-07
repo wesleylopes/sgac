@@ -6,40 +6,6 @@ ini_set('max_execution_time', 0);
 $dti   = $_POST['datai'];  // Captura data Inicial Formulário
 $dtf   = $_POST['dataf'];  // Captura data Final Formulário
 
-//Busca Valores por Unidade  
-  
-$vlrGasolinaUnai        = buscaValorQtComb('UNAI',$dti,$dtf,'GASOLINA')['VALOR_COMBUSTIVEL'];
-$vlrEtanolUnai          = buscaValorQtComb('UNAI',$dti,$dtf,'ETANOL')['VALOR_COMBUSTIVEL'];
-$vlrDieselUnai          = buscaValorQtComb('UNAI',$dti,$dtf,'DIESEL')['VALOR_COMBUSTIVEL'];
-  
-$vlrGasolinaParacatu    = buscaValorQtComb('Paracatu',$dti,$dtf,'GASOLINA')['VALOR_COMBUSTIVEL'];
-$vlrEtanolParacatu      = buscaValorQtComb('Paracatu',$dti,$dtf,'ETANOL')['VALOR_COMBUSTIVEL'];
-$vlrDieselParacatu      = buscaValorQtComb('Paracatu',$dti,$dtf,'DIESEL')['VALOR_COMBUSTIVEL'];
-  
-$vlrGasolinaPirapora    = buscaValorQtComb('Pirapora',$dti,$dtf,'GASOLINA')['VALOR_COMBUSTIVEL'];
-$vlrEtanolPirapora      = buscaValorQtComb('Pirapora',$dti,$dtf,'ETANOL')['VALOR_COMBUSTIVEL'];
-$vlrDieselPirapora      = buscaValorQtComb('Pirapora',$dti,$dtf,'DIESEL')['VALOR_COMBUSTIVEL'];
-  
-$qtdGasolinaUnai        = buscaValorQtComb('UNAI',$dti,$dtf,'GASOLINA')['QUANTIDADE_LITROS'];
-$qtdEtanolUnai          = buscaValorQtComb('UNAI',$dti,$dtf,'ETANOL')['QUANTIDADE_LITROS'];
-$qtdDieselUnai          = buscaValorQtComb('UNAI',$dti,$dtf,'DIESEL')['QUANTIDADE_LITROS'];
-  
-$qtdGasolinaParacatu    = buscaValorQtComb('Paracatu',$dti,$dtf,'GASOLINA')['QUANTIDADE_LITROS'];
-$qtdEtanolParacatu      = buscaValorQtComb('Paracatu',$dti,$dtf,'ETANOL')['QUANTIDADE_LITROS'];
-$qtdDieselParacatu      = buscaValorQtComb('Paracatu',$dti,$dtf,'DIESEL')['QUANTIDADE_LITROS'];
-  
-$qtdGasolinaPirapora    = buscaValorQtComb('Pirapora',$dti,$dtf,'GASOLINA') ['QUANTIDADE_LITROS'];
-$qtdEtanolPirapora      = buscaValorQtComb('Pirapora',$dti,$dtf,'ETANOL')['QUANTIDADE_LITROS'];
-$qtdDieselPirapora      = buscaValorQtComb('Pirapora',$dti,$dtf,'DIESEL')['QUANTIDADE_LITROS']; 
-  
-// Busca Valores e Quantidades Consolidadas 
-$vlrGasolinaConsolidado   = buscaValorQtCombConsolidado($dti,$dtf,'GASOLINA')['VALOR_COMBUSTIVEL'];
-$vlrEtanolConsolidado     = buscaValorQtCombConsolidado($dti,$dtf,'ETANOL')['VALOR_COMBUSTIVEL'];
-$vlrDieselConsolidado     = buscaValorQtCombConsolidado($dti,$dtf,'DIESEL')['VALOR_COMBUSTIVEL'];
-  
-$qtdGasolinaConsolidado   = buscaValorQtCombConsolidado($dti,$dtf,'GASOLINA')['QUANTIDADE_LITROS'];
-$qtdEtanolConsolidado     = buscaValorQtCombConsolidado($dti,$dtf,'ETANOL')['QUANTIDADE_LITROS'];
-$qtdDieselConsolidado     = buscaValorQtCombConsolidado($dti,$dtf,'DIESEL')['QUANTIDADE_LITROS'];
   
 }?>
 
@@ -107,9 +73,9 @@ $qtdDieselConsolidado     = buscaValorQtCombConsolidado($dti,$dtf,'DIESEL')['QUA
                 <i class="fa fa-exchange float-right text-white"></i>
                 <h6 class="text-white text-uppercase m-b-10">Transações aprovadas no PERÍODO </h6>
                 <span class="text-white">Quantidade</span>
-                <h4 class="m-b-20 text-white counter">400</h4>
+                <h4 class="m-b-20 text-white counter">10</h4>
                 <span class="text-white">Valor R$</span>
-                <h4 class="m-b-20 text-white counter">100.000</h4>
+                <h4 class="m-b-20 text-white counter">0</h4>
                 <span class="text-white">Analise de Combustivel</span>
               </div>
             </div>
@@ -119,9 +85,9 @@ $qtdDieselConsolidado     = buscaValorQtCombConsolidado($dti,$dtf,'DIESEL')['QUA
                 <i class="fa fa-exchange float-right text-white"></i>
                 <h6 class="text-white text-uppercase m-b-10">Transações negadas no PERÍODO </h6>
                 <span class="text-white">Quantidade</span>
-                <h4 class="m-b-20 text-white counter">400</h4>
+                <h4 class="m-b-20 text-white counter">0</h4>
                 <span class="text-white">Valor R$</span>
-                <h4 class="m-b-20 text-white counter">100.000</h4>
+                <h4 class="m-b-20 text-white counter">0</h4>
                 <span class="text-white">Analise de Combustivel</span>
               </div>
             </div>
@@ -131,9 +97,9 @@ $qtdDieselConsolidado     = buscaValorQtCombConsolidado($dti,$dtf,'DIESEL')['QUA
                 <i class="fa fa-exchange float-right text-white"></i>
                 <h6 class="text-white text-uppercase m-b-10">TRANSAÇÕES APROVADAS (06/05/2019) </h6>
                 <span class="text-white">Quantidade</span>
-                <h4 class="m-b-20 text-white counter">400</h4>
+                <h4 class="m-b-20 text-white counter">0</h4>
                 <span class="text-white">Valor R$</span>
-                <h4 class="m-b-20 text-white counter">100.000</h4>
+                <h4 class="m-b-20 text-white counter">0</h4>
                 <span class="text-white">Analise de Combustivel</span>
               </div>
             </div>
@@ -143,9 +109,9 @@ $qtdDieselConsolidado     = buscaValorQtCombConsolidado($dti,$dtf,'DIESEL')['QUA
                 <i class="fa fa-exchange float-right text-white"></i>
                 <h6 class="text-white text-uppercase m-b-10">Transações negadas (06/05/2019) </h6>
                 <span class="text-white">Quantidade</span>
-                <h4 class="m-b-20 text-white counter">400</h4>
+                <h4 class="m-b-20 text-white counter">0</h4>
                 <span class="text-white">Valor R$</span>
-                <h4 class="m-b-20 text-white counter">100.000</h4>
+                <h4 class="m-b-20 text-white counter">0</h4>
                 <span class="text-white">Analise de Combustivel</span>
               </div>
             </div>
@@ -169,7 +135,7 @@ $qtdDieselConsolidado     = buscaValorQtCombConsolidado($dti,$dtf,'DIESEL')['QUA
                 <span class="text-white">Cadastrados</span>
                 <h4 class="m-b-20 text-white counter">0</h4>
                 <span class="text-white">Ativos</span>
-                <h4 class="m-b-20 text-white counter">00</h4>
+                <h4 class="m-b-20 text-white counter">0</h4>
                 <span class="text-white">Cadastro de Motoristas</span>
               </div>
             </div>
@@ -178,7 +144,7 @@ $qtdDieselConsolidado     = buscaValorQtCombConsolidado($dti,$dtf,'DIESEL')['QUA
               <div class="card-box noradius noborder bg-danger">
                 <i class="fa fa-bell-o float-right text-white"></i>
                 <h6 class="text-white text-uppercase m-b-20">Alertas Pendentes</h6>
-                <h1 class="m-b-20 text-white counter">13</h1>
+                <h1 class="m-b-20 text-white counter">1</h1>
                 <span class="text-white">Notificações</span>
               </div>
             </div>
@@ -218,7 +184,7 @@ $qtdDieselConsolidado     = buscaValorQtCombConsolidado($dti,$dtf,'DIESEL')['QUA
                 <div class="card-body">
                   <canvas id="lineChart"></canvas>
                 </div>
-                <div class="card-footer small text-muted">Atualizado Segunda feira ás 11:59</div>
+                <div class="card-footer small text-muted">Atualizado Segunda feira ás 08:59</div>
               </div><!-- end card-->
             </div>
             
@@ -232,7 +198,7 @@ $qtdDieselConsolidado     = buscaValorQtCombConsolidado($dti,$dtf,'DIESEL')['QUA
                 <div class="card-body">
                   <canvas id="lineChart"></canvas>
                 </div>
-                <div class="card-footer small text-muted">Atualizado Segunda feira ás 11:59</div>
+                <div class="card-footer small text-muted">Atualizado Segunda feira ás 08:59</div>
               </div><!-- end card-->
             </div>
             
@@ -246,7 +212,7 @@ $qtdDieselConsolidado     = buscaValorQtCombConsolidado($dti,$dtf,'DIESEL')['QUA
                 <div class="card-body">
                   <canvas id="lineChart"></canvas>
                 </div>
-                <div class="card-footer small text-muted">Atualizado Segunda feira ás 11:59</div>
+                <div class="card-footer small text-muted">Atualizado Segunda feira ás 08:59</div>
               </div><!-- end card-->
             </div>
           </div>
@@ -291,7 +257,7 @@ $qtdDieselConsolidado     = buscaValorQtCombConsolidado($dti,$dtf,'DIESEL')['QUA
             // counter-up
             $('.counter').counterUp({
               delay: 300,
-              time: 600
+              time: 1000
             });
           });
 

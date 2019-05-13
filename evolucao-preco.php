@@ -318,7 +318,7 @@ while (strtotime($date) <= strtotime($end_date)) {
                       ctx = chartInstance.ctx;
                     ctx.textAlign = 'center';
                     ctx.fillStyle = 'rgba(25,0,0,0.9)';
-                    ctx.font = "bold 11px Calibri";
+                   // ctx.font = "bold 11px Calibri";
                     this.data.datasets.forEach(function(dataset, i) {
                       var meta = chartInstance.controller.getDatasetMeta(i);
                       meta.data.forEach(function(bar, index) {
@@ -384,7 +384,7 @@ while (strtotime($date) <= strtotime($end_date)) {
                       ctx = chartInstance.ctx;
                     ctx.textAlign = 'center';
                     ctx.fillStyle = 'rgba(25,0,0,0.9)';
-                    ctx.font = "bold 11px Calibri";
+                    //ctx.font = "bold 11px Calibri";
                     this.data.datasets.forEach(function(dataset, i) {
                       var meta = chartInstance.controller.getDatasetMeta(i);
                       meta.data.forEach(function(bar, index) {

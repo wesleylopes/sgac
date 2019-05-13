@@ -65,17 +65,17 @@ $dtf   = $_POST['dataf'];  // Captura data Final Formulário
                 <div class="clearfix"></div>
               </div>
             </div>
-          </div>
-
+          </div>     
+            
           <div class="row">
-            <div class="col-xs-12 col-md-6 col-lg-6 col-xl-3">
+            <div class="col-xs-12 col-md-6 col-lg-6 col-xl-6">
               <div class="card-box noradius noborder bg-success">
                 <i class="fa fa-exchange float-right text-white"></i>
-                <h6 class="text-white text-uppercase m-b-10">Transações aprovadas no PERÍODO </h6>
+                <h6 class="text-white text-uppercase m-b-10">Transações no PERÍODO</h6>
                 <span class="text-white">Quantidade</span>
-                <h4 class="m-b-20 text-white counter">10</h4>
+                <h4 class="m-b-20 text-white "> 0</h4>
                 <span class="text-white">Valor R$</span>
-                <h4 class="m-b-20 text-white counter">0</h4>
+                <h4 class="m-b-20 text-white ">0</h4>
                 <span class="text-white">Analise de Combustivel</span>
               </div>
             </div>
@@ -257,7 +257,7 @@ $dtf   = $_POST['dataf'];  // Captura data Final Formulário
             // counter-up
             $('.counter').counterUp({
               delay: 300,
-              time: 1000
+              time: 300
             });
           });
 

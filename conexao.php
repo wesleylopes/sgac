@@ -1,5 +1,5 @@
 <?php
-$dsn="mysql:dbname=sgac;host=127.0.0.1";
+$dsn="mysql:dbname=sgacbase;localhost;charset=utf8";
     $dbuser="root";
     $dbpass="";
     
@@ -9,3 +9,5 @@ $dsn="mysql:dbname=sgac;host=127.0.0.1";
        }catch(PDOException $e){
           echo "Falhou: ".$e->getMessage();
        }
+
+

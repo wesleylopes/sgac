@@ -58,9 +58,9 @@ while (strtotime($date) <= strtotime($end_date)) {
   $qtdEtanolConsolidado1     = buscaValorQtCombConsolidado($date,$date,'ETANOL')['QUANTIDADE_LITROS'];
   $qtdDieselConsolidado1     = buscaValorQtCombConsolidado($date,$date,'DIESEL')['QUANTIDADE_LITROS'];
   
-  $arrayQtdDiesel[]          = $qtdDieselConsolidado1;  
-  $arrayQtdGasolina[]        = $qtdGasolinaConsolidado1; 
-  $arrayQtdEtanol[]          = $qtdEtanolConsolidado1;
+  $arrayQtdDiesel[]          = "$qtdDieselConsolidado1";  
+  $arrayQtdGasolina[]        = "$qtdGasolinaConsolidado1"; 
+  $arrayQtdEtanol[]          = "$qtdEtanolConsolidado1";
   
   $dataFormatada= formataData($date);  
   $arrayData[] = "'$dataFormatada'"; 
@@ -75,326 +75,342 @@ while (strtotime($date) <= strtotime($end_date)) {
 <html lang="pt-br">
 
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>S.G.A.C-POTÊNCIA MEDIÇÕES</title>
-  <meta name="description" conte nt="">
-  <meta name="author" content="">
+    <title>S.G.A.C-POTÊNCIA MEDIÇÕES</title>
+    <meta name="description" conte nt="">
+    <meta name="author" content="">
 
-  <!-- Favicon -->
-  <link rel="shortcut icon" href="assets/images/favicon.ico">
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="assets/images/favicon.ico">
 
-  <!-- Bootstrap CSS -->
-  <link href="assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <!-- Bootstrap CSS -->
+    <link href="assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
 
-  <!-- Font Awesome CSS -->
-  <link href="assets/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+    <!-- Font Awesome CSS -->
+    <link href="assets/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
 
-  <!-- Custom CSS -->
-  <link href="assets/css/style.css" rel="stylesheet" type="text/css" />
+    <!-- Custom CSS -->
+    <link href="assets/css/style.css" rel="stylesheet" type="text/css" />
 
-  <!-- BEGIN CSS for this page -->
-  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.16/css/dataTables.bootstrap4.min.css" />
-  <!-- END CSS for this page -->
+    <!-- BEGIN CSS for this page -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.16/css/dataTables.bootstrap4.min.css" />
+    <!-- END CSS for this page -->
 
 </head>
 
 <body class="adminbody">
-  <div id="main">
-    <!-- Start  Menu Principal Superior -->
-    <?php require_once ("front-end/main-menu-top.php"); ?>
-    <!-- End Menu Principal Superior -->
+    <div id="main">
+        <!-- Start  Menu Principal Superior -->
+        <?php require_once ("front-end/main-menu-top.php"); ?>
+        <!-- End Menu Principal Superior -->
 
-    <!-- Start Barra Menu Lateral Esquerdo -->
-    <?php require_once ("front-end/sidebar-menu-left.php"); ?>
-    <!-- End Barra Menu Lateral Esquerdo -->
+        <!-- Start Barra Menu Lateral Esquerdo -->
+        <?php require_once ("front-end/sidebar-menu-left.php"); ?>
+        <!-- End Barra Menu Lateral Esquerdo -->
 
-    <div class="content-page">
-      <!-- Start content -->
-      <div class="content">
+        <div class="content-page">
+            <!-- Start content -->
+            <div class="content">
 
-        <div class="container-fluid">
+                <div class="container-fluid">
 
-          <div class="row">
-            <div class="col-xl-12">
-              <div class="breadcrumb-holder">
-                <h1 class="main-title float-left">Dashboard </h1>
-                <ol class="breadcrumb float-right">
-                  <li class="breadcrumb-item">Evolução de Preço de Combustível</li>
-                  <li class="breadcrumb-item active">(Diario-Trimestre)</li>
-                </ol>
-                <div class="clearfix"></div>
-              </div>
+                    <div class="row">
+                        <div class="col-xl-12">
+                            <div class="breadcrumb-holder">
+                                <h1 class="main-title float-left">Dashboard </h1>
+                                <ol class="breadcrumb float-right">
+                                    <li class="breadcrumb-item">Evolução de Preço de Combustível</li>
+                                    <li class="breadcrumb-item active">(Diario-Trimestre)</li>
+                                </ol>
+                                <div class="clearfix"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-          </div>
-        </div>
-      </div>
 
-      <div class="container">
-        <div class="container">
-          <div class="card-footer small text-muted">Ultima Sincronização de Tela:
-            <?php echo buscaDataHora();                    
+            <div class="container">
+                <div class="container">
+                    <div class="card-footer small text-muted">Ultima Sincronização de Tela:
+                        <?php echo buscaDataHora();                    
                     $arrayMensagem = verificaAtualizacaoPeriodoDadosSistema();
                     ?>
-            <br>
-            <span class="text-red"> A base de Dados Possui Registros de
-              <?php echo $arrayMensagem['MOVIMENTO_INICIAL']?> á <?php echo $arrayMensagem['MOVIMENTO_FINAL']?> </span>
-            <br>
-            <span> Ultima importação: <?php echo $arrayMensagem['ULTIMA_IMPORTACAO']?> </span>
+                        <br>
+                        <span class="text-red"> A base de Dados Possui Registros de
+                            <?php echo $arrayMensagem['MOVIMENTO_INICIAL']?> á <?php echo $arrayMensagem['MOVIMENTO_FINAL']?> </span>
+                        <br>
+                        <span> Ultima importação: <?php echo $arrayMensagem['ULTIMA_IMPORTACAO']?> </span>
 
-          </div>
-          <br>
-          <div class="row">
-            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-12">
-              <div class="card-header">
-                <i class="fa fa-filter"></i> FILTRAR PERIODO DE <> ATÉ
-              </div>
-              <br>
-
-              <form method="POST">
-                <div class="row">
-                  <div class="col">
-                    <div class="form-group">
-                      <input type="date" class="form-control" value="<?php echo $_POST['datai'];?>" id="InputDatai" name="datai" aria-describedby="emailHelp" placeholder="Data inicial">
                     </div>
-                  </div>
-                  <div class="col">
-                    <div class="form-group">
-                      <input type="date" class="form-control" value="<?php echo $_POST['dataf'];?>" id="InputDataf" name="dataf" placeholder="Data final">
+                    <br>
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-12">
+                            <div class="card-header">
+                                <i class="fa fa-filter"></i> FILTRAR PERIODO DE <> ATÉ
+                            </div>
+                            <br>
+
+                            <form method="POST">
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="form-group">
+                                            <input type="date" class="form-control" value="<?php echo $_POST['datai'];?>" id="InputDatai" name="datai" aria-describedby="emailHelp" placeholder="Data inicial">
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="form-group">
+                                            <input type="date" class="form-control" value="<?php echo $_POST['dataf'];?>" id="InputDataf" name="dataf" placeholder="Data final">
+                                        </div>
+                                    </div>
+
+                                    <div class="col">
+                                        <button type="submit" class="btn btn-primary  btn-block"><i class="fa fa-refresh"></i> Atualizar Graficos</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                                <div class="card mb-3">
+                                    <div class="card-header">
+                                        <i class="fa fa-table"></i> EVOLUÇÃO MENSAL CONSUMO MÉDIO COMBUSTÍVEL EM LITROS (90/60/30 DIAS)
+                                    </div>
+                                    <div class="card-body">
+
+                                        <canvas id="grafico1"></canvas>
+
+                                    </div>
+                                    <div class="card-footer small text-muted"></div>
+                                </div>
+                            </div>
+                            <hr>
+
+                            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-12">
+
+
+                            </div>
+
+                        </div>
+
+
+                        <footer class="footer">
+                            <span class="text-right">
+                                S.G.A.C Versão 1.0.0.1 <a target="_blank" href="#">2019 Potência Medicões</a>
+                            </span>
+                            <span class="float-right">
+                                Desenvolvido por <a target="_blank" href="http://www.potenciamedicoes.com.br"><b>Wesley Lopes</b></a>
+                            </span>
+                        </footer>
                     </div>
-                  </div>
+                    <!-- END main -->
 
-                  <div class="col">
-                    <button type="submit" class="btn btn-primary  btn-block"><i class="fa fa-refresh"></i> Atualizar Graficos</button>
-                  </div>
-                </div>
-              </form>
-            </div>
+                    <script src="assets/js/modernizr.min.js"></script>
+                    <script src="assets/js/jquery.min.js"></script>
+                    <script src="assets/js/moment.min.js"></script>
 
-            <div class="row">
-              <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-                <div class="card mb-3">
-                  <div class="card-header">
-                    <i class="fa fa-table"></i> EVOLUÇÃO MENSAL CONSUMO MÉDIO COMBUSTÍVEL EM LITROS (90/60/30 DIAS)
-                  </div>
-                  <div class="card-body">
+                    <script src="assets/js/popper.min.js"></script>
+                    <script src="assets/js/bootstrap.min.js"></script>
 
-                    <canvas id="grafico1"></canvas>
+                    <script src="assets/js/detect.js"></script>
+                    <script src="assets/js/fastclick.js"></script>
+                    <script src="assets/js/jquery.blockUI.js"></script>
+                    <script src="assets/js/jquery.nicescroll.js"></script>
 
-                  </div>
-                  <div class="card-footer small text-muted"></div>
-                </div>
-              </div>
-              <hr>
+                    <!-- App js -->
+                    <script src="assets/js/pikeadmin.js">
+                    </script>
 
-              <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-12">
-                <div class="card mb-3">
-                  <div class="card-header">
-                    <i class="fa fa-table"></i> EVOLUÇÃO DIARIA CONSUMO MÉDIO COMBUSTÍVEL EM LITROS
-                  </div>
+                    <!-- BEGIN Java Script for this page -->
+                    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
+                    <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+                    <script src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap4.min.js"></script>
 
-                  <div class="card-body">
+                    <!-- Counter-Up-->
+                    <script src="assets/plugins/waypoints/lib/jquery.waypoints.min.js"></script>
+                    <script src="assets/plugins/counterup/jquery.counterup.min.js"></script>
 
-                    <canvas id="grafico2"></canvas>
+                    <script>
+                        $(document).ready(function() {
+                            // data-tables
+                            $('#example1').DataTable();
 
+                            // counter-up
+                            $('.counter').counterUp({
+                                delay: 10,
+                                time: 600
+                            });
+                        });
+                        }
 
-                  </div>
-                  <div class="card-footer small text-muted"></div>
-                </div>
-              </div>
+                    </script>
 
-            </div>
+                    <script>
+                        var ctx1 = document.getElementById("grafico1").getContext('2d');
+                        var barChart = new Chart(ctx1, {
+                            type: 'line',
+                            borderWidth: 10,
+                            data: {
+                                labels: ["<?php echo extrairMesAnoPorExtenso($dti90);?>", "<?php echo extrairMesAnoPorExtenso($dti60);?>", "<?php echo extrairMesAnoPorExtenso($dti30);?>"],
+                                datasets: [{
+                                    label: 'DIESEL',
+                                    data: ["<?php echo $QtdDieselConsolidado90Dias;?>",
+                                        "<?php echo $QtdDieselConsolidado60Dias;?>",
+                                        "<?php echo $QtdDieselConsolidado30Dias;?>"
+                                    ],
+                                    responsive: true,
+                                    fill: false,
+                                    backgroundColor: 'rgba(96,167,0,0.9)',
+                                    borderColor: 'rgba(96,167,0,0.9)',
+                                }, {
+                                    label: 'GASOLINA',
+                                    data: ["<?php echo $QtdGasolinaConsolidado90Dias;?>",
+                                        "<?php echo $QtdGasolinaConsolidado60Dias;?>",
+                                        "<?php echo $QtdGasolinaConsolidado30Dias;?>"
+                                    ],
+                                    responsive: true,
+                                    fill: false,
+                                    backgroundColor: 'rgba(255,167,0,0.9)',
+                                    borderColor: ['rgba(255,167,0,0.9)'],
+                                }, {
+                                    label: 'ETANOL',
+                                    data: ["<?php echo $QtdEtanolConsolidado90Dias;?>",
+                                        "<?php echo $QtdEtanolConsolidado60Dias;?>",
+                                        "<?php echo $QtdEtanolConsolidado30Dias;?>"
+                                    ],
+                                    responsive: true,
+                                    fill: false,
+                                    backgroundColor: 'rgba(78,149,212,0.9)',
+                                    borderColor: 'rgba(78,149,212,0.9)',
+                                }],
+                            },
+                            options: {
+                                layout: {
+                                    padding: {
+                                        left: 0,
+                                        right: 50,
+                                        top: 0,
+                                        bottom: 0
+                                    }
+                                },
+                                title: {
+                                    display: false,
 
+                                },
+                                scales: {
+                                    xAxes: [{
+                                        display: true,
+                                    }],
+                                    yAxes: [{
+                                        display: true,
+                                    }]
+                                },
+                                animation: {
+                                    duration: 1000,
+                                    onComplete: function() {
+                                        var chartInstance = this.chart,
+                                            ctx = chartInstance.ctx;
+                                        ctx.textAlign = 'center';
+                                        ctx.fillStyle = 'rgba(25,0,0,0.9)';
+                                        ctx.font = "bold 11px Calibri";
+                                        this.data.datasets.forEach(function(dataset, i) {
+                                            var meta = chartInstance.controller.getDatasetMeta(i);
+                                            meta.data.forEach(function(bar, index) {
+                                                var data = dataset.data[index];
+                                                ctx.fillText(data, bar._model.x - 5, bar._model.y - 15);
+                                            });
+                                        });
+                                    },
+                                },
+                                scales: {
+                                    yAxes: [{
+                                        ticks: {
+                                            beginAtZero: true,
+                                            fontColor: "white",
+                                            fontSize: 11,
+                                            stepSize: 6
+                                        }
+                                    }]
+                                }
+                            }
+                        });
 
-            <footer class="footer">
-              <span class="text-right">
-                S.G.A.C Versão 1.0.0.1 <a target="_blank" href="#">2019 Potência Medicões</a>
-              </span>
-              <span class="float-right">
-                Desenvolvido por <a target="_blank" href="http://www.potenciamedicoes.com.br"><b>Wesley Lopes</b></a>
-              </span>
-            </footer>
-          </div>
-          <!-- END main -->
+                    </script>
 
-          <script src="assets/js/modernizr.min.js"></script>
-          <script src="assets/js/jquery.min.js"></script>
-          <script src="assets/js/moment.min.js"></script>
+                    <script>
+                        var ctx1 = document.getElementById("grafico2").getContext('2d');
+                        var barChart = new Chart(ctx1, {
+                            type: 'line',
+                            borderWidth: 10,
+                            data: {
+                                labels: [ < ? php echo implode(',', $arrayData); ? > ],
+                                datasets: [{
+                                    label: 'DIESEL',
+                                    data: [ < ? php echo implode(',', $arrayQtdDiesel); ? > ],
+                                    responsive: true,
+                                    fill: false,
+                                    backgroundColor: ['rgba(96,167,0,0.9)'],
+                                    borderColor: 'rgba(96,167,0,0.9)',
+                                }, {
+                                    label: 'GASOLINA',
+                                    data: [ < ? php echo implode(',', $arrayQtdGasolina) ? > ],
+                                    responsive: true,
+                                    fill: false,
+                                    backgroundColor: 'rgba(255,167,0,0.9)',
+                                    borderColor: ['rgba(255,167,0,0.9)'],
+                                }, {
+                                    label: 'ETANOL',
+                                    data: [ < ? php echo implode(',', $arrayQtdEtanol) ? > ],
+                                    responsive: true,
+                                    fill: false,
+                                    backgroundColor: 'rgba(78,149,212,0.9)',
+                                    borderColor: 'rgba(78,149,212,0.9)',
+                                }]
+                            },
+                            options: {
+                                layout: {
+                                    padding: {
+                                        left: 50,
+                                        right: 50,
+                                        top: 0,
+                                        bottom: 0
+                                    }
+                                },
+                                title: {
+                                    display: false,
+                                },
+                                scales: {
+                                    xAxes: [{
+                                        display: true,
+                                    }],
+                                    yAxes: [{
+                                        display: true,
+                                    }]
+                                },
+                                animation: {
+                                    duration: 1000,
+                                    onComplete: function() {
+                                        var chartInstance = this.chart,
+                                            ctx = chartInstance.ctx;
+                                        ctx.textAlign = 'center';
+                                        ctx.fillStyle = 'rgba(25,0,0,0.9)';
+                                        ctx.font = "bold 14px Calibri";
+                                        this.data.datasets.forEach(function(dataset, i) {
+                                            var meta = chartInstance.controller.getDatasetMeta(i);
+                                            meta.data.forEach(function(bar, index) {
+                                                var data = dataset.data[index];
+                                                ctx.fillText(data, bar._model.x - 5, bar._model.y - 15);
+                                            });
+                                        });
+                                    },
+                                },
+                            }
+                        });
 
-          <script src="assets/js/popper.min.js"></script>
-          <script src="assets/js/bootstrap.min.js"></script>
-
-          <script src="assets/js/detect.js"></script>
-          <script src="assets/js/fastclick.js"></script>
-          <script src="assets/js/jquery.blockUI.js"></script>
-          <script src="assets/js/jquery.nicescroll.js"></script>
-
-          <!-- App js -->
-          <script src="assets/js/pikeadmin.js">
-          </script>
-
-          <!-- BEGIN Java Script for this page -->
-          <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
-          <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
-          <script src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap4.min.js"></script>
-
-          <!-- Counter-Up-->
-          <script src="assets/plugins/waypoints/lib/jquery.waypoints.min.js"></script>
-          <script src="assets/plugins/counterup/jquery.counterup.min.js"></script>
-
-          <script>
-            $(document).ready(function() {
-              // data-tables
-              $('#example1').DataTable();
-
-              // counter-up
-              $('.counter').counterUp({
-                delay: 10,
-                time: 600
-              });
-            });
-            }
-
-          </script>
-
-          <script>
-            var ctx1 = document.getElementById("grafico1").getContext('2d');
-            var barChart = new Chart(ctx1, {
-              type: 'line',
-              borderWidth: 10,
-              data: {
-                labels: ["<?php echo extrairMesAnoPorExtenso($dti90);?>", "<?php echo extrairMesAnoPorExtenso($dti60);?>", "<?php echo extrairMesAnoPorExtenso($dti30);?>"],
-                datasets: [{
-                  label: 'DIESEL',
-                  data: [<?php echo $QtdDieselConsolidado90Dias;?>,
-                    <?php echo $QtdDieselConsolidado60Dias;?>,
-                    <?php echo $QtdDieselConsolidado30Dias;?>
-                  ],
-                  responsive: true,
-                  fill: false,
-                  backgroundColor: 'rgba(96,167,0,0.9)',
-                  borderColor: 'rgba(96,167,0,0.9)',
-                }, {
-                  label: 'GASOLINA',
-                  data: [<?php echo $QtdGasolinaConsolidado90Dias;?>,
-                    <?php echo $QtdGasolinaConsolidado60Dias;?>,
-                    <?php echo $QtdGasolinaConsolidado30Dias;?>
-                  ],
-                  responsive: true,
-                  fill: false,
-                  backgroundColor: 'rgba(255,167,0,0.9)',
-                  borderColor: ['rgba(255,167,0,0.9)'],
-                }, {
-                  label: 'ETANOL',
-                  data: [<?php echo $QtdEtanolConsolidado90Dias;?>,
-                    <?php echo $QtdEtanolConsolidado60Dias;?>,
-                    <?php echo $QtdEtanolConsolidado30Dias;?>
-                  ],
-                  responsive: true,
-                  fill: false,
-                  backgroundColor: 'rgba(78,149,212,0.9)',
-                  borderColor: 'rgba(78,149,212,0.9)',
-                }],
-              },
-              options: {
-                title: {
-                  display: false,
-
-                },
-                scales: {
-                  xAxes: [{
-                    display: true,
-                  }],
-                  yAxes: [{
-                    display: true,
-                  }]
-                },
-                animation: {
-                  duration: 1000,
-                  onComplete: function() {
-                    var chartInstance = this.chart,
-                      ctx = chartInstance.ctx;
-                    ctx.textAlign = 'center';
-                    ctx.fillStyle = 'rgba(25,0,0,0.9)';
-                    this.data.datasets.forEach(function(dataset, i) {
-                      var meta = chartInstance.controller.getDatasetMeta(i);
-                      meta.data.forEach(function(bar, index) {
-                        var data = dataset.data[index];                      
-                        ctx.fillText(data, bar._model.x - 5, bar._model.y - 15);
-                      });
-                    });
-                  },
-                },
-              }
-            });
-
-          </script>
-
-          <script>
-            var ctx1 = document.getElementById("grafico2").getContext('2d');
-            var barChart = new Chart(ctx1, {
-              type: 'line',
-              borderWidth: 10,
-              data: {
-                labels: [<?php echo implode(',', $arrayData);?>],
-                datasets: [{
-                  label: 'DIESEL',
-                  data: [<?php echo implode(',',$arrayQtdDiesel);?>],
-                  responsive: true,
-                  fill: false,
-                  backgroundColor: ['rgba(96,167,0,0.9)'],
-                  borderColor: 'rgba(96,167,0,0.9)',
-                }, {
-                  label: 'GASOLINA',
-                  data: [<?php echo implode(',',$arrayQtdGasolina)?>],
-                  responsive: true,
-                  fill: false,
-                  backgroundColor: 'rgba(255,167,0,0.9)',
-                  borderColor: ['rgba(255,167,0,0.9)'],
-                }, {
-                  label: 'ETANOL',
-                  data: [<?php echo implode (',',$arrayQtdEtanol) ?>],
-                  responsive: true,
-                  fill: false,
-                  backgroundColor: 'rgba(78,149,212,0.9)',
-                  borderColor: 'rgba(78,149,212,0.9)',
-                }]
-              },
-              options: {
-                title: {
-                  display: false,
-                },
-                scales: {
-                  xAxes: [{
-                    display: true,
-                  }],
-                  yAxes: [{
-                    display: true,
-                  }]
-                },
-                animation: {
-                  duration: 1000,
-                  onComplete: function() {
-                    var chartInstance = this.chart,
-                      ctx = chartInstance.ctx;
-                    ctx.textAlign = 'center';
-                    ctx.fillStyle = 'rgba(25,0,0,0.9)';
-                    ctx.font = "bold 14px Calibri";
-                    this.data.datasets.forEach(function(dataset, i) {
-                      var meta = chartInstance.controller.getDatasetMeta(i);
-                      meta.data.forEach(function(bar, index) {
-                        var data = dataset.data[index];                        
-                        ctx.fillText(data, bar._model.x - 5, bar._model.y - 15);
-                      });
-                    });
-                  },
-                },
-              }
-            });
-
-          </script>
-          <!-- END Java Script Pagina -->
+                    </script>
+                    <!-- END Java Script Pagina -->
 
 
 </body>

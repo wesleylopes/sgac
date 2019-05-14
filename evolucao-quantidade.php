@@ -131,8 +131,8 @@ while (strtotime($date) <= strtotime($end_date)) {
                 </div>
             </div>
 
-            <div class="container">
-                <div class="container">
+            <div class="container-fluid">
+                <div class="container-fluid">
                     <div class="card-footer small text-muted">Ultima Sincronização de Tela:
                         <?php echo buscaDataHora();                    
                     $arrayMensagem = verificaAtualizacaoPeriodoDadosSistema();
@@ -176,7 +176,7 @@ while (strtotime($date) <= strtotime($end_date)) {
                             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
                                 <div class="card mb-3">
                                     <div class="card-header">
-                                        <i class="fa fa-table"></i> EVOLUÇÃO MENSAL CONSUMO MÉDIO COMBUSTÍVEL EM LITROS (90/60/30 DIAS)
+                                        <i class="fa fa-table"></i> EVOLUÇÃO MENSAL CONSUMO MÉDIO COMBUSTÍVEL EM LITROS (ULTIMOS 3 MESES)
                                     </div>
                                     <div class="card-body">
 
@@ -187,14 +187,9 @@ while (strtotime($date) <= strtotime($end_date)) {
                                 </div>
                             </div>
                             <hr>
-
                             <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-12">
-
-
                             </div>
-
                         </div>
-
 
                         <footer class="footer">
                             <span class="text-right">
@@ -240,7 +235,7 @@ while (strtotime($date) <= strtotime($end_date)) {
                             // counter-up
                             $('.counter').counterUp({
                                 delay: 10,
-                                time: 600
+                                time: 300
                             });
                         });
                         }
@@ -308,7 +303,7 @@ while (strtotime($date) <= strtotime($end_date)) {
                                     }]
                                 },
                                 animation: {
-                                    duration: 1000,
+                                    duration: 10,
                                     onComplete: function() {
                                         var chartInstance = this.chart,
                                             ctx = chartInstance.ctx;
@@ -327,7 +322,7 @@ while (strtotime($date) <= strtotime($end_date)) {
                                 scales: {
                                     yAxes: [{
                                         ticks: {
-                                            beginAtZero: true,
+                                            beginAtZero: false,
                                             fontColor: "white",
                                             fontSize: 11,
                                             stepSize: 6
@@ -390,7 +385,7 @@ while (strtotime($date) <= strtotime($end_date)) {
                                     }]
                                 },
                                 animation: {
-                                    duration: 1000,
+                                    duration: 10,
                                     onComplete: function() {
                                         var chartInstance = this.chart,
                                             ctx = chartInstance.ctx;

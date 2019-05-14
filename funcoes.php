@@ -158,6 +158,32 @@ function buscaValorQtCombCidadeConsolidado($dataInicial,$dataFinal,$tipoCombusti
       }
     } 
 
+function buscaValorQtCombPostoConsolidado($dataInicial,$dataFinal,$tipoCombustivel,$posto){        
+   require("conexao.php");           
+        
+    //$sql= "call buscaPrecoQtdConsolidado('$tipoCombustivel','$dataInicial','$dataFinal')";
+   $sql= "call buscaPrecoQtdPostoConsolidado('$tipoCombustivel','$dataInicial','$dataFinal','$posto')";
+    /*   
+    echo $sql;
+    echo "<br>";
+    echo "<br>";
+    echo "<br>";*/
+            
+   $sql = $db->query($sql);            
+   $dados = $sql->fetchAll(); 
+            
+   foreach ($dados as $quantidade){
+      return array(
+        'NOME_POSTO'             => $quantidade['NOME_POSTO'],
+        'VALOR_COMBUSTIVEL'      => $quantidade['VALOR_COMBUSTIVEL'],
+        'TIPO_COMBUSTIVEL_BUSCA' => $quantidade['TIPO_COMBUSTIVEL_BUSCA'],
+        'QUANTIDADE_LITROS'      => $quantidade['QUANTIDADE_LITROS'],
+        'CIDADE'                 => $quantidade['CIDADE']
+          
+        );             
+      }
+    } 
+
 function extrairMesAnoPorExtenso($data){   
    setlocale(LC_ALL, "pt_BR", "pt_BR.iso-8859-1", "pt_BR.utf-8","Portuguese_Brazilian","Portuguese_Brazil");
    date_default_timezone_set('America/Sao_Paulo'); 

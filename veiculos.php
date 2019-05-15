@@ -9,15 +9,9 @@ $dtf   = $_POST['dataf'];  // Captura data Final Formulário
 
 $sql="SELECT DISTINCT(CIDADE) FROM movimento_veiculos WHERE DATE(DATA_MOVIMENTO) between '$dti' and '$dtf'"; 
   
-$sql = $db->query($sql);            
-$registros = $sql->fetchAll();       
-            
-
-    
-
-    
+$sql = $db->query($sql);           
+$registros = $sql->fetchAll();
 }  
-
 ?>
 
 <!DOCTYPE html>
@@ -143,7 +137,7 @@ $registros = $sql->fetchAll();
                             <label class="control-label" for="InputDataf">Marca* </label><br>
                             <select name "opcoes" class="form-control">
                               <?php echo "<option>---  </option>";                                                            
-                                    $sql="SELECT distinct(TIPO_FROTA) as TIPO_FROTA FROM movimento_veiculos ";
+                                    $sql="SELECT distinct(FABRICANTE_VEICULO) as TIPO_FROTA FROM movimento_veiculos ";
                                     $sql = $db->query($sql);
                                     $dados = $sql->fetchAll();
                               
@@ -154,12 +148,13 @@ $registros = $sql->fetchAll();
                             </select>
                           </div>
                         </div>
+
                         <div class="col">
                           <div class="form-group">
                             <label class="control-label" for="InputDataf">Modelo* </label><br>
                             <select name "opcoes" class="form-control">
                               <?php echo "<option>---  </option>";                                                            
-                                    $sql="SELECT distinct(TIPO_FROTA) as TIPO_FROTA FROM movimento_veiculos ";
+                                    $sql="SELECT distinct(MODELO_VEICULO) as TIPO_FROTA FROM movimento_veiculos ";
                                     $sql = $db->query($sql);
                               
                                     if ($sql->rowCount()){
@@ -175,15 +170,17 @@ $registros = $sql->fetchAll();
                                         echo "<option>$quantidade[TIPO_FROTA]</option>"; 
                            }                                                             
                           ?>
+
                             </select>
                           </div>
                         </div>
                       </div>
+
                       <div class="row">
                         <div class="col">
                           <div class="form-group">
                             <label for="recipient-name" class="control-label">Número de Cartão:</label>
-                            <input name="nome" type="select" class="form-control">
+                            <input name="nome" type="text" size="1" maxlength="1" class="form-control">
                           </div>
                         </div>
 
@@ -240,7 +237,6 @@ $registros = $sql->fetchAll();
                           <th>Filial</th>
                           <th>Status</th>
                           <th>Ação</th>
-
                         </tr>
                       </thead>
                       <tbody>
@@ -283,7 +279,6 @@ $registros = $sql->fetchAll();
                       </tbody>
                     </table>
                   </div>
-
                 </div>
               </div>
             </div>
@@ -658,7 +653,6 @@ $registros = $sql->fetchAll();
       modal.find('#recipient-name').val(recipientnome)
       modal.find('#detalhes-text').val(recipientdetalhes)
     })
-
   </script>
 
   <!-- END Java Script Pagina -->

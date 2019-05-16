@@ -222,7 +222,7 @@ return $entry['QUANTIDADE_LITROS']; }, $array));
                                 <div class="card mb-3">
                                     <div class="card-header">
                                         <i class="fa fa-table"></i> PREÇO X QUANTIDADE MÉDIA CONSUMIDA DE COMBUSTÍVEL POR CIDADE
-                                        <span class="badge badge-success">(GASOLINA)</span>
+                                        <span class="badge badge-success"> (GASOLINA)</span>
                                     </div>
 
                                     <div class="card-body">

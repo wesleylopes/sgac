@@ -2,7 +2,7 @@
 require("funcoes.php");
 require("conexao.php");
   if (iniciaSessao()===true){ 
-  ini_set('max_execution_time', 0); 
+  ini_set('max_execution_time', 0); //teste
   
 $dti   = $_POST['datai'];  // Captura data Inicial Formulário
 $dtf   = $_POST['dataf'];  // Captura data Final Formulário

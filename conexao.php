@@ -5,7 +5,7 @@ $dsn="mysql:dbname=sgacbase;localhost;charset=utf8";
     
     try{
          $db = new PDO($dsn, $dbuser, $dbpass);
-        
+       
        }catch(PDOException $e){
           echo "Falhou: ".$e->getMessage();
        }

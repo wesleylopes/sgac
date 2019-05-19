@@ -36,7 +36,7 @@
           <a class="active2" href="#"><i class="fa fa-fw fa-bullhorn"></i><span> PAINEL DE ALERTAS</span>
             <span class="badge badge-danger"> 0 </span> </a>
           <a class="active2" href="analise-unidade.php"><i class="fa fa-fw fa fa-pie-chart"></i><span> ANÁLISE POR FILIAL </span></a>
-          <a class="active2" href="cidade-preco.php"><i class="fa fa-fw fa-bar-chart"></i><span> ANÁLISE POR CIDADE </span></a>
+          <a class="active2" href="analise-cidade.php"><i class="fa fa-fw fa-bar-chart"></i><span> ANÁLISE POR CIDADE </span></a>
           <a class="active2" href="analise-posto.php"><i class="fa fa-fw fa fa-flag"></i><span> ANÁLISE POR POSTO </span></a>
           <a href="#"><i class="fa fa-group"></i> <span> ANÁLISE POR EQUIPE</span> <span class="menu-arrow"></span></a>
           <ul class="list-unstyled">

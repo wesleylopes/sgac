@@ -180,7 +180,7 @@ $qtdVeiculos = buscaQtdVeiculos();
                 </div>
                 <div class="card-footer small text-muted">Atualizado Segunda feira ás 08:59</div>
               </div><!-- end card-->
-            </div>
+            </div>             
           </div>
 
           <!-- Start Barra Menu Lateral Esquerdo -->

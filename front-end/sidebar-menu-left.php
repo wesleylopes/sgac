@@ -40,7 +40,7 @@
           <a class="active2" href="analise-posto.php"><i class="fa fa-fw fa fa-flag"></i><span> ANÁLISE POR POSTO </span></a>
           <a href="#"><i class="fa fa-group"></i> <span> ANÁLISE POR EQUIPE</span> <span class="menu-arrow"></span></a>
           <ul class="list-unstyled">
-            <li><a href="veiculos.php"><i class="fa fa-fw fa-car"></i>Lista</a></li>
+            <li><a href="gestao-visual.php"><i class="fa fa-fw fa-car"></i>Gestão Visual Equipe e Veiculos</a></li>
             <li><a href="veiculos.php"><i class="fa fa-fw fa-user"></i>Comparativo</a></li>
          
           </ul>

@@ -259,8 +259,11 @@ img {
     padding: 10%;
 }
 
-.card {   
-    
+.card-text {   
+    font-weight: 500;
+    line-height: 1.2;
+    font-size: 11px;
+    margin-bottom: 0;
 }
 
 .header-title {

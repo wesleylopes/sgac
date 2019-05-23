@@ -3,9 +3,11 @@ require("funcoes.php");
 if (iniciaSessao()===true){
 ini_set('max_execution_time', 0); 
   
-$dti   = $_POST['datai'];  // Captura data Inicial Formulário
-$dtf   = $_POST['dataf'];  // Captura data Final Formulário
-
+$dti         = $_POST['datai'];  // Captura data Inicial Formulário
+$dtf         = $_POST['dataf'];  // Captura data Final Formulário
+$qtdMotoristas = buscaQtdMotoristas();
+    
+$qtdVeiculos = buscaQtdVeiculos();
   
 }?>
 
@@ -73,57 +75,21 @@ $dtf   = $_POST['dataf'];  // Captura data Final Formulário
                 <i class="fa fa-exchange float-right text-white"></i>
                 <h6 class="text-white text-uppercase m-b-10">Transações no PERÍODO</h6>
                 <span class="text-white">Quantidade</span>
-                <h4 class="m-b-20 text-white "> 0</h4>
+                <h4 class="m-b-20 text-white "><?php echo buscaValorQtdtransacoes($dti,$dtf)['QTD_TRANSACOES']?></h4>
                 <span class="text-white">Valor R$</span>
-                <h4 class="m-b-20 text-white ">0</h4>
+                <h4 class="m-b-20 text-white "><?php echo buscaValorQtdtransacoes($dti,$dtf)['VALOR_TRANSACOES']?></h4>
                 <span class="text-white">Analise de Combustivel</span>
               </div>
-            </div>
-
-            <div class="col-xs-12 col-md-6 col-lg-6 col-xl-3">
-              <div class="card-box noradius noborder bg-danger">
-                <i class="fa fa-exchange float-right text-white"></i>
-                <h6 class="text-white text-uppercase m-b-10">Transações negadas no PERÍODO </h6>
-                <span class="text-white">Quantidade</span>
-                <h4 class="m-b-20 text-white counter">0</h4>
-                <span class="text-white">Valor R$</span>
-                <h4 class="m-b-20 text-white counter">0</h4>
-                <span class="text-white">Analise de Combustivel</span>
-              </div>
-            </div>
-
-            <div class="col-xs-12 col-md-6 col-lg-6 col-xl-3">
-              <div class="card-box noradius noborder bg-success">
-                <i class="fa fa-exchange float-right text-white"></i>
-                <h6 class="text-white text-uppercase m-b-10">TRANSAÇÕES APROVADAS (06/05/2019) </h6>
-                <span class="text-white">Quantidade</span>
-                <h4 class="m-b-20 text-white counter">0</h4>
-                <span class="text-white">Valor R$</span>
-                <h4 class="m-b-20 text-white counter">0</h4>
-                <span class="text-white">Analise de Combustivel</span>
-              </div>
-            </div>
-
-            <div class="col-xs-12 col-md-6 col-lg-6 col-xl-3">
-              <div class="card-box noradius noborder bg-danger">
-                <i class="fa fa-exchange float-right text-white"></i>
-                <h6 class="text-white text-uppercase m-b-10">Transações negadas (06/05/2019) </h6>
-                <span class="text-white">Quantidade</span>
-                <h4 class="m-b-20 text-white counter">0</h4>
-                <span class="text-white">Valor R$</span>
-                <h4 class="m-b-20 text-white counter">0</h4>
-                <span class="text-white">Analise de Combustivel</span>
-              </div>
-            </div>
+            </div>   
 
             <div class="col-xs-12 col-md-6 col-lg-6 col-xl-3">
               <div class="card-box noradius noborder bg-warning">
                 <i class="fa fa-car float-right text-white"></i>
                 <h6 class="text-white text-uppercase m-b-10"> RESUMO Veiculos </h6>
                 <span class="text-white">Cadastrados</span>
-                <h4 class="m-b-20 text-white counter">0</h4>
+                <h4 class="m-b-20 text-white counter"><?php echo $qtdVeiculos  ?></h4>
                 <span class="text-white">Ativos</span>
-                <h4 class="m-b-20 text-white counter">0</h4>
+                <h4 class="m-b-20 text-white counter"><?php echo $qtdVeiculos  ?></h4>
                 <span class="text-white">Cadastro de Veiculos</span>
               </div>
             </div>
@@ -131,11 +97,11 @@ $dtf   = $_POST['dataf'];  // Captura data Final Formulário
             <div class="col-xs-12 col-md-6 col-lg-6 col-xl-3">
               <div class="card-box noradius noborder bg-default">
                 <i class="fa fa-user-o float-right text-white"></i>
-                <h6 class="text-white text-uppercase m-b-10"> RESUMO MOTORISTAS</h6>
+                <h6 class="text-white text-uppercase m-b-10">RESUMO MOTORISTAS</h6>
                 <span class="text-white">Cadastrados</span>
-                <h4 class="m-b-20 text-white counter">0</h4>
+                <h4 class="m-b-20 text-white counter"><?php echo $qtdMotoristas ?></h4>
                 <span class="text-white">Ativos</span>
-                <h4 class="m-b-20 text-white counter">0</h4>
+                <h4 class="m-b-20 text-white counter"><?php echo $qtdMotoristas ?></h4>
                 <span class="text-white">Cadastro de Motoristas</span>
               </div>
             </div>

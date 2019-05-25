@@ -135,6 +135,10 @@ img {
     white-space: nowrap;
 }
 
+.w-25{    
+  width: 50%;
+}
+
 .text-custom {
     color: #64b0f2;
 }

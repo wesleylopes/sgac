@@ -159,55 +159,54 @@ return $entry['QUANTIDADE_LITROS']; }, $array));
                         </div>
                     </div>
                 </div>
-            </div>
 
-            <div class="container-fluid">
+
                 <div class="container-fluid">
-                    <div class="card-footer small text-muted">Ultima Sincronização de Tela:
-                        <?php echo buscaDataHora();                    
+                    <div class="container-fluid">
+                        <div class="card-footer small text-muted">Ultima Sincronização de Tela:
+                            <?php echo buscaDataHora();                    
                           $arrayMensagem = verificaAtualizacaoPeriodoDadosSistema();
                          ?>
 
-                        <br>
-                        <span class="text-red"> A base de Dados Possui Registros de
-                            <?php echo $arrayMensagem['MOVIMENTO_INICIAL']?> á <?php echo $arrayMensagem['MOVIMENTO_FINAL']?> </span>
-                        <br>
-                        <span> Ultima importação: <?php echo $arrayMensagem['ULTIMA_IMPORTACAO']?> </span>
-
-                    </div>
-                    <br>
-                    <div class="row">
-                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-                            <div class="card-header">
-                                <i class="fa fa-filter"></i> FILTRAR PERIODO DE <> ATÉ
-                            </div>
                             <br>
+                            <span class="text-red"> A base de Dados Possui Registros de
+                                <?php echo $arrayMensagem['MOVIMENTO_INICIAL']?> á <?php echo $arrayMensagem['MOVIMENTO_FINAL']?> </span>
+                            <br>
+                            <span> Ultima importação: <?php echo $arrayMensagem['ULTIMA_IMPORTACAO']?> </span>
 
-                            <form method="POST">
-                                <div class="row">
-                                    <div class="col">
-                                        <label for="example3">
-                                            Data Final:
-                                        </label>
-                                        <div class="form-group">
-                                            <input type="date" class="form-control" value="<?php echo $_POST['datai'];?>" id="InputDatai" name="datai" aria-describedby="emailHelp" placeholder="Data inicial">
-                                        </div>
-                                    </div>
-                                    <div class="col">
-                                        <label for="example3">
-                                            Data Final:
-                                        </label>
-                                        <div class="form-group">
-                                            <input type="date" class="form-control" value="<?php echo $_POST['dataf'];?>" id="InputDataf" name="dataf" placeholder="Data final">
-                                        </div>
-                                    </div>
+                        </div>
+                        <br>
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                                <div class="card-header">
+                                    <i class="fa fa-filter"></i> FILTROS
+                                </div>
+                                <div class=" container card mb-3">
+                                    <form method="POST">
+                                        <div class="row">
+                                            <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 col-xl-3">
+                                                <label for="example3">
+                                                    Data Inicial:
+                                                </label>
+                                                <div class="form-group ">
+                                                    <input type="date" class="form-control" value="<?php echo $_POST['datai'];?>" id="InputDatai" name="datai" aria-describedby="emailHelp" placeholder="Data inicial">
+                                                </div>
+                                            </div>
+                                            <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 col-xl-3">
+                                                <label for="example3">
+                                                    Data Final:
+                                                </label>
+                                                <div class="form-group">
+                                                    <input type="date" class="form-control" value="<?php echo $_POST['dataf'];?>" id="InputDataf" name="dataf" placeholder="Data final">
+                                                </div>
+                                            </div>
 
-                                    <div class="col">
-                                        <label for="example3">
-                                            Cidade:
-                                        </label>
-                                        <select class="form-control select2" id="example2" name="state[]" multiple="multiple2">
-                                               <?php 
+                                            <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 col-xl-3">
+                                                <label for="example3">
+                                                    Cidade:
+                                                </label>
+                                                <select class="form-control select2" id="example2" name="state[]" multiple="multiple2">
+                                                    <?php 
                                             $sql="SELECT distinct(CIDADE) as CIDADE
                                                   FROM movimento_veiculos";
                                             $sql = $db->query($sql);
@@ -219,14 +218,14 @@ return $entry['QUANTIDADE_LITROS']; }, $array));
                                                             
                                             ?>
 
-                                        </select>
-                                    </div>
-                                    <div class="col">
-                                        <label for="example3">
-                                            Polo:
-                                        </label>
-                                        <select class="form-control select2" id="example1" name="state2[]" multiple="multiple">
-                                               <?php 
+                                                </select>
+                                            </div>
+                                            <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 col-xl-3">
+                                                <label for="example3">
+                                                    Polo:
+                                                </label>
+                                                <select class="form-control select2" id="example1" name="state2[]" multiple="multiple">
+                                                    <?php 
                                             $sql="SELECT distinct(CENTRO_RESULTADO) as CENTRO_RESULTADO
                                                   FROM movimento_veiculos";
                                             $sql = $db->query($sql);
@@ -238,15 +237,15 @@ return $entry['QUANTIDADE_LITROS']; }, $array));
                                                             
                                             ?>
 
-                                        </select>
-                                    </div>
+                                                </select>
+                                            </div>
 
-                                    <div class="col">
-                                        <label for="example4">
-                                            Equipe:
-                                        </label>
-                                        <select class="form-control select2" id="example4" name="state3[]" multiple="multiple3">
-                                            <?php 
+                                            <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 col-xl-3">
+                                                <label for="example4">
+                                                    Equipe:
+                                                </label>
+                                                <select class="form-control select2" id="example4" name="state3[]" multiple="multiple3">
+                                                    <?php 
                                             $sql="SELECT distinct(CENTRO_CUSTO) as CENTRO_CUSTO
                                                   FROM movimento_veiculos";
                                             $sql = $db->query($sql);
@@ -257,55 +256,35 @@ return $entry['QUANTIDADE_LITROS']; }, $array));
                                             } 
                                                             
                                             ?>
-                                        </select>
-                                    </div>
+                                                </select>
+                                            </div>
 
-                                    <div class="col">
-                                        <label for="example5">
-                                            motorista:
-                                        </label>
-                                        <select class="form-control select2" id="example5" name="state3[]" multiple="multiple4">
-                                               <?php 
-                                            $sql="SELECT distinct(MOTORISTA) as MOTORISTA
+                                            <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 col-xl-3">
+                                                <label for="example5">
+                                                    Veiculo - motorista:
+                                                </label>
+                                                <select class="form-control select2" id="example6" name="state3[]" multiple="multiple5">
+                                                    <?php 
+                                            $sql="SELECT distinct(PLACA_VEICULO) as PLACA_VEICULO,MOTORISTA
                                                   FROM movimento_veiculos";
                                             $sql = $db->query($sql);
                                             $dados = $sql->fetchAll();
                                             
                                             foreach ($dados as $quantidade){
-                                               echo "<option>".$quantidade['MOTORISTA']."</option>"; 
+                                               echo "<option>".$quantidade['PLACA_VEICULO']." - ".$quantidade['MOTORISTA']."</option>"; 
                                             } 
                                                             
                                             ?>
+                                                </select>
+                                            </div>
 
-                                        </select>
-                                    </div>
-                                    <div class="col">
-                                        <label for="example5">
-                                            Veiculo:
-                                        </label>
-                                        <select class="form-control select2" id="example6" name="state3[]" multiple="multiple5">
-                                              <?php 
-                                            $sql="SELECT distinct(PLACA_VEICULO) as PLACA_VEICULO
-                                                  FROM movimento_veiculos";
-                                            $sql = $db->query($sql);
-                                            $dados = $sql->fetchAll();
-                                            
-                                            foreach ($dados as $quantidade){
-                                               echo "<option>".$quantidade['PLACA_VEICULO']."</option>"; 
-                                            } 
-                                                            
-                                            ?>
+                                            <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 col-xl-3">
+                                                <label for="example5">
+                                                    Posto:
+                                                </label>
+                                                <select class="form-control select2" id="example7" name="state3[]" multiple="multiple6">
 
-                                        </select>
-                                    </div>
-
-                                    <div class="col">
-                                        <label for="example5">
-                                            Posto:
-                                        </label>
-                                        <select class="form-control select2" id="example7" name="state3[]" multiple="multiple6">
-
-                                            <?php 
+                                                    <?php 
                                             $sql="SELECT distinct(NOME_POSTO) as NOME_POSTO
                                                   FROM movimento_veiculos";
                                             $sql = $db->query($sql);
@@ -317,43 +296,34 @@ return $entry['QUANTIDADE_LITROS']; }, $array));
                                                             
                                             ?>
 
-                                        </select>
-                                    </div>
+                                                </select>
+                                            </div>
 
-                                    <div class="col">
-                                        <label for="example2">
+                                            <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 col-xl-3">
+                                                <label for="example2">
 
-                                        </label>
-                                        <br>
-                                        <button type="submit" class="btn btn-primary  btn-block"><i class="fa fa-refresh"></i> Atualizar</button>
-                                    </div>
+                                                </label>
+                                                <br>
+                                                <button type="submit" class="btn btn-primary  btn-block"><i class="fa fa-refresh"></i> Atualizar</button>
+                                            </div>
+                                        </div>
+                                    </form>
                                 </div>
-                            </form>
-                        </div>
 
-                        <div class="row">
-                            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 col-xl-6">
-                                <div class="card mb-3">
-                                    <div class="card-header">
-                                        <i class="fa fa-table"></i> PREÇO X QUANTIDADE MÉDIA CONSUMIDA DE COMBUSTÍVEL POR CIDADE
-                                        <h8><span class="badge badge-warning">(DIESEL)</span></h8>
-                                    </div>
-                                    <div class="card-body">
-                                        <canvas id="grafico1"></canvas>
-                                    </div>
-                                    <div class="card-footer small text-muted"></div>
-                                </div>
-                            </div>
-                            <hr>
-
-                            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 col-xl-6">
-                                <div class="card mb-3">
-                                    <div class="card-header">
-                                        <i class="fa fa-table"></i> PREÇO X QUANTIDADE MÉDIA CONSUMIDA DE COMBUSTÍVEL POR CIDADE
-                                        <span class="badge badge-success"> (GASOLINA)</span>
-                                    </div>
-
-                                    <div class="card-body">
+                                <div class="card-footer small text-muted"></div>
+                                <br>
+                                <div class="row">
+                                    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                                        <div class="card mb-3">
+                                            <div class="card-header">
+                                                <i class="fa fa-table"></i> PREÇO X QUANTIDADE MÉDIA CONSUMIDA DE COMBUSTÍVEL POR CIDADE
+                                                <h8><span class="badge badge-warning">(DIESEL)</span></h8>
+                                            </div>
+                                            <div class="card-body">
+                                                <canvas id="grafico1"></canvas>
+                                            </div>
+                                            <div class="card-footer small text-muted"></div>
+                                        </div>
                                         <canvas id="grafico2"></canvas>
 
                                     </div>
@@ -385,270 +355,276 @@ return $entry['QUANTIDADE_LITROS']; }, $array));
                             </span>
                         </footer>
 
-                        <!-- END main -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    <!-- END main -->
 
-                        <script src="assets/js/modernizr.min.js"></script>
-                        <script src="assets/js/jquery.min.js"></script>
-                        <script src="assets/js/moment.min.js"></script>
+    <script src="assets/js/modernizr.min.js"></script>
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/js/moment.min.js"></script>
 
-                        <script src="assets/js/popper.min.js"></script>
-                        <script src="assets/js/bootstrap.min.js"></script>
+    <script src="assets/js/popper.min.js"></script>
+    <script src="assets/js/bootstrap.min.js"></script>
 
-                        <script src="assets/js/detect.js"></script>
-                        <script src="assets/js/fastclick.js"></script>
-                        <script src="assets/js/jquery.blockUI.js"></script>
-                        <script src="assets/js/jquery.nicescroll.js"></script>
-                        <!-- BEGIN Java Script for this page -->
-                        <script src="assets/plugins/select2/js/select2.min.js"></script>
-                        <script>
-                            $(document).ready(function() {
-                                $('.select2').select2();
+    <script src="assets/js/detect.js"></script>
+    <script src="assets/js/fastclick.js"></script>
+    <script src="assets/js/jquery.blockUI.js"></script>
+    <script src="assets/js/jquery.nicescroll.js"></script>
+    <!-- BEGIN Java Script for this page -->
+    <script src="assets/plugins/select2/js/select2.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('.select2').select2();
+        });
+
+    </script>
+    <!-- App js -->
+    <script src="assets/js/pikeadmin.js">
+    </script>
+
+    <!-- BEGIN Java Script for this page -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap4.min.js"></script>
+
+    <!-- Counter-Up-->
+    <script src="assets/plugins/waypoints/lib/jquery.waypoints.min.js"></script>
+    <script src="assets/plugins/counterup/jquery.counterup.min.js"></script>
+    <script src="assets/js/detect.js"></script>
+
+    <script src="assets/js/jquery.scrollTo.min.js"></script>
+    <script src="assets/plugins/switchery/switchery.min.js"></script>
+
+    <!-- App js -->
+
+
+
+    <script src="assets/js/funcoes.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            // data-tables
+            $('#example1').DataTable();
+
+            // counter-up
+            $('.counter').counterUp({
+                delay: 10,
+                time: 600
+            });
+        });
+        }
+
+    </script>
+
+    <script>
+        var ctx1 = document.getElementById("grafico1").getContext('2d');
+        var barChart = new Chart(ctx1, {
+            type: 'horizontalBar',
+            borderWidth: 30,
+            data: {
+                labels: ["<?php echo  montaGraficoCidade($arrayValorDieselAgrupado);?>"],
+                datasets: [{
+                    label: 'PREÇO MÉDIO',
+                    data: ["<?php echo  montaGraficoValor($arrayValorDieselAgrupado); ?>"],
+                    responsive: true,
+                    fill: false,
+                    backgroundColor: 'rgba(251,195,0,0.9)',
+                    borderColor: 'rgba(251,195,0,0.9)',
+                }, {
+                    label: 'QUANTIDADE MÉDIA EM LITROS',
+                    data: ["<?php echo montaGraficoQuantidade(agrupaArray($arrayValorDieselAgrupado,$arrayQuantidadeDieselAgrupado))?>"],
+                    responsive: true,
+                    fill: false,
+                    backgroundColor: 'rgba(255,140,0,0.9)',
+                    borderColor: 'rgba(255,140,0,0.9)',
+                }],
+            },
+            options: {
+                layout: {
+                    padding: {
+                        left: 10,
+                        right: 50,
+                        top: 10,
+                        bottom: 10
+                    }
+                },
+                title: {
+                    display: false,
+                },
+                scales: {
+                    xAxes: [{
+                        display: false,
+                    }],
+                    yAxes: [{
+                        display: true,
+                    }]
+                },
+                animation: {
+                    duration: 1000,
+                    onComplete: function() {
+                        var chartInstance = this.chart,
+                            ctx = chartInstance.ctx;
+                        ctx.textAlign = 'center';
+                        ctx.fillStyle = 'rgba(25,0,0,0.9)';
+                        // ctx.font = "bold 11px Calibri";
+                        ctx.fillStyle = ['blue', 'red'];
+                        ctx.strokeStyle = '#fff000';
+                        this.data.datasets.forEach(function(dataset, i) {
+                            var meta = chartInstance.controller.getDatasetMeta(i);
+                            meta.data.forEach(function(bar, index) {
+                                var data = dataset.data[index];
+                                data2 = data;
+                                ctx.fillText(data2, bar._model.x + 20, bar._model.y - 5);
                             });
+                        });
+                    },
+                },
+            }
+        });
 
-                        </script>
-                        <!-- App js -->
-                        <script src="assets/js/pikeadmin.js">
-                        </script>
+    </script>
 
-                        <!-- BEGIN Java Script for this page -->
-                        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
-                        <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
-                        <script src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap4.min.js"></script>
-
-                        <!-- Counter-Up-->
-                        <script src="assets/plugins/waypoints/lib/jquery.waypoints.min.js"></script>
-                        <script src="assets/plugins/counterup/jquery.counterup.min.js"></script>
-                        <script src="assets/js/detect.js"></script>
-
-                        <script src="assets/js/jquery.scrollTo.min.js"></script>
-                        <script src="assets/plugins/switchery/switchery.min.js"></script>
-
-                        <!-- App js -->
-
-
-
-                        <script src="assets/js/funcoes.js"></script>
-
-                        <script>
-                            $(document).ready(function() {
-                                // data-tables
-                                $('#example1').DataTable();
-
-                                // counter-up
-                                $('.counter').counterUp({
-                                    delay: 10,
-                                    time: 600
-                                });
+    <script>
+        var ctx1 = document.getElementById("grafico2").getContext('2d');
+        var barChart = new Chart(ctx1, {
+            type: 'horizontalBar',
+            borderWidth: 30,
+            data: {
+                labels: ["<?php echo  montaGraficoCidade($arrayValorGasolinaAgrupado);?>"],
+                datasets: [{
+                    label: 'PREÇO MÉDIO',
+                    data: ["<?php echo  montaGraficoValor($arrayValorGasolinaAgrupado); ?>"],
+                    responsive: true,
+                    fill: false,
+                    backgroundColor: 'rgba(96,167,0,0.9)',
+                    borderColor: 'rgba(96,167,0,0.9)',
+                }, {
+                    label: 'QUANTIDADE MÉDIA EM LITROS',
+                    data: ["<?php echo montaGraficoQuantidade(agrupaArray($arrayValorGasolinaAgrupado,$arrayQuantidadeGasolinaAgrupado))?>"],
+                    responsive: true,
+                    fill: false,
+                    backgroundColor: 'rgba(255,140,0,0.9)',
+                    borderColor: 'rgba(255,140,0,0.9)',
+                }],
+            },
+            options: {
+                layout: {
+                    padding: {
+                        left: 10,
+                        right: 50,
+                        top: 10,
+                        bottom: 10
+                    }
+                },
+                title: {
+                    display: false,
+                },
+                scales: {
+                    xAxes: [{
+                        display: false,
+                    }],
+                    yAxes: [{
+                        display: true,
+                    }]
+                },
+                animation: {
+                    duration: 1000,
+                    onComplete: function() {
+                        var chartInstance = this.chart,
+                            ctx = chartInstance.ctx;
+                        ctx.textAlign = 'center';
+                        ctx.fillStyle = 'rgba(25,0,0,0.9)';
+                        //ctx.font = "bold 11px Calibri";
+                        ctx.fillStyle = ['blue', 'red'];
+                        ctx.strokeStyle = '#fff000';
+                        this.data.datasets.forEach(function(dataset, i) {
+                            var meta = chartInstance.controller.getDatasetMeta(i);
+                            meta.data.forEach(function(bar, index) {
+                                var data = dataset.data[index];
+                                data2 = data;
+                                ctx.fillText(data2, bar._model.x + 20, bar._model.y - 5);
                             });
-                            }
+                        });
+                    },
+                },
+            }
+        });
 
-                        </script>
+    </script>
 
-                        <script>
-                            var ctx1 = document.getElementById("grafico1").getContext('2d');
-                            var barChart = new Chart(ctx1, {
-                                type: 'horizontalBar',
-                                borderWidth: 30,
-                                data: {
-                                    labels: ["<?php echo  montaGraficoCidade($arrayValorDieselAgrupado);?>"],
-                                    datasets: [{
-                                        label: 'PREÇO MÉDIO',
-                                        data: ["<?php echo  montaGraficoValor($arrayValorDieselAgrupado); ?>"],
-                                        responsive: true,
-                                        fill: false,
-                                        backgroundColor: 'rgba(251,195,0,0.9)',
-                                        borderColor: 'rgba(251,195,0,0.9)',
-                                    }, {
-                                        label: 'QUANTIDADE MÉDIA EM LITROS',
-                                        data: ["<?php echo montaGraficoQuantidade(agrupaArray($arrayValorDieselAgrupado,$arrayQuantidadeDieselAgrupado))?>"],
-                                        responsive: true,
-                                        fill: false,
-                                        backgroundColor: 'rgba(255,140,0,0.9)',
-                                        borderColor: 'rgba(255,140,0,0.9)',
-                                    }],
-                                },
-                                options: {
-                                    layout: {
-                                        padding: {
-                                            left: 10,
-                                            right: 50,
-                                            top: 10,
-                                            bottom: 10
-                                        }
-                                    },
-                                    title: {
-                                        display: false,
-                                    },
-                                    scales: {
-                                        xAxes: [{
-                                            display: false,
-                                        }],
-                                        yAxes: [{
-                                            display: true,
-                                        }]
-                                    },
-                                    animation: {
-                                        duration: 1000,
-                                        onComplete: function() {
-                                            var chartInstance = this.chart,
-                                                ctx = chartInstance.ctx;
-                                            ctx.textAlign = 'center';
-                                            ctx.fillStyle = 'rgba(25,0,0,0.9)';
-                                            // ctx.font = "bold 11px Calibri";
-                                            ctx.fillStyle = ['blue', 'red'];
-                                            ctx.strokeStyle = '#fff000';
-                                            this.data.datasets.forEach(function(dataset, i) {
-                                                var meta = chartInstance.controller.getDatasetMeta(i);
-                                                meta.data.forEach(function(bar, index) {
-                                                    var data = dataset.data[index];
-                                                    data2 = data;
-                                                    ctx.fillText(data2, bar._model.x + 20, bar._model.y - 5);
-                                                });
-                                            });
-                                        },
-                                    },
-                                }
+    <script>
+        var ctx1 = document.getElementById("grafico3").getContext('2d');
+        var barChart = new Chart(ctx1, {
+            type: 'horizontalBar',
+            borderWidth: 30,
+            data: {
+                labels: ["<?php echo  montaGraficoCidade($arrayValorEtanolAgrupado);?>"],
+                datasets: [{
+                    label: 'PREÇO MÉDIO',
+                    data: ["<?php echo  montaGraficoValor($arrayValorEtanolAgrupado); ?>"],
+                    responsive: true,
+                    fill: false,
+                    backgroundColor: 'rgba(78,149,212,0.9)',
+                    borderColor: 'rgba(78,149,212,0.9)',
+                }, {
+                    label: 'QUANTIDADE MÉDIA EM LITROS',
+                    data: ["<?php echo montaGraficoQuantidade(agrupaArray($arrayValorEtanolAgrupado,$arrayQuantidadeEtanolAgrupado))?>"],
+                    responsive: true,
+                    fill: false,
+                    backgroundColor: 'rgba(255,140,0,0.9)',
+                    borderColor: 'rgba(255,140,0,0.9)',
+                }],
+            },
+            options: {
+                layout: {
+                    padding: {
+                        left: 10,
+                        right: 50,
+                        top: 10,
+                        bottom: 10
+                    }
+                },
+                title: {
+                    display: false,
+                },
+                scales: {
+                    xAxes: [{
+                        display: false,
+                    }],
+                    yAxes: [{
+                        display: true,
+                    }]
+                },
+                animation: {
+                    duration: 1000,
+                    onComplete: function() {
+                        var chartInstance = this.chart,
+                            ctx = chartInstance.ctx;
+                        ctx.textAlign = 'center';
+                        ctx.fillStyle = 'rgba(25,0,0,0.9)';
+                        // ctx.font = "bold 11px Calibri";
+                        ctx.fillStyle = ['blue', 'red'];
+                        ctx.strokeStyle = '#fff000';
+                        this.data.datasets.forEach(function(dataset, i) {
+                            var meta = chartInstance.controller.getDatasetMeta(i);
+                            meta.data.forEach(function(bar, index) {
+                                var data = dataset.data[index];
+                                data2 = data;
+                                ctx.fillText(data2, bar._model.x + 20, bar._model.y - 5);
                             });
+                        });
+                    },
+                },
+            }
+        });
 
-                        </script>
+    </script>
 
-                        <script>
-                            var ctx1 = document.getElementById("grafico2").getContext('2d');
-                            var barChart = new Chart(ctx1, {
-                                type: 'horizontalBar',
-                                borderWidth: 30,
-                                data: {
-                                    labels: ["<?php echo  montaGraficoCidade($arrayValorGasolinaAgrupado);?>"],
-                                    datasets: [{
-                                        label: 'PREÇO MÉDIO',
-                                        data: ["<?php echo  montaGraficoValor($arrayValorGasolinaAgrupado); ?>"],
-                                        responsive: true,
-                                        fill: false,
-                                        backgroundColor: 'rgba(96,167,0,0.9)',
-                                        borderColor: 'rgba(96,167,0,0.9)',
-                                    }, {
-                                        label: 'QUANTIDADE MÉDIA EM LITROS',
-                                        data: ["<?php echo montaGraficoQuantidade(agrupaArray($arrayValorGasolinaAgrupado,$arrayQuantidadeGasolinaAgrupado))?>"],
-                                        responsive: true,
-                                        fill: false,
-                                        backgroundColor: 'rgba(255,140,0,0.9)',
-                                        borderColor: 'rgba(255,140,0,0.9)',
-                                    }],
-                                },
-                                options: {
-                                    layout: {
-                                        padding: {
-                                            left: 10,
-                                            right: 50,
-                                            top: 10,
-                                            bottom: 10
-                                        }
-                                    },
-                                    title: {
-                                        display: false,
-                                    },
-                                    scales: {
-                                        xAxes: [{
-                                            display: false,
-                                        }],
-                                        yAxes: [{
-                                            display: true,
-                                        }]
-                                    },
-                                    animation: {
-                                        duration: 1000,
-                                        onComplete: function() {
-                                            var chartInstance = this.chart,
-                                                ctx = chartInstance.ctx;
-                                            ctx.textAlign = 'center';
-                                            ctx.fillStyle = 'rgba(25,0,0,0.9)';
-                                            //ctx.font = "bold 11px Calibri";
-                                            ctx.fillStyle = ['blue', 'red'];
-                                            ctx.strokeStyle = '#fff000';
-                                            this.data.datasets.forEach(function(dataset, i) {
-                                                var meta = chartInstance.controller.getDatasetMeta(i);
-                                                meta.data.forEach(function(bar, index) {
-                                                    var data = dataset.data[index];
-                                                    data2 = data;
-                                                    ctx.fillText(data2, bar._model.x + 20, bar._model.y - 5);
-                                                });
-                                            });
-                                        },
-                                    },
-                                }
-                            });
-
-                        </script>
-
-                        <script>
-                            var ctx1 = document.getElementById("grafico3").getContext('2d');
-                            var barChart = new Chart(ctx1, {
-                                type: 'horizontalBar',
-                                borderWidth: 30,
-                                data: {
-                                    labels: ["<?php echo  montaGraficoCidade($arrayValorEtanolAgrupado);?>"],
-                                    datasets: [{
-                                        label: 'PREÇO MÉDIO',
-                                        data: ["<?php echo  montaGraficoValor($arrayValorEtanolAgrupado); ?>"],
-                                        responsive: true,
-                                        fill: false,
-                                        backgroundColor: 'rgba(78,149,212,0.9)',
-                                        borderColor: 'rgba(78,149,212,0.9)',
-                                    }, {
-                                        label: 'QUANTIDADE MÉDIA EM LITROS',
-                                        data: ["<?php echo montaGraficoQuantidade(agrupaArray($arrayValorEtanolAgrupado,$arrayQuantidadeEtanolAgrupado))?>"],
-                                        responsive: true,
-                                        fill: false,
-                                        backgroundColor: 'rgba(255,140,0,0.9)',
-                                        borderColor: 'rgba(255,140,0,0.9)',
-                                    }],
-                                },
-                                options: {
-                                    layout: {
-                                        padding: {
-                                            left: 10,
-                                            right: 50,
-                                            top: 10,
-                                            bottom: 10
-                                        }
-                                    },
-                                    title: {
-                                        display: false,
-                                    },
-                                    scales: {
-                                        xAxes: [{
-                                            display: false,
-                                        }],
-                                        yAxes: [{
-                                            display: true,
-                                        }]
-                                    },
-                                    animation: {
-                                        duration: 1000,
-                                        onComplete: function() {
-                                            var chartInstance = this.chart,
-                                                ctx = chartInstance.ctx;
-                                            ctx.textAlign = 'center';
-                                            ctx.fillStyle = 'rgba(25,0,0,0.9)';
-                                            // ctx.font = "bold 11px Calibri";
-                                            ctx.fillStyle = ['blue', 'red'];
-                                            ctx.strokeStyle = '#fff000';
-                                            this.data.datasets.forEach(function(dataset, i) {
-                                                var meta = chartInstance.controller.getDatasetMeta(i);
-                                                meta.data.forEach(function(bar, index) {
-                                                    var data = dataset.data[index];
-                                                    data2 = data;
-                                                    ctx.fillText(data2, bar._model.x + 20, bar._model.y - 5);
-                                                });
-                                            });
-                                        },
-                                    },
-                                }
-                            });
-
-                        </script>
-
-                        <!-- END Java Script Pagina -->
+    <!-- END Java Script Pagina -->
 
 </body>
 

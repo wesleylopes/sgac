@@ -68,7 +68,13 @@ BEGIN
 						AND b.CENTRO_RESULTADO in(SELECT DISTINCT(CENTRO_RESULTADO ) FROM movimento_veiculos a 
                                                     WHERE CENTRO_RESULTADO NOT IN('PIAUI','GOIAS'))
 						AND DATE(b.DATA_MOVIMENTO) between p_dataInicial and p_dataFinal);
-                       
+SET veiculosMovimento = (SELECT count(*) 
+					    FROM movimento_veiculos b 
+	                    WHERE b.PRODUTO like CONCAT('%', p_tipoCombustivel, '%')
+                       AND CENTRO_CUSTO like CONCAT('%', p_equipe,'%')
+						AND b.CENTRO_RESULTADO in(SELECT DISTINCT(CENTRO_RESULTADO ) FROM movimento_veiculos a 
+                                                    WHERE CENTRO_RESULTADO NOT IN('PIAUI','GOIAS'))
+						AND DATE(b.DATA_MOVIMENTO) between p_dataInicial and p_dataFinal); buscaPrecoQtdCidadeConsolidado                    
                         
   SET p_kmLitro = ( somaDistancia / somaQuantidade );                       
 -- Abertura do cursor

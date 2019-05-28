@@ -482,19 +482,19 @@ if (iniciaSessao()===true){
             data: {
                 labels: ["<?php echo  montaGraficoCidade($arrayValorDieselAgrupado);?>"],
                 datasets: [{
-                    label: 'PREÇO MÉDIO',
-                    data: ["<?php echo  montaGraficoValor($arrayValorDieselAgrupado); ?>"],
-                    responsive: false,
-                    fill: false,
-                    backgroundColor: 'rgba(251,195,0,0.9)',
-                    borderColor: 'rgba(251,195,0,0.9)',
-                }, {
                     label: 'QUANTIDADE MÉDIA EM LITROS',
                     data: ["<?php echo montaGraficoQuantidade(agrupaArray($arrayValorDieselAgrupado,$arrayQuantidadeDieselAgrupado))?>"],
                     responsive: false,
                     fill: false,
                     backgroundColor: 'rgba(255,140,0,0.9)',
                     borderColor: 'rgba(255,140,0,0.9)',
+                },{
+                    label: 'PREÇO MÉDIO',
+                    data: ["<?php echo  montaGraficoValor($arrayValorDieselAgrupado); ?>"],
+                    responsive: false,
+                    fill: false,
+                    backgroundColor: 'rgba(251,195,0,0.9)',
+                    borderColor: 'rgba(251,195,0,0.9)',
                 }],
             },
             options: {
@@ -524,7 +524,7 @@ if (iniciaSessao()===true){
                             ctx = chartInstance.ctx;
                         ctx.textAlign = 'center';
                         ctx.fillStyle = 'rgba(25,0,0,0.9)';
-                        // ctx.font = "bold 11px Calibri";
+                        ctx.font = "70% bold Calibri";
                         ctx.fillStyle = ['blue', 'red'];
                         ctx.strokeStyle = '#fff000';
                         this.data.datasets.forEach(function(dataset, i) {
@@ -550,19 +550,19 @@ if (iniciaSessao()===true){
             data: {
                 labels: ["<?php echo  montaGraficoCidade($arrayValorGasolinaAgrupado);?>"],
                 datasets: [{
-                    label: 'PREÇO MÉDIO',
-                    data: ["<?php echo  montaGraficoValor($arrayValorGasolinaAgrupado); ?>"],
-                    responsive: false,
-                    fill: false,
-                    backgroundColor: 'rgba(96,167,0,0.9)',
-                    borderColor: 'rgba(96,167,0,0.9)',
-                }, {
                     label: 'QUANTIDADE MÉDIA EM LITROS',
                     data: ["<?php echo montaGraficoQuantidade(agrupaArray($arrayValorGasolinaAgrupado,$arrayQuantidadeGasolinaAgrupado))?>"],
                     responsive: true,
                     fill: false,
                     backgroundColor: 'rgba(255,140,0,0.9)',
                     borderColor: 'rgba(255,140,0,0.9)',
+                },{
+                    label: 'PREÇO MÉDIO',
+                    data: ["<?php echo  montaGraficoValor($arrayValorGasolinaAgrupado); ?>"],
+                    responsive: false,
+                    fill: false,
+                    backgroundColor: 'rgba(96,167,0,0.9)',
+                    borderColor: 'rgba(96,167,0,0.9)',
                 }],
             },
             options: {
@@ -592,7 +592,7 @@ if (iniciaSessao()===true){
                             ctx = chartInstance.ctx;
                         ctx.textAlign = 'center';
                         ctx.fillStyle = 'rgba(25,0,0,0.9)';
-                        //ctx.font = "bold 11px Calibri";
+                        ctx.font = "70% bold Calibri";
                         ctx.fillStyle = ['blue', 'red'];
                         ctx.strokeStyle = '#fff000';
                         this.data.datasets.forEach(function(dataset, i) {
@@ -617,20 +617,20 @@ if (iniciaSessao()===true){
             borderWidth: 30,
             data: {
                 labels: ["<?php echo  montaGraficoCidade($arrayValorEtanolAgrupado);?>"],
-                datasets: [{
-                    label: 'PREÇO MÉDIO',
-                    data: ["<?php echo  montaGraficoValor($arrayValorEtanolAgrupado); ?>"],
-                    responsive: false,
-                    fill: false,
-                    backgroundColor: 'rgba(78,149,212,0.9)',
-                    borderColor: 'rgba(78,149,212,0.9)',
-                }, {
+                datasets: [ {
                     label: 'QUANTIDADE MÉDIA EM LITROS',
                     data: ["<?php echo montaGraficoQuantidade(agrupaArray($arrayValorEtanolAgrupado,$arrayQuantidadeEtanolAgrupado))?>"],
                     responsive: true,
                     fill: false,
                     backgroundColor: 'rgba(255,140,0,0.9)',
                     borderColor: 'rgba(255,140,0,0.9)',
+                },{
+                    label: 'PREÇO MÉDIO',
+                    data: ["<?php echo  montaGraficoValor($arrayValorEtanolAgrupado); ?>"],
+                    responsive: false,
+                    fill: false,
+                    backgroundColor: 'rgba(78,149,212,0.9)',
+                    borderColor: 'rgba(78,149,212,0.9)',
                 }],
             },
             options: {
@@ -648,9 +648,11 @@ if (iniciaSessao()===true){
                 scales: {
                     xAxes: [{
                         display: false,
+                        margin: 30
                     }],
                     yAxes: [{
                         display: true,
+                        margin: 30
                     }]
                 },
                 animation: {
@@ -660,7 +662,7 @@ if (iniciaSessao()===true){
                             ctx = chartInstance.ctx;
                         ctx.textAlign = 'center';
                         ctx.fillStyle = 'rgba(25,0,0,0.9)';
-                        // ctx.font = "bold 11px Calibri";
+                        ctx.font = "70% bold Calibri";
                         ctx.fillStyle = ['blue', 'red'];
                         ctx.strokeStyle = '#fff000';
                         this.data.datasets.forEach(function(dataset, i) {

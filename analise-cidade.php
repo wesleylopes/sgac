@@ -225,8 +225,6 @@ if (iniciaSessao()===true){
 
                                     <div class="card-footer small text-muted"></div>
 
-
-
                                     <br>
 
                                     <?php
@@ -331,19 +329,7 @@ if (iniciaSessao()===true){
                                     usort($arrayQuantidadeEtanolAgrupado,'ordenaArrayQuantidadeCombustivel');
                                     usort($arrayQuantidadeDieselAgrupado,'ordenaArrayQuantidadeCombustivel');
 
-                                    /*   
-                                     echo "<pre>";
-                                     echo "<br>";
-                                       print_r($arrayDieselConsolidado);
-                                     echo "</pre>";
-
-                                        echo "<br>";
-                                          echo "<-------------------------------------------------------->";
-                                      echo "<pre>";
-                                     echo "<br>";
-                                       print_r($arrayValorDieselAgrupado);
-                                     echo "</pre>";*/
-
+                                  
                                     function montaGraficoValor($array){
                                         return implode('","', array_map(function ($entry) {
 
@@ -360,10 +346,7 @@ if (iniciaSessao()===true){
                                         return implode('","', array_map(function ($entry) {
 
                                             return $entry['QUANTIDADE_LITROS']; }, $array));  
-                                    }  
-
-
-
+                                    } 
                                     ?>
 
                                     <div class="row">
@@ -400,14 +383,9 @@ if (iniciaSessao()===true){
                                 </div>
                             </div>
 
-                            <footer class="footer">
-                                <span class="text-right">
-                                    S.G.A.C Versão 1.0.0.1 <a target="_blank" href="#">2019 Potência Medicões</a>
-                                </span>
-                                <span class="float-right">
-                                    Desenvolvido por <a target="_blank" href="http://www.potenciamedicoes.com.br"><b>Wesley Lopes</b></a>
-                                </span>
-                            </footer>
+                           <!-- Start Barra Menu Lateral Esquerdo -->
+                        <?php require_once ("front-end/bar-footer.php"); ?>
+                        <!-- End Barra Menu Lateral Esquerdo -->
 
                         </div>
                     </div>

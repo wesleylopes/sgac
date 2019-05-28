@@ -301,7 +301,7 @@ return $entry['QUANTIDADE_LITROS']; }, $array));
                                 type: 'horizontalBar',
                                 borderWidth: 30,
                                 data: {
-                                    labels: ["<?php echo  montaGraficoCidade($arrayValorDieselAgrupado);?>"],
+                                    labels: [<?php echo  montaGraficoCidade($arrayValorDieselAgrupado);?>],
                                     datasets: [{
                                         label: 'PREÇO MÉDIO',
                                         data: ["<?php echo  montaGraficoValor($arrayValorDieselAgrupado); ?>"],
@@ -362,7 +362,7 @@ return $entry['QUANTIDADE_LITROS']; }, $array));
                             });
 
                         </script>
-
+ <!--
                         <script>
                             var ctx1 = document.getElementById("grafico2").getContext('2d');
                             var barChart = new Chart(ctx1, {
@@ -430,7 +430,7 @@ return $entry['QUANTIDADE_LITROS']; }, $array));
                             });
 
                         </script>
-
+                    
                         <script>
                             var ctx1 = document.getElementById("grafico3").getContext('2d');
                             var barChart = new Chart(ctx1, {
@@ -499,7 +499,7 @@ return $entry['QUANTIDADE_LITROS']; }, $array));
 
                         </script>
 
-                        <!-- END Java Script Pagina -->
+                         END Java Script Pagina -->
 
 </body>
 

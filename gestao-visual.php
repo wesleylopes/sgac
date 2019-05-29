@@ -34,7 +34,7 @@ foreach ($veiculos as $veiculo){
   $arrayVeiculoConsolidado[] = buscaInformacoesVeiculoConsolidado($v_veiculo,$dti,$dtf);  
     
    }
-    
+    /*
  echo "<pre>";
  echo "<br>";
    print_r($arrayVeiculoConsolidado);
@@ -45,7 +45,7 @@ foreach ($veiculos as $veiculo){
   echo "<pre>";
  echo "<br>";
    print_r($arrayVeiculoConsolidado);
- echo "</pre>";
+ echo "</pre>";*/
        
       
       
@@ -138,28 +138,136 @@ foreach ($veiculos as $veiculo){
                     <div class="row">
                         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
                             <div class="card-header">
-                                <i class="fa fa-filter"></i> FILTRAR PERIODO DE <> ATÉ
+                                <i class="fa fa-filter"></i> FILTROS
                             </div>
                             <br>
+                            <div class=" container card mb-3">
+                                <form method="POST">
+                                    <div class="row">
+                                        <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 col-xl-3">
+                                            <label for="example3">
+                                                Data Inicial:
+                                            </label>
+                                            <div class="form-group ">
+                                                <input type="date" class="form-control" value="<?php echo $_POST['datai'];?>" id="InputDatai" name="datai" aria-describedby="emailHelp" placeholder="Data inicial">
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 col-xl-3">
+                                            <label for="example3">
+                                                Data Final:
+                                            </label>
+                                            <div class="form-group">
+                                                <input type="date" class="form-control" value="<?php echo $_POST['dataf'];?>" id="InputDataf" name="dataf" placeholder="Data final">
+                                            </div>
+                                        </div>
 
-                            <form method="POST">
-                                <div class="row">
-                                    <div class="col">
-                                        <div class="form-group">
-                                            <input type="date" class="form-control" value="<?php echo $_POST['datai'];?>" id="InputDatai" name="datai" aria-describedby="emailHelp" placeholder="Data inicial">
+                                        <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 col-xl-3">
+                                            <label for="example3">
+                                                Cidade:
+                                            </label>
+                                            <select multiple class=" form-control select2" id="cidade" name="cidade[]" multiple="cidade">
+                                                <?php 
+                                                        $sql="SELECT distinct(CIDADE) as CIDADE
+                                                  FROM movimento_veiculos";
+                                                        $sql = $db->query($sql);
+                                                        $dados = $sql->fetchAll();
+
+                                                        foreach ($dados as $quantidade){
+                                                            echo "<option>".$quantidade['CIDADE']."</option>"; 
+                                                        } 
+
+                                                        ?>
+                                            </select>
+                                        </div>
+                                        <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 col-xl-3">
+                                            <label for="example3">
+                                                Polo:
+                                            </label>
+                                            <select multiple class=" form-control select2" id="polo" name="polo[]">
+                                                <?php 
+                                                        $sql="SELECT distinct(CENTRO_RESULTADO) as CENTRO_RESULTADO
+                                                  FROM movimento_veiculos";
+                                                        $sql = $db->query($sql);
+                                                        $dados = $sql->fetchAll();
+
+                                                        foreach ($dados as $quantidade){
+                                                            echo "<option>".$quantidade['CENTRO_RESULTADO']."</option>"; 
+                                                        }   
+
+                                                        ?>
+
+                                            </select>
+
+                                        </div>
+
+                                        <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 col-xl-3">
+                                            <label for="example4">
+                                                Equipe:
+                                            </label>
+                                            <select multiple class=" form-control select2" id="equipe" name="equipe[]">
+                                                <?php 
+                                                        $sql="SELECT distinct(CENTRO_CUSTO) as CENTRO_CUSTO
+                                                  FROM movimento_veiculos";
+                                                        $sql = $db->query($sql);
+                                                        $dados = $sql->fetchAll();
+
+                                                        foreach ($dados as $quantidade){
+                                                            echo "<option>".$quantidade['CENTRO_CUSTO']."</option>"; 
+                                                        } 
+
+                                                        ?>
+                                            </select>
+                                        </div>
+
+                                        <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 col-xl-3">
+                                            <label for="example5">
+                                                Veiculo - motorista:
+                                            </label>
+                                            <select multiple class=" form-control select2" id="veiculo" name="veiculo[]">
+                                                <?php 
+                                                        $sql="SELECT distinct(PLACA_VEICULO) as PLACA_VEICULO,MOTORISTA
+                                                  FROM movimento_veiculos";
+                                                        $sql = $db->query($sql);
+                                                        $dados = $sql->fetchAll();
+
+                                                        foreach ($dados as $quantidade){
+                                                            echo "<option value=".$quantidade['PLACA_VEICULO'].   ">".$quantidade['PLACA_VEICULO']." - ".$quantidade['MOTORISTA']."</option>"; 
+                                                        } 
+
+                                                        ?>
+                                            </select>
+                                        </div>
+
+                                        <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 col-xl-3">
+                                            <label for="example5">
+                                                Posto:
+                                            </label>
+                                            <select multiple class=" form-control select2" id="posto" name="posto[]">
+                                                
+                                                <?php 
+                                                $sql="SELECT distinct(NOME_POSTO) as NOME_POSTO
+                                                  FROM movimento_veiculos";
+                                                        $sql = $db->query($sql);
+                                                        $dados = $sql->fetchAll();
+
+                                                        foreach ($dados as $quantidade){
+                                                            echo "<option>".$quantidade['NOME_POSTO']."</option>"; 
+                                                        } 
+
+                                                ?>
+                                            </select>
+                                        </div>
+
+                                        <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 col-xl-3">
+                                            <label for="example2">
+
+                                            </label>
+                                            <br>
+                                            <button type="submit" class="btn btn-primary  btn-block"><i class="fa fa-refresh"></i> Atualizar</button>
                                         </div>
                                     </div>
-                                    <div class="col">
-                                        <div class="form-group">
-                                            <input type="date" class="form-control" value="<?php echo $_POST['dataf'];?>" id="InputDataf" name="dataf" placeholder="Data final">
-                                        </div>
-                                    </div>
-
-                                    <div class="col">
-                                        <button type="submit" class="btn btn-primary  btn-block"><i class="fa fa-refresh"></i> Atualizar Graficos</button>
-                                    </div>
-                                </div>
-                            </form>
+                                </form>
+                            </div>
                         </div>
 
                         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
@@ -207,7 +315,7 @@ foreach ($veiculos as $veiculo){
 
                         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
                             <div class="card-header">
-                               <h2> <i class="fa fa-filter"><span class="badge badge-primary"> &nbsp;VEICULOS</span></i></h2>
+                                <h2> <i class="fa fa-filter"><span class="badge badge-primary"> &nbsp;VEICULOS</span></i></h2>
                             </div>
                             <br>
 
@@ -221,7 +329,7 @@ foreach ($veiculos as $veiculo){
                                     <i class="fa fa-table"></i> <?php echo $Veiculo1['PLACA']?>
                                     <h8><span class="badge badge-success"></span></h8>
                                 </div>
-                                
+
                                 <div class="card-body">
                                     <h10><strong class="card-text"> VALOR ABASTECIDO :</strong></h10>
                                     <h8><span><?php echo $Veiculo1['SOMA_VALOR_COMBUSTIVEL']?></span></h8>
@@ -238,7 +346,7 @@ foreach ($veiculos as $veiculo){
                                     <h8><Strong class="card-text"> MARCA:</Strong></h8>
                                     <h8><span><?php echo $Veiculo1['MARCA']?></span></h8>
                                     <br>
-                                     <h8><Strong class="card-text"> MODELO:</Strong></h8>
+                                    <h8><Strong class="card-text"> MODELO:</Strong></h8>
                                     <h8><span><?php echo $Veiculo1['MODELO']?></span></h8>
                                     <br>
                                     <h8><Strong class="card-text"> MOTORISTA:</Strong></h8>

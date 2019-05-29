@@ -7,39 +7,43 @@ $dti   = $_POST['datai'];  // Captura data Inicial Formulário
 $dtf   = $_POST['dataf'];  // Captura data Final Formulário
 
 //Busca Valores por Unidade  
+    
+   /// $dti,$dtf,'DIESEL',$cidade,$poloCheck,$equipeCheck,$veiculo,$veiculoCheck,$postoCheck
+    
+$vlrGasolinaUnai        = buscaValorQtCombUnit('UNAI',$dti,$dtf,'GASOLINA')['VALOR_COMBUSTIVEL'];
+$vlrEtanolUnai          = buscaValorQtCombUnit('UNAI',$dti,$dtf,'ETANOL')['VALOR_COMBUSTIVEL'];
+$vlrDieselUnai          = buscaValorQtCombUnit('UNAI',$dti,$dtf,'DIESEL')['VALOR_COMBUSTIVEL'];
   
-$vlrGasolinaUnai        = buscaValorQtComb('UNAI',$dti,$dtf,'GASOLINA')['VALOR_COMBUSTIVEL'];
-$vlrEtanolUnai          = buscaValorQtComb('UNAI',$dti,$dtf,'ETANOL')['VALOR_COMBUSTIVEL'];
-$vlrDieselUnai          = buscaValorQtComb('UNAI',$dti,$dtf,'DIESEL')['VALOR_COMBUSTIVEL'];
+$vlrGasolinaParacatu    = buscaValorQtCombUnit('Paracatu',$dti,$dtf,'GASOLINA')['VALOR_COMBUSTIVEL'];
+$vlrEtanolParacatu      = buscaValorQtCombUnit('Paracatu',$dti,$dtf,'ETANOL')['VALOR_COMBUSTIVEL'];
+$vlrDieselParacatu      = buscaValorQtCombUnit('Paracatu',$dti,$dtf,'DIESEL')['VALOR_COMBUSTIVEL'];
   
-$vlrGasolinaParacatu    = buscaValorQtComb('Paracatu',$dti,$dtf,'GASOLINA')['VALOR_COMBUSTIVEL'];
-$vlrEtanolParacatu      = buscaValorQtComb('Paracatu',$dti,$dtf,'ETANOL')['VALOR_COMBUSTIVEL'];
-$vlrDieselParacatu      = buscaValorQtComb('Paracatu',$dti,$dtf,'DIESEL')['VALOR_COMBUSTIVEL'];
+$vlrGasolinaPirapora    = buscaValorQtCombUnit('Pirapora',$dti,$dtf,'GASOLINA')['VALOR_COMBUSTIVEL'];
+$vlrEtanolPirapora      = buscaValorQtCombUnit('Pirapora',$dti,$dtf,'ETANOL')['VALOR_COMBUSTIVEL'];
+$vlrDieselPirapora      = buscaValorQtCombUnit('Pirapora',$dti,$dtf,'DIESEL')['VALOR_COMBUSTIVEL'];
   
-$vlrGasolinaPirapora    = buscaValorQtComb('Pirapora',$dti,$dtf,'GASOLINA')['VALOR_COMBUSTIVEL'];
-$vlrEtanolPirapora      = buscaValorQtComb('Pirapora',$dti,$dtf,'ETANOL')['VALOR_COMBUSTIVEL'];
-$vlrDieselPirapora      = buscaValorQtComb('Pirapora',$dti,$dtf,'DIESEL')['VALOR_COMBUSTIVEL'];
+$qtdGasolinaUnai        = buscaValorQtCombUnit('UNAI',$dti,$dtf,'GASOLINA')['QUANTIDADE_LITROS'];
+$qtdEtanolUnai          = buscaValorQtCombUnit('UNAI',$dti,$dtf,'ETANOL')['QUANTIDADE_LITROS'];
+$qtdDieselUnai          = buscaValorQtCombUnit('UNAI',$dti,$dtf,'DIESEL')['QUANTIDADE_LITROS'];
   
-$qtdGasolinaUnai        = buscaValorQtComb('UNAI',$dti,$dtf,'GASOLINA')['QUANTIDADE_LITROS'];
-$qtdEtanolUnai          = buscaValorQtComb('UNAI',$dti,$dtf,'ETANOL')['QUANTIDADE_LITROS'];
-$qtdDieselUnai          = buscaValorQtComb('UNAI',$dti,$dtf,'DIESEL')['QUANTIDADE_LITROS'];
+$qtdGasolinaParacatu    = buscaValorQtCombUnit('Paracatu',$dti,$dtf,'GASOLINA')['QUANTIDADE_LITROS'];
+$qtdEtanolParacatu      = buscaValorQtCombUnit('Paracatu',$dti,$dtf,'ETANOL')['QUANTIDADE_LITROS'];
+$qtdDieselParacatu      = buscaValorQtCombUnit('Paracatu',$dti,$dtf,'DIESEL')['QUANTIDADE_LITROS'];
   
-$qtdGasolinaParacatu    = buscaValorQtComb('Paracatu',$dti,$dtf,'GASOLINA')['QUANTIDADE_LITROS'];
-$qtdEtanolParacatu      = buscaValorQtComb('Paracatu',$dti,$dtf,'ETANOL')['QUANTIDADE_LITROS'];
-$qtdDieselParacatu      = buscaValorQtComb('Paracatu',$dti,$dtf,'DIESEL')['QUANTIDADE_LITROS'];
+$qtdGasolinaPirapora    = buscaValorQtCombUnit('Pirapora',$dti,$dtf,'GASOLINA') ['QUANTIDADE_LITROS'];
+$qtdEtanolPirapora      = buscaValorQtCombUnit('Pirapora',$dti,$dtf,'ETANOL')['QUANTIDADE_LITROS'];
+$qtdDieselPirapora      = buscaValorQtCombUnit('Pirapora',$dti,$dtf,'DIESEL')['QUANTIDADE_LITROS']; 
   
-$qtdGasolinaPirapora    = buscaValorQtComb('Pirapora',$dti,$dtf,'GASOLINA') ['QUANTIDADE_LITROS'];
-$qtdEtanolPirapora      = buscaValorQtComb('Pirapora',$dti,$dtf,'ETANOL')['QUANTIDADE_LITROS'];
-$qtdDieselPirapora      = buscaValorQtComb('Pirapora',$dti,$dtf,'DIESEL')['QUANTIDADE_LITROS']; 
+
   
 // Busca Valores e Quantidades Consolidadas 
-$vlrGasolinaConsolidado   = buscaValorQtCombConsolidado($dti,$dtf,'GASOLINA')['VALOR_COMBUSTIVEL'];
-$vlrEtanolConsolidado     = buscaValorQtCombConsolidado($dti,$dtf,'ETANOL')['VALOR_COMBUSTIVEL'];
-$vlrDieselConsolidado     = buscaValorQtCombConsolidado($dti,$dtf,'DIESEL')['VALOR_COMBUSTIVEL'];
+$vlrGasolinaConsolidado   = buscaValorQtCombTot($dti,$dtf,'GASOLINA')['VALOR_COMBUSTIVEL'];
+$vlrEtanolConsolidado     = buscaValorQtCombTot($dti,$dtf,'ETANOL')['VALOR_COMBUSTIVEL'];
+$vlrDieselConsolidado     = buscaValorQtCombTot($dti,$dtf,'DIESEL')['VALOR_COMBUSTIVEL'];
   
-$qtdGasolinaConsolidado   = buscaValorQtCombConsolidado($dti,$dtf,'GASOLINA')['QUANTIDADE_LITROS'];
-$qtdEtanolConsolidado     = buscaValorQtCombConsolidado($dti,$dtf,'ETANOL')['QUANTIDADE_LITROS'];
-$qtdDieselConsolidado     = buscaValorQtCombConsolidado($dti,$dtf,'DIESEL')['QUANTIDADE_LITROS'];
+$qtdGasolinaConsolidado   = buscaValorQtCombTot($dti,$dtf,'GASOLINA')['QUANTIDADE_LITROS'];
+$qtdEtanolConsolidado     = buscaValorQtCombTot($dti,$dtf,'ETANOL')['QUANTIDADE_LITROS'];
+$qtdDieselConsolidado     = buscaValorQtCombTot($dti,$dtf,'DIESEL')['QUANTIDADE_LITROS'];
   
 }?>
 
@@ -452,7 +456,6 @@ $qtdDieselConsolidado     = buscaValorQtCombConsolidado($dti,$dtf,'DIESEL')['QUA
                 ],
                 responsive: true,
                 borderWidth: 1,
-                responsive: true,
               }, {
                 label: 'PIRAPORA',
                 data: ["<?php echo $qtdDieselPirapora ?>", "<?php echo $qtdGasolinaPirapora ?>", "<?php echo $qtdEtanolPirapora ?>"],
@@ -489,7 +492,7 @@ $qtdDieselConsolidado     = buscaValorQtCombConsolidado($dti,$dtf,'DIESEL')['QUA
                     var meta = chartInstance.controller.getDatasetMeta(i);
                     meta.data.forEach(function(bar, index) {
                       var data = dataset.data[index];
-                      //ctx.font = "bold 90% calibri";                  
+                      ctx.font = " 100% calibri";                  
                       ctx.fillText(formatNumber(data), bar._model.x, bar._model.y - 5);
                     });
                   });
@@ -505,7 +508,7 @@ $qtdDieselConsolidado     = buscaValorQtCombConsolidado($dti,$dtf,'DIESEL')['QUA
                     beginAtZero: true,
                     fontColor: "white",
                     fontSize: 11,
-                    stepSize: 10,
+                    stepSize: 0,
                     gridLines: {
                       lineWidth: 0
                     }

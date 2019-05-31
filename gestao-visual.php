@@ -1,62 +1,22 @@
 <?php
 require("funcoes.php");
 require("conexao.php");
-  if (iniciaSessao()===true){ 
-  ini_set('max_execution_time', 0); //teste
-  
-$dti   = $_POST['datai'];  // Captura data Inicial Formulário
-$dtf   = $_POST['dataf'];  // Captura data Final Formulário
-      
-$sql="select distinct(a.CENTRO_CUSTO) AS CENTRO_CUSTO from movimento_veiculos a where a.CENTRO_CUSTO not like '%GO%' AND DATE(DATA_MOVIMENTO) between '$dti' and '$dtf'"; 
-  
-$sql = $db->query($sql);            
-$registros = $sql->fetchAll();       
-            
-foreach ($registros as $registro){
-  $equipe =  $registro['CENTRO_CUSTO']; 
-    
-$arrayEquipeConsolidado[] = buscaInformacoesEquipeConsolidado($equipe, $dti, $dtf);  
-    
+if (iniciaSessao()===true){ 
+    ini_set('max_execution_time', 0); //teste
+
+    $dti   = $_POST['datai'];  // Captura data Inicial Formulário
+    $dtf   = $_POST['dataf'];  // Captura data Final Formulário
+
+    $cidadeCheck='';
+    $poloCheck='';
+    $equipeCheck='';
+    $veiculo='';
+    $veiculoCheck='';
+    $postoCheck='';    
+    $arrayEquipeConsolidado = array();
+    $arrayVeiculoConsolidado = array();
+
 }
-
-$sql1="SELECT  distinct (PLACA_VEICULO) as PLACA from movimento_veiculos A where DATE(A.DATA_MOVIMENTO) between '$dti' and '$dtf'"; 
-  
-$sql1 = $db->query($sql1);            
-$veiculos = $sql1->fetchAll();    
-      
- function myFilter($var){
-  return ($var !== NULL && $var !== FALSE && $var !== ''&& $var <=0 );
-}     
-            
-foreach ($veiculos as $veiculo){
-  $v_veiculo =  $veiculo['PLACA']; 
-  
-  $arrayVeiculoConsolidado[] = buscaInformacoesVeiculoConsolidado($v_veiculo,$dti,$dtf);  
-    
-   }
-    /*
- echo "<pre>";
- echo "<br>";
-   print_r($arrayVeiculoConsolidado);
- echo "</pre>";
- 
-    echo "<br>";
-      echo "<-------------------------------------------------------->";
-  echo "<pre>";
- echo "<br>";
-   print_r($arrayVeiculoConsolidado);
- echo "</pre>";*/
-       
-      
-      
-      
-}
-
-
-
-
-
-
 ?>
 
 <!DOCTYPE html>
@@ -85,6 +45,7 @@ foreach ($veiculos as $veiculo){
     <!-- BEGIN CSS for this page -->
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.16/css/dataTables.bootstrap4.min.css" />
     <!-- END CSS for this page -->
+    <link href="assets/plugins/select2/css/select2.min.css" rel="stylesheet" type="text/css" />
 
 </head>
 
@@ -100,12 +61,9 @@ foreach ($veiculos as $veiculo){
         <!-- End Barra Menu Lateral Esquerdo -->
 
         <div class="content-page">
-
             <!-- Start content -->
             <div class="content">
-
                 <div class="container-fluid">
-
                     <div class="row">
                         <div class="col-xl-12">
                             <div class="breadcrumb-holder">
@@ -125,8 +83,8 @@ foreach ($veiculos as $veiculo){
                 <div class="container">
                     <div class="card-footer small text-muted">Ultima Sincronização de Tela:
                         <?php echo buscaDataHora();                    
-           $arrayMensagem = verificaAtualizacaoPeriodoDadosSistema();
-          ?>
+                            $arrayMensagem = verificaAtualizacaoPeriodoDadosSistema();
+                            ?>
                         <br>
                         <span class="text-red"> A base de Dados Possui Registros de
                             <?php echo $arrayMensagem['MOVIMENTO_INICIAL']?> á <?php echo $arrayMensagem['MOVIMENTO_FINAL']?> </span>
@@ -167,16 +125,16 @@ foreach ($veiculos as $veiculo){
                                             </label>
                                             <select multiple class=" form-control select2" id="cidade" name="cidade[]" multiple="cidade">
                                                 <?php 
-                                                        $sql="SELECT distinct(CIDADE) as CIDADE
+                                                    $sql="SELECT distinct(CIDADE) as CIDADE
                                                   FROM movimento_veiculos";
-                                                        $sql = $db->query($sql);
-                                                        $dados = $sql->fetchAll();
+                                                    $sql = $db->query($sql);
+                                                    $dados = $sql->fetchAll();
 
-                                                        foreach ($dados as $quantidade){
-                                                            echo "<option>".$quantidade['CIDADE']."</option>"; 
-                                                        } 
+                                                    foreach ($dados as $quantidade){
+                                                        echo "<option>".$quantidade['CIDADE']."</option>"; 
+                                                    } 
 
-                                                        ?>
+                                                    ?>
                                             </select>
                                         </div>
                                         <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 col-xl-3">
@@ -185,16 +143,16 @@ foreach ($veiculos as $veiculo){
                                             </label>
                                             <select multiple class=" form-control select2" id="polo" name="polo[]">
                                                 <?php 
-                                                        $sql="SELECT distinct(CENTRO_RESULTADO) as CENTRO_RESULTADO
+                                                    $sql="SELECT distinct(CENTRO_RESULTADO) as CENTRO_RESULTADO
                                                   FROM movimento_veiculos";
-                                                        $sql = $db->query($sql);
-                                                        $dados = $sql->fetchAll();
+                                                    $sql = $db->query($sql);
+                                                    $dados = $sql->fetchAll();
 
-                                                        foreach ($dados as $quantidade){
-                                                            echo "<option>".$quantidade['CENTRO_RESULTADO']."</option>"; 
-                                                        }   
+                                                    foreach ($dados as $quantidade){
+                                                        echo "<option>".$quantidade['CENTRO_RESULTADO']."</option>"; 
+                                                    }   
 
-                                                        ?>
+                                                    ?>
 
                                             </select>
 
@@ -206,16 +164,16 @@ foreach ($veiculos as $veiculo){
                                             </label>
                                             <select multiple class=" form-control select2" id="equipe" name="equipe[]">
                                                 <?php 
-                                                        $sql="SELECT distinct(CENTRO_CUSTO) as CENTRO_CUSTO
+                                                    $sql="SELECT distinct(CENTRO_CUSTO) as CENTRO_CUSTO
                                                   FROM movimento_veiculos";
-                                                        $sql = $db->query($sql);
-                                                        $dados = $sql->fetchAll();
+                                                    $sql = $db->query($sql);
+                                                    $dados = $sql->fetchAll();
 
-                                                        foreach ($dados as $quantidade){
-                                                            echo "<option>".$quantidade['CENTRO_CUSTO']."</option>"; 
-                                                        } 
+                                                    foreach ($dados as $quantidade){
+                                                        echo "<option>".$quantidade['CENTRO_CUSTO']."</option>"; 
+                                                    } 
 
-                                                        ?>
+                                                    ?>
                                             </select>
                                         </div>
 
@@ -225,16 +183,16 @@ foreach ($veiculos as $veiculo){
                                             </label>
                                             <select multiple class=" form-control select2" id="veiculo" name="veiculo[]">
                                                 <?php 
-                                                        $sql="SELECT distinct(PLACA_VEICULO) as PLACA_VEICULO,MOTORISTA
+                                                    $sql="SELECT distinct(PLACA_VEICULO) as PLACA_VEICULO,MOTORISTA
                                                   FROM movimento_veiculos";
-                                                        $sql = $db->query($sql);
-                                                        $dados = $sql->fetchAll();
+                                                    $sql = $db->query($sql);
+                                                    $dados = $sql->fetchAll();
 
-                                                        foreach ($dados as $quantidade){
-                                                            echo "<option value=".$quantidade['PLACA_VEICULO'].   ">".$quantidade['PLACA_VEICULO']." - ".$quantidade['MOTORISTA']."</option>"; 
-                                                        } 
+                                                    foreach ($dados as $quantidade){
+                                                        echo "<option value=".$quantidade['PLACA_VEICULO'].   ">".$quantidade['PLACA_VEICULO']." - ".$quantidade['MOTORISTA']."</option>"; 
+                                                    } 
 
-                                                        ?>
+                                                    ?>
                                             </select>
                                         </div>
 
@@ -243,18 +201,18 @@ foreach ($veiculos as $veiculo){
                                                 Posto:
                                             </label>
                                             <select multiple class=" form-control select2" id="posto" name="posto[]">
-                                                
+
                                                 <?php 
-                                                $sql="SELECT distinct(NOME_POSTO) as NOME_POSTO
+                                                    $sql="SELECT distinct(NOME_POSTO) as NOME_POSTO
                                                   FROM movimento_veiculos";
-                                                        $sql = $db->query($sql);
-                                                        $dados = $sql->fetchAll();
+                                                    $sql = $db->query($sql);
+                                                    $dados = $sql->fetchAll();
 
-                                                        foreach ($dados as $quantidade){
-                                                            echo "<option>".$quantidade['NOME_POSTO']."</option>"; 
-                                                        } 
+                                                    foreach ($dados as $quantidade){
+                                                        echo "<option>".$quantidade['NOME_POSTO']."</option>"; 
+                                                    } 
 
-                                                ?>
+                                                    ?>
                                             </select>
                                         </div>
 
@@ -270,13 +228,84 @@ foreach ($veiculos as $veiculo){
                             </div>
                         </div>
 
+                        <?php
+
+
+                            $sql="select distinct(a.CENTRO_CUSTO) AS CENTRO_CUSTO from movimento_veiculos a where DATE(DATA_MOVIMENTO) between '$dti' and '$dtf'"; 
+
+                            if (isset($_POST["cidade"])){ 
+                                $cidadeCheck = implode("','", $_POST["cidade"]);
+                                $sql.="AND CIDADE IN ('$cidadeCheck')";
+
+                            }if (isset($_POST["polo"])){
+                                $poloCheck = implode("','", $_POST["polo"]);
+                                $sql.="AND CENTRO_RESULTADO IN('$poloCheck')";
+
+                            }if (isset($_POST["equipe"])){
+                                $equipeCheck = implode("','", $_POST["equipe"]);
+                                $sql.="AND CENTRO_CUSTO IN ('$equipeCheck')";
+
+                            }if (isset($_POST["veiculo"])){
+                                $veiculoCheck  = implode("','", $_POST["veiculo"]);
+                                $sql.="AND PLACA_VEICULO IN('$veiculoCheck')"; 
+                            }if (isset($_POST["posto"])){
+                                $postoCheck  = implode("','", $_POST["posto"]);
+                                $sql.="AND NOME_POSTO IN('$postoCheck')";
+                            }
+
+                            $sql = $db->query($sql);            
+                            $registros = $sql->fetchAll();       
+
+                            foreach ($registros as $registro){
+                                $equipe =  $registro['CENTRO_CUSTO']; 
+
+                                $arrayEquipeConsolidado[] = buscaInformacoesEquipeConsolidado($dti, $dtf, $cidadeCheck, $poloCheck, $equipe,$equipeCheck, $veiculoCheck, $postoCheck);  
+
+                            }
+
+                            $sql1="SELECT  distinct (PLACA_VEICULO) as PLACA from movimento_veiculos A where DATE(A.DATA_MOVIMENTO) between '$dti' and '$dtf'and a.MODELO_VEICULO NOT like '%SERRA%'"; 
+
+                            if (isset($_POST["cidade"])){ 
+                                $cidadeCheck = implode("','", $_POST["cidade"]);
+                                $sql1.="AND CIDADE IN ('$cidadeCheck')";
+
+                            }if (isset($_POST["polo"])){
+                                $poloCheck = implode("','", $_POST["polo"]);
+                                $sql1.="AND CENTRO_RESULTADO IN('$poloCheck')";
+
+                            }if (isset($_POST["equipe"])){
+                                $equipeCheck = implode("','", $_POST["equipe"]);
+                                $sql1.="AND CENTRO_CUSTO IN ('$equipeCheck')";
+
+                            }if (isset($_POST["veiculo"])){
+                                $veiculoCheck  = implode("','", $_POST["veiculo"]);
+                                $sql1.="AND PLACA_VEICULO IN('$veiculoCheck')"; 
+                            }if (isset($_POST["posto"])){
+                                $postoCheck  = implode("','", $_POST["posto"]);
+                                $sql1.="AND NOME_POSTO IN('$postoCheck')";
+                            }                            
+
+
+                            $sql1 = $db->query($sql1);            
+                            $veiculos = $sql1->fetchAll();    
+
+                            function myFilter($var){
+                                return ($var !== NULL && $var !== FALSE && $var !== ''&& $var <=0 );
+                            }     
+
+                            foreach ($veiculos as $veiculo){
+                                $v_veiculo =  $veiculo['PLACA']; 
+
+                                $arrayVeiculoConsolidado[] = buscaInformacoesVeiculoConsolidado($dti, $dtf, $cidadeCheck,$poloCheck,$equipeCheck, $v_veiculo,$veiculoCheck,$postoCheck);  
+
+                            }
+                            ?>
+
                         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
                             <div class="card-header">
                                 <h2> <i class="fa fa-filter"><span class="badge badge-success"> &nbsp;EQUIPES</span></i> </h2>
                             </div>
                             <br>
-
-
                         </div>
 
                         <div class="row view-equipe">
@@ -289,7 +318,7 @@ foreach ($veiculos as $veiculo){
                                         <h8><span class="badge badge-success"></span></h8>
                                     </div>
                                     <div class="card-body">
-                                        <h10><strong class="card-text"> VALOR ABASTECIDO :</strong></h10>
+                                        <h10><strong class="card-text"> VALOR ABASTECIDO R$:</strong></h10>
                                         <h8><span><?php echo $Equipe['SOMA_VALOR_COMBUSTIVEL']?></span></h8>
                                         <br>
                                         <h8><Strong class="card-text"> QUANTIDADE :</Strong></h8>
@@ -298,7 +327,7 @@ foreach ($veiculos as $veiculo){
                                         <h8><Strong class="card-text"> KM POR LITRO :</Strong></h8>
                                         <h8><span><?php echo $Equipe['KM_LITRO']?></span></h8>
                                         <br>
-                                        <h8><Strong class="card-text"> CUSTO MEDIO R$ DO KM:</Strong></h8>
+                                        <h8><Strong class="card-text"> CUSTO MEDIO DO KM R$:</Strong></h8>
                                         <h8><span><?php echo $Equipe['CUSTO_COMBUSTIVEL_KM']?></span></h8>
                                         <br>
                                         <h8><Strong class="card-text"> VEICULOS C/ MOVIMENTO:</Strong></h8>
@@ -318,8 +347,6 @@ foreach ($veiculos as $veiculo){
                                 <h2> <i class="fa fa-filter"><span class="badge badge-primary"> &nbsp;VEICULOS</span></i></h2>
                             </div>
                             <br>
-
-
                         </div>
                         <div class="row view-veiulo">
 
@@ -327,7 +354,14 @@ foreach ($veiculos as $veiculo){
                             <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 col-xl-3">
                                 <div class="card-header">
                                     <i class="fa fa-table"></i> <?php echo $Veiculo1['PLACA']?>
-                                    <h8><span class="badge badge-success"></span></h8>
+
+                                    <?php if($Veiculo1['STATUS_RENDIMENTO']=='OK'){
+                                       echo"<h8><span class='badge badge-success data-toggle='tooltip' data-placement='top' title='Veículo rodando dentro da normalidade'><i class='fa fa-check'></i> </span></h8>"; 
+                                        
+                                         }else{
+                                       echo"<h8><span class='badge badge-danger data-toggle='tooltip' data-placement='top' title='O Veículo possui Inconsistências - Rendimento de combustivel fora do padrão'><i class='fa fa-warning'></i> </span></h8>"; 
+                                         }
+                                        ?>
                                 </div>
 
                                 <div class="card-body">
@@ -339,6 +373,9 @@ foreach ($veiculos as $veiculo){
                                     <br>
                                     <h8><Strong class="card-text"> KM POR LITRO :</Strong></h8>
                                     <h8><span><?php echo $Veiculo1['KM_LITRO']?></span></h8>
+                                    <br>
+                                    <h8><Strong class="card-text"> KM RODADOS :</Strong></h8>
+                                    <h8><span><?php echo $Veiculo1['DISTANCIA']?></span></h8>
                                     <br>
                                     <h8><Strong class="card-text"> CUSTO MEDIO R$ DO KM:</Strong></h8>
                                     <h8><span><?php echo $Veiculo1['CUSTO_COMBUSTIVEL_KM']?></span></h8>
@@ -352,6 +389,9 @@ foreach ($veiculos as $veiculo){
                                     <h8><Strong class="card-text"> MOTORISTA:</Strong></h8>
                                     <h8><span><?php echo $Veiculo1['MOTORISTA']?></span></h8>
                                     <br>
+                                    <h8><Strong class="card-text"> RENDIMENTO PADRÃO:</Strong></h8>
+                                    <h8><span><?php echo $Veiculo1['RENDIMENTO_VEICULO']?></span></h8>
+                                    <br>
                                 </div>
                                 <div class="card-footer small text-muted"></div>
                                 <br>
@@ -361,14 +401,9 @@ foreach ($veiculos as $veiculo){
                             <?php } ?>
                         </div>
 
-                        <footer class="footer">
-                            <span class="text-right">
-                                S.G.A.C Versão 1.0.0.1 <a target="_blank" href="#">2019 Potência Medicões</a>
-                            </span>
-                            <span class="float-right">
-                                Desenvolvido por <a target="_blank" href="http://www.potenciamedicoes.com.br"><b>Wesley Lopes</b></a>
-                            </span>
-                        </footer>
+                        <!-- Start Barra Menu Lateral Esquerdo -->
+                        <?php require_once ("front-end/bar-footer.php"); ?>
+                        <!-- End Barra Menu Lateral Esquerdo -->
 
                         <!-- END main -->
 
@@ -383,6 +418,13 @@ foreach ($veiculos as $veiculo){
                         <script src="assets/js/fastclick.js"></script>
                         <script src="assets/js/jquery.blockUI.js"></script>
                         <script src="assets/js/jquery.nicescroll.js"></script>
+                        <script src="assets/plugins/select2/js/select2.min.js"></script>
+                        <script>
+                            $(document).ready(function() {
+                                $('.select2').select2();
+                            });
+
+                        </script>
 
                         <!-- App js -->
                         <script src="assets/js/pikeadmin.js">
@@ -408,6 +450,10 @@ foreach ($veiculos as $veiculo){
                                     delay: 10,
                                     time: 600
                                 });
+
+                                $(function() {
+                                    $('[data-toggle="tooltip"]').tooltip()
+                                })
                             });
                             }
 

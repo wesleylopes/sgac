@@ -7,7 +7,7 @@ require("conexao.php");
 $dti   = $_POST['datai'];  // Captura data Inicial Formulário
 $dtf   = $_POST['dataf'];  // Captura data Final Formulário
 
-$sql="SELECT DISTINCT(CIDADE) FROM movimento_veiculos WHERE DATE(DATA_MOVIMENTO) between '$dti' and '$dtf'"; 
+$sql="SELECT * FROM Veiculos"; 
   
 $sql = $db->query($sql);           
 $registros = $sql->fetchAll();
@@ -58,9 +58,7 @@ $registros = $sql->fetchAll();
 
       <!-- Start content -->
       <div class="content">
-
         <div class="container-fluid">
-
           <div class="row">
             <div class="col-xl-12">
               <div class="breadcrumb-holder">
@@ -120,7 +118,7 @@ $registros = $sql->fetchAll();
                                     $dados = $sql->fetchAll();
                               
                                     foreach ($dados as $quantidade){
-                                        echo "<option>$quantidade[TIPO_FROTA]</option>"; 
+                                        echo "<option>".utf8_encode($quantidade[TIPO_FROTA])."</option>"; 
                            }                                                             
                           ?>
                             </select>
@@ -240,42 +238,24 @@ $registros = $sql->fetchAll();
                         </tr>
                       </thead>
                       <tbody>
-                        <tr>
-                          <td>BBG-2774</td>
-                          <td>60645800070566140</td>
-                          <td>ATEGO 1719/36</td>
-                          <td>CAMINHÃO</td>
-                          <td>MERCEDES-BENZ</td>
-                          <td>PARACATU</td>
-                          <td>ATIVO</td>
-                          <td><button type="submit" class="btn btn-primary btn-sm  "><i class="fa fa fa-edit"></i> </button>
-                            <button type="submit" class="btn btn-danger btn-sm  "><i class="fa fa fa-trash-o"></i> </button>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>BBG-2774</td>
-                          <td>60645800070566140</td>
-                          <td>ATEGO 1719/36</td>
-                          <td>CAMINHÃO</td>
-                          <td>MERCEDES-BENZ</td>
-                          <td>PARACATU</td>
-                          <td>ATIVO</td>
-                          <td><button type="submit" class="btn btn-primary btn-sm  "><i class="fa fa fa-edit"></i> </button>
-                            <button type="submit" class="btn btn-danger btn-sm  "><i class="fa fa fa-trash-o"></i> </button>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>BBG-2774</td>
-                          <td>60645800070566140</td>
-                          <td>ATEGO 1719/36</td>
-                          <td>CAMINHÃO</td>
-                          <td>MERCEDES-BENZ</td>
-                          <td>PARACATU</td>
-                          <td>ATIVO</td>
-                          <td><button type="submit" class="btn btn-primary btn-sm  "><i class="fa fa fa-edit"></i> </button>
-                            <button type="submit" class="btn btn-danger btn-sm  "><i class="fa fa fa-trash-o"></i> </button>
-                          </td>
-                        </tr>
+                       
+                       <?php    
+                       foreach ($registros as $veiculo){ 
+                         echo "<tr>";
+                         echo "<td> &nbsp".$veiculo['PLACA_VEICULO']."</td>";
+                         echo "<td>".$veiculo['NUMERO_CARTAO']."</td>";
+                         echo "<td>".utf8_decode($veiculo['MODELO_VEICULO'])."</td>";
+                         echo "<td>".utf8_encode($veiculo['TIPO_VEICULO'])."</td>";
+                         echo "<td>".$veiculo['FABRICANTE_VEICULO']."</td>";
+                         echo "<td>".$veiculo['CENTRO_RESULTADO']."</td>";
+                         echo "<td>".$veiculo['STATUS']."</td>";
+                           
+                         echo "<td><button type='submit' class='btn btn-primary btn-sm'><i class='fa fa fa-edit'></i> </button>
+                                <button type='submit' class='btn btn-danger btn-sm  '><i class='fa fa fa-trash-o'></i> </button>
+                                </td>";                           
+                         echo "</tr>";
+                       }
+                      ?>
                       </tbody>
                     </table>
                   </div>

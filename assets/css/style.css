@@ -252,9 +252,9 @@ img {
 }
 
 .card-header h3 {
-    font-weight: 500;
+    font-weight: bold;
     line-height: 1.2;
-    font-size: 1.2rem;
+    font-size: 1 rem;
     margin-bottom: 0;
 }
 
@@ -268,6 +268,7 @@ img {
     line-height: 1.2;
     font-size: 11px;
     margin-bottom: 0;
+    
 }
 
 .header-title {

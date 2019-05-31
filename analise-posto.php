@@ -281,9 +281,7 @@ if (iniciaSessao()===true){
                                             $dti,$dtf,'DIESEL',$cidadeCheck,$poloCheck,$equipeCheck,$veiculoCheck,$posto
                                         );
                                     } 
-                                }
-
-                                
+                                }                                
 
                                     // Remove Registros Duplicados e Agrupa as quantidades   
                                     function agrupaArray($array) {
@@ -349,8 +347,6 @@ if (iniciaSessao()===true){
                                 } 
                                 
                                 ?>
-
-
 
                                 <div class="row">
                                     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
@@ -502,7 +498,7 @@ if (iniciaSessao()===true){
                                 ctx = chartInstance.ctx;
                             ctx.textAlign = 'center';
                             ctx.fillStyle = 'rgba(25,0,0,0.9)';
-                            ctx.font = "70% bold Calibri";
+                            //ctx.font = "70% bold Calibri";
                             ctx.fillStyle = ['blue', 'red'];
                             ctx.strokeStyle = '#fff000';
                             this.data.datasets.forEach(function(dataset, i) {
@@ -510,7 +506,7 @@ if (iniciaSessao()===true){
                                 meta.data.forEach(function(bar, index) {
                                     var data = dataset.data[index];
                                     data2 = data;
-                                    ctx.fillText(data2, bar._model.x + 20, bar._model.y - 5);
+                                    ctx.fillText(data2, bar._model.x + 25, bar._model.y - 5);
                                 });
                             });
                         },
@@ -571,7 +567,7 @@ if (iniciaSessao()===true){
                                 ctx = chartInstance.ctx;
                             ctx.textAlign = 'center';
                             ctx.fillStyle = 'rgba(25,0,0,0.9)';
-                            ctx.font = "70% bold Calibri";
+                            //ctx.font = "70% bold Calibri";
                             ctx.fillStyle = ['blue', 'red'];
                             ctx.strokeStyle = '#fff000';
                             this.data.datasets.forEach(function(dataset, i) {
@@ -579,7 +575,7 @@ if (iniciaSessao()===true){
                                 meta.data.forEach(function(bar, index) {
                                     var data = dataset.data[index];
                                     data2 = data;
-                                    ctx.fillText(data2, bar._model.x + 20, bar._model.y - 5);
+                                    ctx.fillText(data2, bar._model.x + 25, bar._model.y - 5);
                                 });
                             });
                         },
@@ -640,7 +636,7 @@ if (iniciaSessao()===true){
                                 ctx = chartInstance.ctx;
                             ctx.textAlign = 'center';
                             ctx.fillStyle = 'rgba(25,0,0,0.9)';
-                            ctx.font = "70% bold Calibri";
+                            //ctx.font = "70% bold Calibri";
                             ctx.fillStyle = ['blue', 'red'];
                             ctx.strokeStyle = '#fff000';
                             this.data.datasets.forEach(function(dataset, i) {
@@ -648,7 +644,7 @@ if (iniciaSessao()===true){
                                 meta.data.forEach(function(bar, index) {
                                     var data = dataset.data[index];
                                     data2 = data;
-                                    ctx.fillText(data2, bar._model.x + 20, bar._model.y - 5);
+                                    ctx.fillText(data2, bar._model.x + 25, bar._model.y - 5);
                                 });
                             });
                         },

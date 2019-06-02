@@ -153,7 +153,6 @@ if (iniciaSessao()===true){
                                                     }   
 
                                                     ?>
-
                                             </select>
 
                                         </div>
@@ -172,7 +171,6 @@ if (iniciaSessao()===true){
                                                     foreach ($dados as $quantidade){
                                                         echo "<option>".$quantidade['CENTRO_CUSTO']."</option>"; 
                                                     } 
-
                                                     ?>
                                             </select>
                                         </div>
@@ -191,30 +189,11 @@ if (iniciaSessao()===true){
                                                     foreach ($dados as $quantidade){
                                                         echo "<option value=".$quantidade['PLACA_VEICULO'].   ">".$quantidade['PLACA_VEICULO']." - ".$quantidade['MOTORISTA']."</option>"; 
                                                     } 
-
                                                     ?>
                                             </select>
                                         </div>
 
-                                        <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 col-xl-3">
-                                            <label for="example5">
-                                                Posto:
-                                            </label>
-                                            <select multiple class=" form-control select2" id="posto" name="posto[]">
-
-                                                <?php 
-                                                    $sql="SELECT distinct(NOME_POSTO) as NOME_POSTO
-                                                  FROM movimento_veiculos";
-                                                    $sql = $db->query($sql);
-                                                    $dados = $sql->fetchAll();
-
-                                                    foreach ($dados as $quantidade){
-                                                        echo "<option>".$quantidade['NOME_POSTO']."</option>"; 
-                                                    } 
-
-                                                    ?>
-                                            </select>
-                                        </div>
+                                        
 
                                         <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 col-xl-3">
                                             <label for="example2">
@@ -229,8 +208,7 @@ if (iniciaSessao()===true){
                         </div>
 
                         <?php
-
-
+                        
                             $sql="select distinct(a.CENTRO_CUSTO) AS CENTRO_CUSTO from movimento_veiculos a where DATE(DATA_MOVIMENTO) between '$dti' and '$dtf'"; 
 
                             if (isset($_POST["cidade"])){ 
@@ -283,9 +261,8 @@ if (iniciaSessao()===true){
                             }if (isset($_POST["posto"])){
                                 $postoCheck  = implode("','", $_POST["posto"]);
                                 $sql1.="AND NOME_POSTO IN('$postoCheck')";
-                            }                            
-
-
+                            } 
+                        
                             $sql1 = $db->query($sql1);            
                             $veiculos = $sql1->fetchAll();    
 
@@ -309,9 +286,15 @@ if (iniciaSessao()===true){
                         </div>
 
                         <div class="row view-equipe">
-                            <?php foreach ($arrayEquipeConsolidado as $Equipe){?>
-
-                            <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 col-xl-3">
+                            <?php foreach ($arrayEquipeConsolidado as $Equipe){
+                            if (count($arrayEquipeConsolidado)==1){
+                           echo "<div class='col-xs-3 col-sm-3 col-md-3 col-lg-3 col-xl-12'>";
+                        }
+                        else{                        
+                           echo "<div class='col-xs-3 col-sm-3 col-md-3 col-lg-3 col-xl-3'>";
+                        }  
+                            ?>
+                          
                                 <div class="card mb-3">
                                     <div class="card-header">
                                         <i class="fa fa-table"></i> <?php echo $Equipe['EQUIPE']?>
@@ -337,9 +320,7 @@ if (iniciaSessao()===true){
                                     <div class="card-footer small text-muted"></div>
                                 </div>
                             </div>
-
-                            <?php } ?>
-                            <hr>
+                            <?php } ?>                           
                         </div>
 
                         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
@@ -350,8 +331,15 @@ if (iniciaSessao()===true){
                         </div>
                         <div class="row view-veiulo">
 
-                            <?php foreach ($arrayVeiculoConsolidado as $Veiculo1){ ?>
-                            <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 col-xl-3">
+                        <?php foreach ($arrayVeiculoConsolidado as $Veiculo1){ 
+                        if (count($arrayVeiculoConsolidado)==1){
+                           echo "<div class='col-xs-3 col-sm-3 col-md-3 col-lg-3 col-xl-12'>";
+                        }
+                        else{                        
+                           echo "<div class='col-xs-3 col-sm-3 col-md-3 col-lg-3 col-xl-3'>";
+                        }  
+                        ?>                          
+                            
                                 <div class="card-header">
                                     <i class="fa fa-table"></i> <?php echo $Veiculo1['PLACA']?>
 
@@ -359,7 +347,7 @@ if (iniciaSessao()===true){
                                        echo"<h8><span class='badge badge-success data-toggle='tooltip' data-placement='top' title='Veículo rodando dentro da normalidade'><i class='fa fa-check'></i> </span></h8>"; 
                                         
                                          }else{
-                                       echo"<h8><span class='badge badge-danger data-toggle='tooltip' data-placement='top' title='O Veículo possui Inconsistências - Rendimento de combustivel fora do padrão'><i class='fa fa-warning'></i> </span></h8>"; 
+                                       echo"<h8><span class='badge badge-danger data-toggle='tooltip' data-placement='top' title='O Veículo possui Inconsistências - rendimento fora do padrão'><i class='fa fa-warning'></i> </span></h8>"; 
                                          }
                                         ?>
                                 </div>
@@ -386,12 +374,13 @@ if (iniciaSessao()===true){
                                     <h8><Strong class="card-text"> MODELO:</Strong></h8>
                                     <h8><span><?php echo $Veiculo1['MODELO']?></span></h8>
                                     <br>
-                                    <h8><Strong class="card-text"> MOTORISTA:</Strong></h8>
-                                    <h8><span><?php echo $Veiculo1['MOTORISTA']?></span></h8>
-                                    <br>
                                     <h8><Strong class="card-text"> RENDIMENTO PADRÃO:</Strong></h8>
                                     <h8><span><?php echo $Veiculo1['RENDIMENTO_VEICULO']?></span></h8>
                                     <br>
+                                    <h8><Strong class="card-text"> MOTORISTA:</Strong></h8>
+                                    <h8><span><?php echo $Veiculo1['MOTORISTA']?></span></h8>
+                                    <br>
+                                    
                                 </div>
                                 <div class="card-footer small text-muted"></div>
                                 <br>
@@ -442,20 +431,11 @@ if (iniciaSessao()===true){
 
                         <script>
                             $(document).ready(function() {
-                                // data-tables
-                                $('#example1').DataTable();
-
-                                // counter-up
-                                $('.counter').counterUp({
-                                    delay: 10,
-                                    time: 600
-                                });
-
                                 $(function() {
                                     $('[data-toggle="tooltip"]').tooltip()
                                 })
                             });
-                            }
+                          
 
                         </script>
 

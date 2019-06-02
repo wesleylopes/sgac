@@ -149,27 +149,136 @@ while (strtotime($date) <= strtotime($end_date)) {
                         <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-12">
                             <div class="card-header">
                                 <i class="fa fa-filter"></i> FILTRAR PERIODO DE <> ATÉ
-                            </div>
-                            <br>
+                            </div>                        
 
+                            <div class=" container card mb-3">
                             <form method="POST">
                                 <div class="row">
-                                    <div class="col">
-                                        <div class="form-group">
+                                    <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 col-xl-3">
+                                        <label for="example3">
+                                            Data Inicial:
+                                        </label>
+                                        <div class="form-group ">
                                             <input type="date" class="form-control" value="<?php echo $_POST['datai'];?>" id="InputDatai" name="datai" aria-describedby="emailHelp" placeholder="Data inicial">
                                         </div>
                                     </div>
-                                    <div class="col">
+                                    <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 col-xl-3">
+                                        <label for="example3">
+                                            Data Final:
+                                        </label>
                                         <div class="form-group">
                                             <input type="date" class="form-control" value="<?php echo $_POST['dataf'];?>" id="InputDataf" name="dataf" placeholder="Data final">
                                         </div>
                                     </div>
 
-                                    <div class="col">
-                                        <button type="submit" class="btn btn-primary  btn-block"><i class="fa fa-refresh"></i> Atualizar Graficos</button>
+                                    <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 col-xl-3">
+                                        <label for="example3">
+                                            Cidade:
+                                        </label>
+                                        <select multiple class=" form-control select2" id="cidade" name="cidade[]" multiple="cidade">
+                                            <?php 
+                                            $sql="SELECT distinct(CIDADE) as CIDADE
+                                                  FROM movimento_veiculos";
+                                            $sql = $db->query($sql);
+                                            $dados = $sql->fetchAll();
+
+                                            foreach ($dados as $quantidade){
+                                                echo "<option>".$quantidade['CIDADE']."</option>"; 
+                                            } 
+                                            ?>
+
+                                        </select>
+                                    </div>
+                                    <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 col-xl-3">
+                                        <label for="example3">
+                                            Polo:
+                                        </label>
+                                        <select multiple class=" form-control select2" id="polo" name="polo[]">
+                                            <?php 
+                                            $sql="SELECT distinct(CENTRO_RESULTADO) as CENTRO_RESULTADO
+                                                  FROM movimento_veiculos";
+                                            $sql = $db->query($sql);
+                                            $dados = $sql->fetchAll();
+
+                                            foreach ($dados as $quantidade){
+                                                echo "<option>".$quantidade['CENTRO_RESULTADO']."</option>"; 
+                                            } 
+                                            ?>
+
+                                        </select>
+
+                                    </div>
+
+                                    <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 col-xl-3">
+                                        <label for="example4">
+                                            Equipe:
+                                        </label>
+                                        <select multiple class=" form-control select2" id="equipe" name="equipe[]">
+                                            <?php 
+                                            $sql="SELECT distinct(CENTRO_CUSTO) as CENTRO_CUSTO
+                                                  FROM movimento_veiculos";
+                                            $sql = $db->query($sql);
+                                            $dados = $sql->fetchAll();
+
+                                            foreach ($dados as $quantidade){
+                                                echo "<option>".$quantidade['CENTRO_CUSTO']."</option>"; 
+                                            } 
+
+                                            ?>
+                                        </select>
+                                    </div>
+
+                                    <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 col-xl-3">
+                                        <label for="example5">
+                                            Veiculo - motorista:
+                                        </label>
+                                        <select multiple class=" form-control select2" id="veiculo" name="veiculo[]">
+                                            <?php 
+                                            $sql="SELECT distinct(PLACA_VEICULO) as PLACA_VEICULO,MOTORISTA
+                                                  FROM movimento_veiculos";
+                                            $sql = $db->query($sql);
+                                            $dados = $sql->fetchAll();
+
+                                            foreach ($dados as $quantidade){
+                                                echo "<option value=".$quantidade['PLACA_VEICULO'].   ">".$quantidade['PLACA_VEICULO']." - ".$quantidade['MOTORISTA']."</option>"; 
+                                            } 
+
+                                            ?>
+                                        </select>
+                                    </div>
+
+                                    <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 col-xl-3">
+                                        <label for="example5">
+                                            Posto:
+                                        </label>
+                                        <select multiple class=" form-control select2" id="posto" name="posto[]">
+
+                                            <?php 
+                                            $sql="SELECT distinct(NOME_POSTO) as NOME_POSTO
+                                                  FROM movimento_veiculos";
+                                            $sql = $db->query($sql);
+                                            $dados = $sql->fetchAll();
+
+                                            foreach ($dados as $quantidade){
+                                                echo "<option>".$quantidade['NOME_POSTO']."</option>"; 
+                                            } 
+
+                                            ?>
+
+                                        </select>
+                                    </div>
+
+                                    <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 col-xl-3">
+                                        <label for="example2">
+
+                                        </label>
+                                        <br>
+                                        <button type="submit" class="btn btn-primary  btn-block"><i class="fa fa-refresh"></i> Atualizar</button>
                                     </div>
                                 </div>
                             </form>
+                        </div>
+
                         </div>
 
                         <div class="row">
@@ -191,14 +300,10 @@ while (strtotime($date) <= strtotime($end_date)) {
                             </div>
                         </div>
 
-                        <footer class="footer">
-                            <span class="text-right">
-                                S.G.A.C Versão 1.0.0.1 <a target="_blank" href="#">2019 Potência Medicões</a>
-                            </span>
-                            <span class="float-right">
-                                Desenvolvido por <a target="_blank" href="http://www.potenciamedicoes.com.br"><b>Wesley Lopes</b></a>
-                            </span>
-                        </footer>
+                        <!-- Start Barra Menu Lateral Esquerdo -->
+                        <?php require_once ("front-end/bar-footer.php"); ?>
+                        <!-- End Barra Menu Lateral Esquerdo -->
+
                     </div>
                     <!-- END main -->
 

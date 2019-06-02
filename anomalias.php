@@ -6,6 +6,14 @@ if (iniciaSessao()===true){
 
     $dti   = $_POST['datai'];  // Captura data Inicial Formulário
     $dtf   = $_POST['dataf'];  // Captura data Final Formulário
+    
+    $cidadeCheck='';
+    $poloCheck='';
+    $equipeCheck='';
+    $veiculo='';
+    $veiculoCheck='';
+    $postoCheck='';
+    $sql1='';
 }  
 
 ?>
@@ -64,8 +72,8 @@ if (iniciaSessao()===true){
                                 <div class="breadcrumb-holder">
                                     <h1 class="main-title float-left">Dashboard </h1>
                                     <ol class="breadcrumb float-right">
-                                        <li class="breadcrumb-item">Evolução de Preço de Combustível</li>
-                                        <li class="breadcrumb-item active">(Diario-Trimestre)</li>
+                                        <li class="breadcrumb-item">Anomalias</li>
+                                        <li class="breadcrumb-item active">Transações Negadas</li>
                                     </ol>
                                     <div class="clearfix"></div>
                                 </div>
@@ -121,7 +129,7 @@ if (iniciaSessao()===true){
                                                 <select multiple class=" form-control select2" id="cidade" name="cidade[]" multiple="cidade">
                                                     <?php 
                                                     $sql="SELECT distinct(CIDADE) as CIDADE
-                                                  FROM movimento_veiculos";
+                                                  FROM sgacbase.anomalia_siag";
                                                     $sql = $db->query($sql);
                                                     $dados = $sql->fetchAll();
 
@@ -139,37 +147,18 @@ if (iniciaSessao()===true){
                                                 </label>
                                                 <select multiple class=" form-control select2" id="polo" name="polo[]">
                                                     <?php 
-                                                    $sql="SELECT distinct(CENTRO_RESULTADO) as CENTRO_RESULTADO
-                                                  FROM movimento_veiculos";
-                                                    $sql = $db->query($sql);
-                                                    $dados = $sql->fetchAll();
-
-                                                    foreach ($dados as $quantidade){
-                                                        echo "<option>".$quantidade['CENTRO_RESULTADO']."</option>"; 
-                                                    } 
-                                                    ?>
-
-                                                </select>
-
-                                            </div>
-
-                                            <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 col-xl-3">
-                                                <label for="example4">
-                                                    Equipe:
-                                                </label>
-                                                <select multiple class=" form-control select2" id="equipe" name="equipe[]">
-                                                    <?php 
                                                     $sql="SELECT distinct(CENTRO_CUSTO) as CENTRO_CUSTO
-                                                  FROM movimento_veiculos";
+                                                  FROM sgacbase.anomalia_siag";
                                                     $sql = $db->query($sql);
                                                     $dados = $sql->fetchAll();
 
                                                     foreach ($dados as $quantidade){
                                                         echo "<option>".$quantidade['CENTRO_CUSTO']."</option>"; 
                                                     } 
-
                                                     ?>
+
                                                 </select>
+
                                             </div>
 
                                             <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 col-xl-3">
@@ -179,12 +168,12 @@ if (iniciaSessao()===true){
                                                 <select multiple class=" form-control select2" id="veiculo" name="veiculo[]">
                                                     <?php 
                                                     $sql="SELECT distinct(PLACA_VEICULO) as PLACA_VEICULO,MOTORISTA
-                                                  FROM movimento_veiculos";
+                                                  FROM sgacbase.anomalia_siag";
                                                     $sql = $db->query($sql);
                                                     $dados = $sql->fetchAll();
 
                                                     foreach ($dados as $quantidade){
-                                                        echo "<option value=".$quantidade['PLACA_VEICULO'].   ">".$quantidade['PLACA_VEICULO']." - ".$quantidade['MOTORISTA']."</option>"; 
+                                                        echo "<option value=".$quantidade['PLACA_VEICULO'].   ">".$quantidade['PLACA_VEICULO']."</option>"; 
                                                     } 
 
                                                     ?>
@@ -199,7 +188,7 @@ if (iniciaSessao()===true){
 
                                                     <?php 
                                                     $sql="SELECT distinct(NOME_POSTO) as NOME_POSTO
-                                                  FROM movimento_veiculos";
+                                                  FROM sgacbase.anomalia_siag";
                                                     $sql = $db->query($sql);
                                                     $dados = $sql->fetchAll();
 
@@ -225,135 +214,101 @@ if (iniciaSessao()===true){
 
                                 <?php
 
-                                $cidadeCheck='';
-                                $poloCheck='';
-                                $equipeCheck='';
-                                $veiculo='';
-                                $veiculoCheck='';
-                                $postoCheck='';
-
-                                $sql="SELECT DISTINCT(NOME_POSTO) as NOME_POSTO FROM movimento_veiculos a 
-                                                 WHERE DATE(DATA_MOVIMENTO) between '$dti' and '$dtf'";
 
                                 if (isset($_POST["cidade"])){ 
                                     $cidadeCheck = implode("','", $_POST["cidade"]);
-                                    $sql.="AND CIDADE IN ('$cidadeCheck')";
+                                    $sql1.="AND CIDADE IN ('$cidadeCheck')";
 
                                 }if (isset($_POST["polo"])){
                                     $poloCheck = implode("','", $_POST["polo"]);
-                                    $sql.="AND CENTRO_RESULTADO IN('$poloCheck')";
-
-                                }if (isset($_POST["equipe"])){
-                                    $equipeCheck = implode("','", $_POST["equipe"]);
-                                    $sql.="AND CENTRO_CUSTO IN ('$equipeCheck')";
+                                    $sql1.="AND CENTRO_CUSTO IN('$poloCheck')";
 
                                 }if (isset($_POST["veiculo"])){
                                     $veiculoCheck  = implode("','", $_POST["veiculo"]);
-                                    $sql.="AND PLACA_VEICULO IN('$veiculoCheck')"; 
+                                    $sql1.="AND PLACA_VEICULO IN('$veiculoCheck')"; 
                                 }if (isset($_POST["posto"])){
                                     $postoCheck  = implode("','", $_POST["posto"]);
-                                    $sql.="AND NOME_POSTO IN('$postoCheck')";
+                                    $sql1.="AND NOME_POSTO IN('$postoCheck')";
                                 }
 
-                                 //echo "TESTE3 <br>".$sql."<br>";
+                                $sql="SELECT ANOMALIA, COUNT(ANOMALIA) AS CONTADOR FROM sgacbase.anomalia_siag where DATE(DATA_MOVIMENTO) between '$dti' and '$dtf' ";
+                                
+                                $sql .= $sql1;
+                                
+                                $sql .= ' GROUP BY ANOMALIA ORDER BY CONTADOR DESC';
+
+
+                               // echo "TESTE3 <br>".$sql."<br>";
 
                                 $sql = $db->query($sql);            
-                                $registros = $sql->fetchAll(); 
-
-                                $arrayGasolinaConsolidado =array();
-                                $arrayEtanolConsolidado   =array();  
-                                $arrayDieselConsolidado   =array(); 
+                                $registros = $sql->fetchAll();                               
 
                                 if($sql->rowCount() >0){
 
-                                    foreach ($registros as $registro){
-                                        $posto =  $registro['NOME_POSTO'];
+                                    foreach ($registros as $registro){ 
+                                        if($registro['CONTADOR']>3) {                                        
+                                            $arrayAnomalia[]= utf8_encode($registro['ANOMALIA']); 
+                                            $arrayContadorAnomalia[]= $registro['CONTADOR'];
+                                        } 
 
-                                        $arrayGasolinaConsolidado[]   = buscaValorQtCombPostoConsolidado(
-                                            $dti,$dtf,'GASOLINA',$cidadeCheck,$poloCheck,$equipeCheck,$veiculoCheck,$posto
-                                        );
-
-                                        $arrayEtanolConsolidado[]   = buscaValorQtCombPostoConsolidado(
-                                            $dti,$dtf,'ETANOL',$cidadeCheck,$poloCheck,$equipeCheck,$veiculoCheck,$posto
-                                        );
-
-                                        $arrayDieselConsolidado[]= buscaValorQtCombPostoConsolidado(
-                                            $dti,$dtf,'DIESEL',$cidadeCheck,$poloCheck,$equipeCheck,$veiculoCheck,$posto
-                                        );
                                     } 
-                                }                                
+                                }  
 
-                                    // Remove Registros Duplicados e Agrupa as quantidades   
-                                    function agrupaArray($array) {
-                                    $agrupador = array();
-                                    foreach ($array as $item) {
-                                        $key = $item['NOME_POSTO'];
-                                        if (isset($key)){ 
-                                            if (!isset($agrupador[$key])) {
-                                                $agrupador[$key] = array(
-                                                    'NOME_POSTO' => $key,
-                                                    'VALOR_COMBUSTIVEL' => $item['VALOR_COMBUSTIVEL'],
-                                                    'TIPO_COMBUSTIVEL_BUSCA' => $item['TIPO_COMBUSTIVEL_BUSCA'],
-                                                    'QUANTIDADE_LITROS' => $item['QUANTIDADE_LITROS'],
-                                                    'CIDADE' => $item['CIDADE'],
-                                                );
-                                            } 
+                                unset($sql);
+
+                                $sql="SELECT MOTORISTA, COUNT(MOTORISTA) AS CONTADOR FROM sgacbase.anomalia_siag where DATE(DATA_MOVIMENTO) between '$dti' and '$dtf'";
+                                $sql .= $sql1;
+                                $sql .= ' GROUP BY MOTORISTA ORDER BY CONTADOR DESC';
+
+
+                                //echo "TESTE3 <br>".$sql."<br>";
+
+                                $sql = $db->query($sql);            
+                                $registros = $sql->fetchAll();                               
+
+                                if($sql->rowCount() >0){
+
+                                    foreach ($registros as $registro){   
+                                        if($registro['CONTADOR']>3) {
+                                            $arrayAnomaliaMotorista[]= utf8_encode($registro['MOTORISTA']); 
+                                            $arrayContadorAnomaliaMotorista[]= $registro['CONTADOR'];
                                         }
-                                    }  
-                                    return $agrupador;
-                                } 
-
-                                $arrayValorGasolinaAgrupado = agrupaArray($arrayGasolinaConsolidado);
-                                $arrayValorEtanolAgrupado   = agrupaArray($arrayEtanolConsolidado); 
-                                $arrayValorDieselAgrupado   = agrupaArray($arrayDieselConsolidado);
-
-                                $arrayQuantidadeGasolinaAgrupado = agrupaArray($arrayGasolinaConsolidado);
-                                $arrayQuantidadeEtanolAgrupado   = agrupaArray($arrayEtanolConsolidado); 
-                                $arrayQuantidadeDieselAgrupado   = agrupaArray($arrayDieselConsolidado);
-
-                                function ordenaArrayValorCombustivel($a, $b) { 
-                                    return $a['QUANTIDADE_LITROS'] < $b['QUANTIDADE_LITROS']; 
-                                }
-
-                                function ordenaArrayQuantidadeCombustivel($a, $b) { 
-                                    return $a['NOME_POSTO'] == $b['NOME_POSTO']; 
-                                }   
-
-                                usort($arrayValorGasolinaAgrupado,'ordenaArrayValorCombustivel');
-                                usort($arrayValorEtanolAgrupado,'ordenaArrayValorCombustivel');
-                                usort($arrayValorDieselAgrupado,'ordenaArrayValorCombustivel');
-
-                                usort($arrayQuantidadeGasolinaAgrupado,'ordenaArrayQuantidadeCombustivel');
-                                usort($arrayQuantidadeEtanolAgrupado,'ordenaArrayQuantidadeCombustivel');
-                                usort($arrayQuantidadeDieselAgrupado,'ordenaArrayQuantidadeCombustivel');
 
 
-                                function montaGraficoValor($array){
-                                    return implode('","', array_map(function ($entry) {
+                                    } 
+                                }  
 
-                                        return $entry['VALOR_COMBUSTIVEL']; }, $array));  
-                                } 
+                                unset($sql);
 
-                                function montaGraficoPosto($array){
-                                    return implode('","', array_map(function ($entry) {
 
-                                        return $entry['NOME_POSTO'].' - '.$entry['CIDADE']; }, $array));  
-                                } 
+                                $sql="SELECT PLACA_VEICULO, COUNT(PLACA_VEICULO) AS CONTADOR FROM sgacbase.anomalia_siag where DATE(DATA_MOVIMENTO) between '$dti' and '$dtf' ";
+                                $sql .= $sql1;
+                                $sql .= ' GROUP BY PLACA_VEICULO ORDER BY CONTADOR DESC';
 
-                                function montaGraficoQuantidade($array){
-                                    return implode('","', array_map(function ($entry) {
 
-                                        return $entry['QUANTIDADE_LITROS']; }, $array));  
-                                } 
-                                
+                                //echo "TESTE3 <br>".$sql."<br>";
+
+                                $sql = $db->query($sql);            
+                                $registros = $sql->fetchAll();                               
+
+                                if($sql->rowCount() >0){
+
+                                    foreach ($registros as $registro){   
+                                        if($registro['CONTADOR']>3) {
+                                            $arrayAnomaliaVeiculo[]= utf8_encode($registro['PLACA_VEICULO']); 
+                                            $arrayContadorAnomaliaVeiculo[]= $registro['CONTADOR'];
+                                        } 
+                                    } 
+                                }  
+
                                 ?>
 
                                 <div class="row">
-                                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                                    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 col-xl-12">
                                         <div class="card mb-3">
                                             <div class="card-header">
-                                                <i class="fa fa-table"></i> PREÇO X QUANTIDADE MÉDIA CONSUMIDA DE COMBUSTÍVEL POR CIDADE
-                                                <h8><span class="badge badge-warning">(DIESEL)</span></h8>
+                                                <i class="fa fa-table"></i> TIPOS DE TRANSAÇÕES
+                                                <h8><span class="badge badge-danger">(NEGADAS)</span></h8>
                                             </div>
                                             <div class="card-body">
                                                 <canvas id="grafico1"></canvas>
@@ -361,34 +316,35 @@ if (iniciaSessao()===true){
                                             <div class="card-footer small text-muted"></div>
                                         </div>
                                     </div>
-                                    <hr>
 
-                                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-                                        <div class="card mb-3">
-                                            <div class="card-header">
-                                                <i class="fa fa-table"></i> PREÇO X QUANTIDADE MÉDIA CONSUMIDA DE COMBUSTÍVEL POR CIDADE
-                                                <span class="badge badge-success">(GASOLINA)</span>
+
+                                    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 col-xl-12">
+                                        <div class="row">
+                                            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 col-xl-12">
+                                                <div class="card mb-3">
+                                                    <div class="card-header">
+                                                        <i class="fa fa-table"></i> CONDUTORES
+                                                        <h8><span class="badge badge-danger">(REINCIDENTES)</span></h8>
+                                                    </div>
+                                                    <div class="card-body">
+                                                        <canvas id="grafico2"></canvas>
+                                                    </div>
+                                                    <div class="card-footer small text-muted"></div>
+                                                </div>
+                                            </div>
+                                            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 col-xl-12">
+                                                <div class="card mb-3">
+                                                    <div class="card-header">
+                                                        <i class="fa fa-table"></i> VEICULOS
+                                                        <h8><span class="badge badge-danger">(REINCIDENTES)</span></h8>
+                                                    </div>
+                                                    <div class="card-body">
+                                                        <canvas id="grafico3"></canvas>
+                                                    </div>
+                                                    <div class="card-footer small text-muted"></div>
+                                                </div>
                                             </div>
 
-                                            <div class="card-body">
-                                                <canvas id="grafico2"></canvas>
-
-                                            </div>
-                                            <div class="card-footer small text-muted"></div>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-                                        <div class="card mb-3">
-                                            <div class="card-header">
-                                                <i class="fa fa-table"></i> PREÇO X QUANTIDADE MÉDIA CONSUMIDA DE COMBUSTÍVEL POR CIDADE
-                                                <span class="badge badge-primary">(ETANOL)</span>
-                                            </div>
-                                            <div class="card-body">
-                                                <canvas id="grafico3"></canvas>
-
-                                            </div>
-                                            <div class="card-footer small text-muted"></div>
                                         </div>
                                     </div>
                                 </div>
@@ -417,12 +373,12 @@ if (iniciaSessao()===true){
         <script src="assets/js/jquery.blockUI.js"></script>
         <script src="assets/js/jquery.nicescroll.js"></script>
         <script src="assets/plugins/select2/js/select2.min.js"></script>
-        <script>           
-        $('.select2').select2();
-            
+        <script>
+            $('.select2').select2();
+
         </script>
-                   
-       <script src = "assets/js/pikeadmin.js" >
+
+        <script src="assets/js/pikeadmin.js">
 
         </script>
 
@@ -442,7 +398,7 @@ if (iniciaSessao()===true){
                 $('#example1').DataTable();
 
                 // counter-up
-               
+
             });
             }
 
@@ -454,28 +410,21 @@ if (iniciaSessao()===true){
                 type: 'horizontalBar',
                 borderWidth: 30,
                 data: {
-                    labels: ["<?php echo  montaGraficoPosto($arrayValorDieselAgrupado);?>"],
-                    datasets: [ {
-                        label: 'QUANTIDADE MÉDIA EM LITROS',
-                        data: ["<?php echo montaGraficoQuantidade(agrupaArray($arrayValorDieselAgrupado,$arrayQuantidadeDieselAgrupado))?>"],
+                    labels: [" <?php echo implode('", "',$arrayAnomalia);?>"],
+                    datasets: [{
+                        label: 'QUANTIDADE',
+                        data: [" <?php echo implode('", "',$arrayContadorAnomalia);?>"],
                         responsive: true,
                         fill: false,
-                        backgroundColor: 'rgba(255,140,0,0.9)',
+                        backgroundColor: 'rgba(255,0,0,0.9)',
                         borderColor: 'rgba(255,140,0,0.9)',
-                    },{
-                        label: 'PREÇO MÉDIO',
-                        data: ["<?php echo  montaGraficoValor($arrayValorDieselAgrupado); ?>"],
-                        responsive: true,
-                        fill: false,
-                        backgroundColor: 'rgba(251,195,0,0.9)',
-                        borderColor: 'rgba(251,195,0,0.9)',
                     }],
                 },
                 options: {
                     layout: {
                         padding: {
                             left: 0,
-                            right: 20,
+                            right: 50,
                             top: 0,
                             bottom: 0
                         }
@@ -516,35 +465,27 @@ if (iniciaSessao()===true){
 
         </script>
 
-
         <script>
             var ctx1 = document.getElementById("grafico2").getContext('2d');
             var barChart = new Chart(ctx1, {
                 type: 'horizontalBar',
                 borderWidth: 30,
                 data: {
-                    labels: ["<?php echo  montaGraficoPosto($arrayValorGasolinaAgrupado);?>"],
-                    datasets: [ {
-                        label: 'QUANTIDADE MÉDIA EM LITROS',
-                        data: ["<?php echo montaGraficoQuantidade(agrupaArray($arrayValorGasolinaAgrupado,$arrayQuantidadeGasolinaAgrupado))?>"],
+                    labels: [" <?php echo implode('", "',$arrayAnomaliaMotorista);?>"],
+                    datasets: [{
+                        label: 'QUANTIDADE',
+                        data: [" <?php echo implode('", "',$arrayContadorAnomaliaMotorista);?>"],
                         responsive: true,
                         fill: false,
-                        backgroundColor: 'rgba(255,140,0,0.9)',
+                        backgroundColor: 'rgba(255,0,0,0.9)',
                         borderColor: 'rgba(255,140,0,0.9)',
-                    },{
-                        label: 'PREÇO MÉDIO',
-                        data: ["<?php echo  montaGraficoValor($arrayValorGasolinaAgrupado); ?>"],
-                        responsive: true,
-                        fill: false,
-                        backgroundColor: 'rgba(96,167,0,0.9)',
-                        borderColor: 'rgba(96,167,0,0.9)',
                     }],
                 },
                 options: {
                     layout: {
                         padding: {
                             left: 0,
-                            right: 20,
+                            right: 50,
                             top: 0,
                             bottom: 0
                         }
@@ -592,28 +533,21 @@ if (iniciaSessao()===true){
                 type: 'horizontalBar',
                 borderWidth: 30,
                 data: {
-                    labels: ["<?php echo  montaGraficoPosto($arrayValorEtanolAgrupado);?>"],
-                    datasets: [ {
-                        label: 'QUANTIDADE MÉDIA EM LITROS',
-                        data: ["<?php echo montaGraficoQuantidade(agrupaArray($arrayValorEtanolAgrupado,$arrayQuantidadeEtanolAgrupado))?>"],
+                    labels: [" <?php echo implode('", "',$arrayAnomaliaVeiculo);?>"],
+                    datasets: [{
+                        label: 'QUANTIDADE',
+                        data: [" <?php echo implode('", "',$arrayContadorAnomaliaVeiculo);?>"],
                         responsive: true,
                         fill: false,
-                        backgroundColor: 'rgba(255,140,0,0.9)',
+                        backgroundColor: 'rgba(255,0,0,0.9)',
                         borderColor: 'rgba(255,140,0,0.9)',
-                    },{
-                        label: 'PREÇO MÉDIO',
-                        data: ["<?php echo  montaGraficoValor($arrayValorEtanolAgrupado); ?>"],
-                        responsive: true,
-                        fill: false,
-                        backgroundColor: 'rgba(78,149,212,0.9)',
-                        borderColor: 'rgba(78,149,212,0.9)',
                     }],
                 },
                 options: {
                     layout: {
                         padding: {
                             left: 0,
-                            right: 20,
+                            right: 50,
                             top: 0,
                             bottom: 0
                         }
@@ -653,6 +587,9 @@ if (iniciaSessao()===true){
             });
 
         </script>
+
+
+
 
         <!-- END Java Script Pagina -->
 

@@ -12,113 +12,113 @@ if (iniciaSessao()===true){
 <!DOCTYPE html>
 <html lang="pt-br">
 
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-        <title>S.G.A.C-POTÊNCIA MEDIÇÕES</title>
-        <meta name="description" conte nt="">
-        <meta name="author" content="">
+    <title>S.G.A.C-POTÊNCIA MEDIÇÕES</title>
+    <meta name="description" conte nt="">
+    <meta name="author" content="">
 
-        <!-- Favicon -->
-        <link rel="shortcut icon" href="assets/images/favicon.ico">
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="assets/images/favicon.ico">
 
-        <!-- Bootstrap CSS -->
-        <link href="assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <!-- Bootstrap CSS -->
+    <link href="assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
 
-        <!-- Font Awesome CSS -->
-        <link href="assets/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+    <!-- Font Awesome CSS -->
+    <link href="assets/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
 
-        <!-- Custom CSS -->
-        <link href="assets/css/style.css" rel="stylesheet" type="text/css" />
+    <!-- Custom CSS -->
+    <link href="assets/css/style.css" rel="stylesheet" type="text/css" />
 
-        <!-- BEGIN CSS for this page -->
-        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.16/css/dataTables.bootstrap4.min.css" />
-        <!-- END CSS for this page -->
+    <!-- BEGIN CSS for this page -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.16/css/dataTables.bootstrap4.min.css" />
+    <!-- END CSS for this page -->
 
-        <link href="assets/plugins/select2/css/select2.min.css" rel="stylesheet" type="text/css" />
+    <link href="assets/plugins/select2/css/select2.min.css" rel="stylesheet" type="text/css" />
 
-    </head>
+</head>
 
-    <body class="adminbody">
-        <div id="main">
+<body class="adminbody">
+    <div id="main">
 
-            <!-- Start  Menu Principal Superior -->
-            <?php require_once ("front-end/main-menu-top.php"); ?>
-            <!-- End Menu Principal Superior -->
+        <!-- Start  Menu Principal Superior -->
+        <?php require_once ("front-end/main-menu-top.php"); ?>
+        <!-- End Menu Principal Superior -->
 
-            <!-- Start Barra Menu Lateral Esquerdo -->
-            <?php require_once ("front-end/sidebar-menu-left.php"); ?>
-            <!-- End Barra Menu Lateral Esquerdo -->
+        <!-- Start Barra Menu Lateral Esquerdo -->
+        <?php require_once ("front-end/sidebar-menu-left.php"); ?>
+        <!-- End Barra Menu Lateral Esquerdo -->
 
-            <div class="content-page">
+        <div class="content-page">
 
-                <!-- Start content -->
-                <div class="content">
+            <!-- Start content -->
+            <div class="content">
 
-                    <div class="container-fluid">
+                <div class="container-fluid">
 
-                        <div class="row">
-                            <div class="col-xl-12">
-                                <div class="breadcrumb-holder">
-                                    <h1 class="main-title float-left">Dashboard </h1>
-                                    <ol class="breadcrumb float-right">
-                                        <li class="breadcrumb-item">Evolução de Preço de Combustível</li>
-                                        <li class="breadcrumb-item active">(Diario-Trimestre)</li>
-                                    </ol>
-                                    <div class="clearfix"></div>
-                                </div>
+                    <div class="row">
+                        <div class="col-xl-12">
+                            <div class="breadcrumb-holder">
+                                <h1 class="main-title float-left">Dashboard </h1>
+                                <ol class="breadcrumb float-right">
+                                    <li class="breadcrumb-item">Evolução de Preço de Combustível</li>
+                                    <li class="breadcrumb-item active">(Diario-Trimestre)</li>
+                                </ol>
+                                <div class="clearfix"></div>
                             </div>
                         </div>
                     </div>
+                </div>
 
 
+                <div class="container-fluid">
                     <div class="container-fluid">
-                        <div class="container-fluid">
-                            <div class="card-footer small text-muted">Ultima Sincronização de Tela:
-                                <?php echo buscaDataHora();                    
+                        <div class="card-footer small text-muted">Ultima Sincronização de Tela:
+                            <?php echo buscaDataHora();                    
                                 $arrayMensagem = verificaAtualizacaoPeriodoDadosSistema();
                                 ?>
 
-                                <br>
-                                <span class="text-red"> A base de Dados Possui Registros de
-                                    <?php echo $arrayMensagem['MOVIMENTO_INICIAL']?> á <?php echo $arrayMensagem['MOVIMENTO_FINAL']?> </span>
-                                <br>
-                                <span> Ultima importação: <?php echo $arrayMensagem['ULTIMA_IMPORTACAO']?> </span>
-
-                            </div>
                             <br>
-                            <div class="row">
-                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-                                    <div class="card-header">
-                                        <i class="fa fa-filter"></i> FILTROS
-                                    </div>
-                                    <div class=" container card mb-3">
-                                        <form method="POST">
-                                            <div class="row">
-                                                <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 col-xl-3">
-                                                    <label for="example3">
-                                                        Data Inicial:
-                                                    </label>
-                                                    <div class="form-group ">
-                                                        <input type="date" class="form-control" value="<?php echo $_POST['datai'];?>" id="InputDatai" name="datai" aria-describedby="emailHelp" placeholder="Data inicial">
-                                                    </div>
-                                                </div>
-                                                <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 col-xl-3">
-                                                    <label for="example3">
-                                                        Data Final:
-                                                    </label>
-                                                    <div class="form-group">
-                                                        <input type="date" class="form-control" value="<?php echo $_POST['dataf'];?>" id="InputDataf" name="dataf" placeholder="Data final">
-                                                    </div>
-                                                </div>
+                            <span class="text-red"> A base de Dados Possui Registros de
+                                <?php echo $arrayMensagem['MOVIMENTO_INICIAL']?> á <?php echo $arrayMensagem['MOVIMENTO_FINAL']?> </span>
+                            <br>
+                            <span> Ultima importação: <?php echo $arrayMensagem['ULTIMA_IMPORTACAO']?> </span>
 
-                                                <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 col-xl-3">
-                                                    <label for="example3">
-                                                        Cidade:
-                                                    </label>
-                                                    <select multiple class=" form-control select2" id="cidade" name="cidade[]" multiple="cidade">
-                                                        <?php 
+                        </div>
+                        <br>
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                                <div class="card-header">
+                                    <i class="fa fa-filter"></i> FILTROS
+                                </div>
+                                <div class=" container card mb-3">
+                                    <form method="POST">
+                                        <div class="row">
+                                            <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 col-xl-3">
+                                                <label for="example3">
+                                                    Data Inicial:
+                                                </label>
+                                                <div class="form-group ">
+                                                    <input type="date" class="form-control" value="<?php echo $_POST['datai'];?>" id="InputDatai" name="datai" aria-describedby="emailHelp" placeholder="Data inicial">
+                                                </div>
+                                            </div>
+                                            <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 col-xl-3">
+                                                <label for="example3">
+                                                    Data Final:
+                                                </label>
+                                                <div class="form-group">
+                                                    <input type="date" class="form-control" value="<?php echo $_POST['dataf'];?>" id="InputDataf" name="dataf" placeholder="Data final">
+                                                </div>
+                                            </div>
+
+                                            <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 col-xl-3">
+                                                <label for="example3">
+                                                    Cidade:
+                                                </label>
+                                                <select multiple class=" form-control select2" id="cidade" name="cidade[]" multiple="cidade">
+                                                    <?php 
                                                         $sql="SELECT distinct(CIDADE) as CIDADE
                                                   FROM movimento_veiculos";
                                                         $sql = $db->query($sql);
@@ -130,14 +130,14 @@ if (iniciaSessao()===true){
 
                                                         ?>
 
-                                                    </select>
-                                                </div>
-                                                <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 col-xl-3">
-                                                    <label for="example3">
-                                                        Polo:
-                                                    </label>
-                                                    <select multiple class=" form-control select2" id="polo" name="polo[]">
-                                                        <?php 
+                                                </select>
+                                            </div>
+                                            <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 col-xl-3">
+                                                <label for="example3">
+                                                    Polo:
+                                                </label>
+                                                <select multiple class=" form-control select2" id="polo" name="polo[]">
+                                                    <?php 
                                                         $sql="SELECT distinct(CENTRO_RESULTADO) as CENTRO_RESULTADO
                                                   FROM movimento_veiculos";
                                                         $sql = $db->query($sql);
@@ -149,16 +149,16 @@ if (iniciaSessao()===true){
 
                                                         ?>
 
-                                                    </select>
+                                                </select>
 
-                                                </div>
+                                            </div>
 
-                                                <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 col-xl-3">
-                                                    <label for="example4">
-                                                        Equipe:
-                                                    </label>
-                                                    <select multiple class=" form-control select2" id="equipe" name="equipe[]">
-                                                        <?php 
+                                            <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 col-xl-3">
+                                                <label for="example4">
+                                                    Equipe:
+                                                </label>
+                                                <select multiple class=" form-control select2" id="equipe" name="equipe[]">
+                                                    <?php 
                                                         $sql="SELECT distinct(CENTRO_CUSTO) as CENTRO_CUSTO
                                                   FROM movimento_veiculos";
                                                         $sql = $db->query($sql);
@@ -169,15 +169,15 @@ if (iniciaSessao()===true){
                                                         } 
 
                                                         ?>
-                                                    </select>
-                                                </div>
+                                                </select>
+                                            </div>
 
-                                                <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 col-xl-3">
-                                                    <label for="example5">
-                                                        Veiculo - motorista:
-                                                    </label>
-                                                    <select multiple class=" form-control select2" id="veiculo" name="veiculo[]">
-                                                        <?php 
+                                            <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 col-xl-3">
+                                                <label for="example5">
+                                                    Veiculo - motorista:
+                                                </label>
+                                                <select multiple class=" form-control select2" id="veiculo" name="veiculo[]">
+                                                    <?php 
                                                         $sql="SELECT distinct(PLACA_VEICULO) as PLACA_VEICULO,MOTORISTA
                                                   FROM movimento_veiculos";
                                                         $sql = $db->query($sql);
@@ -188,16 +188,16 @@ if (iniciaSessao()===true){
                                                         } 
 
                                                         ?>
-                                                    </select>
-                                                </div>
+                                                </select>
+                                            </div>
 
-                                                <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 col-xl-3">
-                                                    <label for="example5">
-                                                        Posto:
-                                                    </label>
-                                                    <select multiple class=" form-control select2" id="posto" name="posto[]">
+                                            <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 col-xl-3">
+                                                <label for="example5">
+                                                    Posto:
+                                                </label>
+                                                <select multiple class=" form-control select2" id="posto" name="posto[]">
 
-                                                        <?php 
+                                                    <?php 
                                                         $sql="SELECT distinct(NOME_POSTO) as NOME_POSTO
                                                   FROM movimento_veiculos";
                                                         $sql = $db->query($sql);
@@ -209,25 +209,25 @@ if (iniciaSessao()===true){
 
                                                         ?>
 
-                                                    </select>
-                                                </div>
-
-                                                <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 col-xl-3">
-                                                    <label for="example2">
-
-                                                    </label>
-                                                    <br>
-                                                    <button type="submit" class="btn btn-primary  btn-block"><i class="fa fa-refresh"></i> Atualizar</button>
-                                                </div>
+                                                </select>
                                             </div>
-                                        </form>
-                                    </div>
 
-                                    <div class="card-footer small text-muted"></div>
+                                            <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 col-xl-3">
+                                                <label for="example2">
 
-                                    <br>
+                                                </label>
+                                                <br>
+                                                <button type="submit" class="btn btn-primary  btn-block"><i class="fa fa-refresh"></i> Atualizar</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
 
-                                    <?php
+                                <div class="card-footer small text-muted"></div>
+
+                                <br>
+
+                                <?php
 
                                     $cidadeCheck='';
                                     $poloCheck='';
@@ -349,50 +349,50 @@ if (iniciaSessao()===true){
                                     } 
                                     ?>
 
-                                    <div class="row">
-                                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-                                            <div class="card mb-3">
-                                                <div class="card-header">
-                                                    <i class="fa fa-table"></i> PREÇO X QUANTIDADE MÉDIA CONSUMIDA DE COMBUSTÍVEL POR CIDADE
-                                                    <h8><span class="badge badge-warning">(DIESEL)</span></h8>
-                                                </div>
-                                                <div class="card-body">
-                                                    <canvas id="grafico1"></canvas>
-                                                </div>
-                                                <div class="card-footer small text-muted"></div>
+                                <div class="row">
+                                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                                        <div class="card mb-3">
+                                            <div class="card-header">
+                                                <i class="fa fa-table"></i> PREÇO X QUANTIDADE MÉDIA CONSUMIDA DE COMBUSTÍVEL POR CIDADE
+                                                <h8><span class="badge badge-warning">(DIESEL)</span></h8>
                                             </div>
-                                            <canvas id="grafico2"></canvas>
-
+                                            <div class="card-body">
+                                                <canvas id="grafico1"></canvas>
+                                            </div>
+                                            <div class="card-footer small text-muted"></div>
                                         </div>
-                                        <div class="card-footer small text-muted"></div>
+                                        <canvas id="grafico2"></canvas>
+
                                     </div>
-                                </div>
-
-                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-                                    <div class="card mb-3">
-                                        <div class="card-header">
-                                            <i class="fa fa-table"></i> PREÇO X QUANTIDADE MÉDIA CONSUMIDA DE COMBUSTÍVEL POR CIDADE
-                                            <span class="badge badge-primary">(ETANOL)</span>
-                                        </div>
-                                        <div class="card-body">
-                                            <canvas id="grafico3"></canvas>
-
-                                        </div>
-                                        <div class="card-footer small text-muted"></div>
-                                    </div>
+                                    <div class="card-footer small text-muted"></div>
                                 </div>
                             </div>
 
-                           <!-- Start Barra Menu Lateral Esquerdo -->
+                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                                <div class="card mb-3">
+                                    <div class="card-header">
+                                        <i class="fa fa-table"></i> PREÇO X QUANTIDADE MÉDIA CONSUMIDA DE COMBUSTÍVEL POR CIDADE
+                                        <span class="badge badge-primary">(ETANOL)</span>
+                                    </div>
+                                    <div class="card-body">
+                                        <canvas id="grafico3"></canvas>
+
+                                    </div>
+                                    <div class="card-footer small text-muted"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Start Barra Menu Lateral Esquerdo -->
                         <?php require_once ("front-end/bar-footer.php"); ?>
                         <!-- End Barra Menu Lateral Esquerdo -->
 
-                        </div>
                     </div>
                 </div>
             </div>
         </div>
-        </div>
+    </div>
+    </div>
     <!-- END main -->
 
     <script src="assets/js/modernizr.min.js"></script>
@@ -460,13 +460,14 @@ if (iniciaSessao()===true){
             data: {
                 labels: ["<?php echo  montaGraficoCidade($arrayValorDieselAgrupado);?>"],
                 datasets: [{
-                    label: 'QUANTIDADE MÉDIA EM LITROS',
+                    label: ['QUANTIDADE MÉDIA EM LITROS', 'R'],
+
                     data: ["<?php echo montaGraficoQuantidade(agrupaArray($arrayValorDieselAgrupado,$arrayQuantidadeDieselAgrupado))?>"],
                     responsive: false,
                     fill: false,
                     backgroundColor: 'rgba(255,140,0,0.9)',
                     borderColor: 'rgba(255,140,0,0.9)',
-                },{
+                }, {
                     label: 'PREÇO MÉDIO',
                     data: ["<?php echo  montaGraficoValor($arrayValorDieselAgrupado); ?>"],
                     responsive: false,
@@ -479,7 +480,7 @@ if (iniciaSessao()===true){
                 layout: {
                     padding: {
                         left: 10,
-                        right: 50,
+                        right: 100,
                         top: 10,
                         bottom: 10
                     }
@@ -487,6 +488,7 @@ if (iniciaSessao()===true){
                 title: {
                     display: false,
                 },
+               
                 scales: {
                     xAxes: [{
                         display: false,
@@ -503,14 +505,13 @@ if (iniciaSessao()===true){
                         ctx.textAlign = 'center';
                         ctx.fillStyle = 'rgba(25,0,0,0.9)';
                         //ctx.font = "70% bold Calibri";
-                        ctx.fillStyle = ['blue', 'red'];
                         ctx.strokeStyle = '#fff000';
                         this.data.datasets.forEach(function(dataset, i) {
                             var meta = chartInstance.controller.getDatasetMeta(i);
                             meta.data.forEach(function(bar, index) {
                                 var data = dataset.data[index];
                                 data2 = data;
-                                ctx.fillText(data2, bar._model.x + 25, bar._model.y - 5);
+                                ctx.fillText(data2, bar._model.x + 20, bar._model.y - 5);
                             });
                         });
                     },
@@ -534,7 +535,7 @@ if (iniciaSessao()===true){
                     fill: false,
                     backgroundColor: 'rgba(255,140,0,0.9)',
                     borderColor: 'rgba(255,140,0,0.9)',
-                },{
+                }, {
                     label: 'PREÇO MÉDIO',
                     data: ["<?php echo  montaGraficoValor($arrayValorGasolinaAgrupado); ?>"],
                     responsive: false,
@@ -570,7 +571,7 @@ if (iniciaSessao()===true){
                             ctx = chartInstance.ctx;
                         ctx.textAlign = 'center';
                         ctx.fillStyle = 'rgba(25,0,0,0.9)';
-                       // ctx.font = "70% bold Calibri";
+                        // ctx.font = "70% bold Calibri";
                         ctx.fillStyle = ['blue', 'red'];
                         ctx.strokeStyle = '#fff000';
                         this.data.datasets.forEach(function(dataset, i) {
@@ -595,14 +596,14 @@ if (iniciaSessao()===true){
             borderWidth: 30,
             data: {
                 labels: ["<?php echo  montaGraficoCidade($arrayValorEtanolAgrupado);?>"],
-                datasets: [ {
+                datasets: [{
                     label: 'QUANTIDADE MÉDIA EM LITROS',
                     data: ["<?php echo montaGraficoQuantidade(agrupaArray($arrayValorEtanolAgrupado,$arrayQuantidadeEtanolAgrupado))?>"],
                     responsive: true,
                     fill: false,
                     backgroundColor: 'rgba(255,140,0,0.9)',
                     borderColor: 'rgba(255,140,0,0.9)',
-                },{
+                }, {
                     label: 'PREÇO MÉDIO',
                     data: ["<?php echo  montaGraficoValor($arrayValorEtanolAgrupado); ?>"],
                     responsive: false,
@@ -660,6 +661,6 @@ if (iniciaSessao()===true){
 
     <!-- END Java Script Pagina -->
 
-    </body>
+</body>
 
 </html>

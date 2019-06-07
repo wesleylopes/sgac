@@ -8,7 +8,7 @@ function formataData($dateTime){
 }
 
 function removeCaracteres($value){
-   return preg_replace('/[^A-Za-z0-9-]/', '', $value);
+    return preg_replace('/[^A-Za-z0-9-]/', '', $value);
 }
 
 function iniciaSessao(){
@@ -428,7 +428,7 @@ function buscaValorQtCombPostoConsolidado($dataInicial, $dataFinal, $tipoCombust
     if (isset($cidade) && !$cidade==''){
         $sql.= "AND CIDADE IN ('$cidade')";
     }
-    echo "TESTE <br>".$sql."<br>";
+    // echo "TESTE <br>".$sql."<br>";
 
     $sql = $db->query($sql);            
     $somaQuantidades = $sql->fetchAll(); 
@@ -437,7 +437,6 @@ function buscaValorQtCombPostoConsolidado($dataInicial, $dataFinal, $tipoCombust
         $quantidadetotal = $somaQuantidade['SOMA_QUANTIDADE'];
         $cidade1 = $somaQuantidade['CIDADE'];
     }
-
 
     unset($sql);
 
@@ -498,7 +497,7 @@ function buscaValorQtCombPostoConsolidado($dataInicial, $dataFinal, $tipoCombust
     }   
 } 
 
-function buscaInformacoesEquipeConsolidado($dataInicial, $dataFinal, $cidade, $polo, $equipe,$equipecheck , $veiculo, $posto){       
+function buscaInformacoesEquipeConsolidado($dataInicial, $dataFinal, $cidade, $polo, $equipe,$equipecheck , $veiculo, $posto,$tipoCombustivel){       
     require("conexao.php");   
 
     $sql= "SELECT SUM(QUANTIDADE) as SOMA_QUANTIDADE
@@ -526,6 +525,12 @@ function buscaInformacoesEquipeConsolidado($dataInicial, $dataFinal, $cidade, $p
     if (isset($cidade) && !$cidade==''){
         $sql.= "AND CIDADE IN ('$cidade')";
     }
+
+    if (isset($tipoCombustivel) && !$tipoCombustivel==''){
+        $sql.= "AND PRODUTO IN ('$tipoCombustivel')";
+    }
+
+
     //echo "TESTE <br>".$sql."<br>";
 
     $sql = $db->query($sql);            
@@ -562,8 +567,13 @@ function buscaInformacoesEquipeConsolidado($dataInicial, $dataFinal, $cidade, $p
     }
 
     if (isset($cidade) && !$cidade==''){
-        $sql.= "AND CIDADE IN ('$cidade')";
+        $sql.= "AND CIDADE IN ('$cidade')";    
     }
+
+    if (isset($tipoCombustivel) && !$tipoCombustivel==''){
+        $sql.= "AND PRODUTO IN ('$tipoCombustivel')";
+    }
+
     //echo "TESTE <br>".$sql."<br>";
 
     $sql = $db->query($sql);            
@@ -606,6 +616,10 @@ function buscaInformacoesEquipeConsolidado($dataInicial, $dataFinal, $cidade, $p
         $sql.="AND NOME_POSTO IN('$posto')";      
     }
 
+    if (isset($tipoCombustivel) && !$tipoCombustivel==''){
+        $sql.= "AND PRODUTO IN ('$tipoCombustivel')";
+    }
+
     // echo "TESTE2 <br>".$sql."<br>";
 
     $sql = $db->query($sql);            
@@ -620,7 +634,8 @@ function buscaInformacoesEquipeConsolidado($dataInicial, $dataFinal, $cidade, $p
     }
 
     $kmLitro = ( $distanciaTotal / $quantidadetotal );
-    $custoCombustivelKm = number_format($somaValorCombustivel,2) / number_format( $kmLitro,2) ;
+    
+    $custoCombustivelKm = ($somaValorCombustivel / $kmLitro) ;
 
 
     if  (number_format($somaValorCombustivel,2)<=>0){        
@@ -637,7 +652,7 @@ function buscaInformacoesEquipeConsolidado($dataInicial, $dataFinal, $cidade, $p
     }   
 } 
 
-function buscaInformacoesVeiculoConsolidado($dataInicial, $dataFinal, $cidade, $polo, $equipe, $veiculo,$veiculocheck, $posto){        
+function buscaInformacoesVeiculoConsolidado($dataInicial, $dataFinal, $cidade, $polo, $equipe, $veiculo,$veiculocheck, $posto,$tipoCombustivel, $tipoVeiculo,$modeloVeiculo){        
     require("conexao.php");    
 
     $sql= "SELECT SUM(QUANTIDADE) as SOMA_QUANTIDADE
@@ -659,13 +674,26 @@ function buscaInformacoesVeiculoConsolidado($dataInicial, $dataFinal, $cidade, $
 
     }if (isset($veiculo)&&!$veiculo==''){
         $sql.="AND PLACA_VEICULO IN('$veiculo')"; 
-
     }
 
     if (isset($cidade) && !$cidade==''){
         $sql.= "AND CIDADE IN ('$cidade')";
     }
-    //echo "TESTE <br>".$sql."<br>";
+
+    if (isset($tipoCombustivel) && !$tipoCombustivel==''){
+        $sql.= "AND PRODUTO IN ('$tipoCombustivel')";
+    }
+    
+    if (isset($modeloVeiculo) && !$modeloVeiculo==''){
+        $sql.= "AND MODELO_VEICULO IN ('$modeloVeiculo')";
+
+    }
+
+    if (isset($tipoVeiculo) && !$tipoVeiculo==''){
+        $sql.="AND PLACA_VEICULO in((select PLACA_VEICULO  from veiculos B where B.TIPO_VEICULO IN('$tipoVeiculo')))";
+    }
+
+    //echo "TESTE1 <br>".$sql."<br>";
 
     $sql = $db->query($sql);            
     $somaQuantidades = $sql->fetchAll(); 
@@ -705,21 +733,35 @@ function buscaInformacoesVeiculoConsolidado($dataInicial, $dataFinal, $cidade, $
     if (isset($cidade) && !$cidade==''){
         $sql.= "AND CIDADE IN ('$cidade')";
     }
-    //echo "TESTE <br>".$sql."<br>";
+
+    if (isset($modeloVeiculo) && !$modeloVeiculo==''){
+        $sql.= "AND MODELO_VEICULO IN ('$modeloVeiculo')";
+
+    }
+    
+    if (isset($tipoCombustivel) && !$tipoCombustivel==''){
+        $sql.= "AND PRODUTO IN ('$tipoCombustivel')";
+
+    }
+
+    if (isset($tipoVeiculo) && !$tipoVeiculo==''){
+       $sql.="AND PLACA_VEICULO in((select PLACA_VEICULO  from veiculos B where B.TIPO_VEICULO IN('$tipoVeiculo')))";
+    }
+    //echo "TESTE2 <br>".$sql."<br>";
 
     $sql = $db->query($sql);            
     $somaQuantidades = $sql->fetchAll(); 
 
     foreach ($somaQuantidades as $somaDistancia){
-      $distanciaTotal = $somaDistancia['SOMA_DISTANCIA'];
-      $somaValorTotal = $somaDistancia['SOMA_VALOR'];
-      $quantidadeVeiculos = $somaDistancia['VEICULOS_MOVIMENTO'];
-      $vMarca = $somaDistancia['FABRICANTE_VEICULO'];
-      $vModelo = $somaDistancia['MODELO_VEICULO'];
-      $vMotorista = $somaDistancia['MOTORISTA'];
-    
+        $distanciaTotal = $somaDistancia['SOMA_DISTANCIA'];
+        $somaValorTotal = $somaDistancia['SOMA_VALOR'];
+        $quantidadeVeiculos = $somaDistancia['VEICULOS_MOVIMENTO'];
+        $vMarca = $somaDistancia['FABRICANTE_VEICULO'];
+        $vModelo = $somaDistancia['MODELO_VEICULO'];
+        $vMotorista = $somaDistancia['MOTORISTA'];
+
     } 
-    
+
     unset($sql);                                                                                                                   
     $rendimentoCombustivel=0;
 
@@ -730,8 +772,8 @@ function buscaInformacoesVeiculoConsolidado($dataInicial, $dataFinal, $cidade, $
     $veiculos = $sql->fetchAll(); 
 
     foreach ($veiculos as $item ){
-      $rendimentoCombustivel = $item['RENDIMENTO_COMBUSTIVEL'];
-    
+        $rendimentoCombustivel = $item['RENDIMENTO_COMBUSTIVEL'];
+
     }     
 
     unset($sql); 
@@ -766,8 +808,20 @@ function buscaInformacoesVeiculoConsolidado($dataInicial, $dataFinal, $cidade, $
     }if (isset($posto)&&!$posto==''){    
         $sql.="AND NOME_POSTO IN('$posto')";      
     }
+    if (isset($tipoCombustivel) && !$tipoCombustivel==''){
+        $sql.= "AND PRODUTO IN ('$tipoCombustivel')";
+    }
+    
+    if (isset($modeloVeiculo) && !$modeloVeiculo==''){
+        $sql.= "AND MODELO_VEICULO IN ('$modeloVeiculo')";
 
-    // echo "TESTE2 <br>".$sql."<br>";
+    }
+
+    if (isset($tipoVeiculo) && !$tipoVeiculo==''){
+        $sql.="AND PLACA_VEICULO in((select PLACA_VEICULO  from veiculos B where B.TIPO_VEICULO IN('$tipoVeiculo')))";
+    }
+
+    // echo "TESTE 3 <br>".$sql."<br>";
 
     $sql = $db->query($sql);            
     $movimentoVeiculos = $sql->fetchAll();
@@ -781,20 +835,21 @@ function buscaInformacoesVeiculoConsolidado($dataInicial, $dataFinal, $cidade, $
     }
     $kmLitro = 0;
     $custoCombustivelKm =0;
-    
+
     $kmLitro = ( $distanciaTotal / $quantidadetotal ); 
-    
-    
-    if ($kmLitro < $rendimentoCombustivel){
+
+    $kmLitroAcrescimo = $rendimentoCombustivel + ($rendimentoCombustivel * 0.05);    
+
+
+    if ($kmLitroAcrescimo > $kmLitro){
         $statusRendimento ='ER';
     } else {
         $statusRendimento ='OK';
     }
-    
-     if (number_format($somaValorCombustivel,2)>0 && number_format( $kmLitro,2)>0){
-        $custoCombustivelKm = ($somaValorCombustivel /$kmLitro);
-     
-     }
+
+    if (number_format($somaValorCombustivel,2)>0 && number_format( $kmLitro,2)>0){
+        $custoCombustivelKm = ($somaValorCombustivel /$kmLitro);     
+    }
 
     if  (number_format($somaValorCombustivel,2)<=>0){        
         return array(
@@ -811,7 +866,8 @@ function buscaInformacoesVeiculoConsolidado($dataInicial, $dataFinal, $cidade, $
             'MOTORISTA'              => $vMotorista,
             'PLACA'                  => $veiculo,
             'STATUS_RENDIMENTO'      => $statusRendimento,
-            'RENDIMENTO_VEICULO'     => $rendimentoCombustivel
+            'RENDIMENTO_VEICULO'     => $rendimentoCombustivel,
+            'RENDIMENTO_VEICULO_ACRESCIMO' => number_format($kmLitroAcrescimo,2)
         );
     }   
 }     
@@ -890,15 +946,15 @@ function buscaAnomalias($dataInicial, $dataFinal, $cidade, $polo, $equipe, $veic
     $somaQuantidades = $sql->fetchAll(); 
 
     foreach ($somaQuantidades as $somaDistancia){
-      $distanciaTotal = $somaDistancia['SOMA_DISTANCIA'];
-      $somaValorTotal = $somaDistancia['SOMA_VALOR'];
-      $quantidadeVeiculos = $somaDistancia['VEICULOS_MOVIMENTO'];
-      $vMarca = $somaDistancia['FABRICANTE_VEICULO'];
-      $vModelo = $somaDistancia['MODELO_VEICULO'];
-      $vMotorista = $somaDistancia['MOTORISTA'];
-    
+        $distanciaTotal = $somaDistancia['SOMA_DISTANCIA'];
+        $somaValorTotal = $somaDistancia['SOMA_VALOR'];
+        $quantidadeVeiculos = $somaDistancia['VEICULOS_MOVIMENTO'];
+        $vMarca = $somaDistancia['FABRICANTE_VEICULO'];
+        $vModelo = $somaDistancia['MODELO_VEICULO'];
+        $vMotorista = $somaDistancia['MOTORISTA'];
+
     } 
-    
+
     unset($sql);                                                                                                                   
     $rendimentoCombustivel=0;
 
@@ -909,8 +965,7 @@ function buscaAnomalias($dataInicial, $dataFinal, $cidade, $polo, $equipe, $veic
     $veiculos = $sql->fetchAll(); 
 
     foreach ($veiculos as $item ){
-      $rendimentoCombustivel = $item['RENDIMENTO_COMBUSTIVEL'];
-    
+        $rendimentoCombustivel = $item['RENDIMENTO_COMBUSTIVEL'];
     }     
 
     unset($sql); 
@@ -960,20 +1015,20 @@ function buscaAnomalias($dataInicial, $dataFinal, $cidade, $polo, $equipe, $veic
     }
     $kmLitro = 0;
     $custoCombustivelKm =0;
-    
+
     $kmLitro = ( $distanciaTotal / $quantidadetotal ); 
-    
-    
+
+
     if ($kmLitro < $rendimentoCombustivel){
         $statusRendimento ='ER';
     } else {
         $statusRendimento ='OK';
     }
-    
-     if (number_format($somaValorCombustivel,2)>0 && number_format( $kmLitro,2)>0){
+
+    if (number_format($somaValorCombustivel,2)>0 && number_format( $kmLitro,2)>0){
         $custoCombustivelKm = ($somaValorCombustivel /$kmLitro);
-     
-     }
+
+    }
 
     if  (number_format($somaValorCombustivel,2)<=>0){        
         return array(
@@ -998,14 +1053,11 @@ function buscaAnomalias($dataInicial, $dataFinal, $cidade, $polo, $equipe, $veic
 function buscaValorQtdtransacoes($dataInicial,$dataFinal){        
     require("conexao.php");           
 
-    //$sql= "call buscaPrecoQtdConsolidado('$tipoCombustivel','$dataInicial','$dataFinal')";
-    $sql= "SELECT Format (Count(*),0)         AS QTD_TRANSACOES, 
-          Format (Sum(valor_total), 2) AS VALOR_TRANSACOES 
+    $sql= "SELECT count(*)         AS QTD_TRANSACOES, 
+          Format (Sum(valor_total), 2) AS VALOR_TRANSACOES,
+          Format (Sum(quantidade), 2) AS QUANTIDADE_LITROS 
    FROM   movimento_veiculos a 
-   WHERE  a.centro_resultado IN(SELECT DISTINCT( centro_resultado ) 
-                             FROM   movimento_veiculos a 
-                             WHERE  centro_resultado NOT IN( 'PIAUI', 'GOIAS' )) 
-       AND Date(a.data_movimento) BETWEEN '$dataInicial' AND '$dataFinal'"; 
+   WHERE Date(a.data_movimento) BETWEEN '$dataInicial' AND '$dataFinal'"; 
 
     $sql = $db->query($sql);            
     $dados = $sql->fetchAll(); 
@@ -1013,7 +1065,8 @@ function buscaValorQtdtransacoes($dataInicial,$dataFinal){
     foreach ($dados as $quantidade){
         return array(
             'QTD_TRANSACOES'             => $quantidade['QTD_TRANSACOES'],
-            'VALOR_TRANSACOES'           => $quantidade['VALOR_TRANSACOES']          
+            'VALOR_TRANSACOES'           => $quantidade['VALOR_TRANSACOES'], 
+            'QUANTIDADE_LITROS'           => $quantidade['QUANTIDADE_LITROS']
         );             
     }
 } 
@@ -1042,22 +1095,30 @@ function buscaQtdMotoristas(){
 function buscaQtdVeiculos(){        
     require("conexao.php");    
 
-    $sql= "select count(distinct(PLACA_VEICULO)) as QTD_VEICULOS
-          from movimento_veiculos a where 
-          a.CENTRO_RESULTADO in( SELECT DISTINCT(CENTRO_RESULTADO ) FROM movimento_veiculos a 
-                                                    WHERE CENTRO_RESULTADO NOT IN('PIAUI','GOIAS'))";
-    /*   
-    echo $sql;
-    echo "<br>";
-    echo "<br>";
-    echo "<br>";*/
+    $sql= "select count(*) as QTD_VEICULOS_ATIVOS from veiculos a WHERE a.STATUS = 'Ativo'";
 
-    $sql = $db->query($sql);            
-    $dados = $sql->fetchAll(); 
+    $sql = $db->query($sql); 
+    $dados= $sql->fetchAll(); 
 
-    foreach ($dados as $quantidade){
-        return  $quantidade['QTD_VEICULOS'];          
+    foreach ($dados as $quantidade){        
+        $qtdVeiculosAtivos = $quantidade['QTD_VEICULOS_ATIVOS'];
     }
+
+    unset($sql);
+
+    $sql= "select count(*)  AS  QTD_VEICULOS_CADASTRADOS  from veiculos";
+
+    $sql = $db->query($sql); 
+    $dados= $sql->fetchAll(); 
+
+    foreach ($dados as $quantidade){        
+        $qtdVeiculosCadastrados = $quantidade['QTD_VEICULOS_CADASTRADOS'];
+    } 
+
+    return array(
+        'QTD_VEICULOS_ATIVOS'           => $qtdVeiculosAtivos,
+        'QTD_VEICULOS_CADASTRADOS'      => $qtdVeiculosCadastrados
+    );   
 } 
 
 function extrairMesAnoPorExtenso($data){   
@@ -1066,3 +1127,15 @@ function extrairMesAnoPorExtenso($data){
 
     return ucfirst(strftime("%B de %Y", strtotime($data)));                
 }
+
+function retornaValorChecado($chave,$array){
+
+    if (in_array(utf8_encode(trim(($chave))),$array)=== true){        
+        return "<option selected>".utf8_encode($chave)."</option>";
+    } else {
+        return "<option >".utf8_encode($chave)."</option>";         
+    }    
+}
+
+
+

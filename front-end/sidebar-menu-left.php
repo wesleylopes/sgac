@@ -33,7 +33,7 @@
           </ul>
         </li>
         <li class="submenu">
-          <a class="active2" href="#"><i class="fa fa-fw fa-bullhorn"></i><span> PAINEL DE ALERTAS</span>
+          <a class="active2" href="anomalias.php"><i class="fa fa-fw fa-bullhorn"></i><span> PAINEL DE ANOMALIAS</span>
             <span class="badge badge-danger"> 0 </span> </a>
           <a class="active2" href="analise-unidade.php"><i class="fa fa-fw fa fa-pie-chart"></i><span> ANÁLISE POR FILIAL </span></a>
           <a class="active2" href="analise-cidade.php"><i class="fa fa-fw fa-bar-chart"></i><span> ANÁLISE POR CIDADE </span></a>
@@ -41,11 +41,9 @@
           <a href="#"><i class="fa fa-group"></i> <span> ANÁLISE POR EQUIPE</span> <span class="menu-arrow"></span></a>
           <ul class="list-unstyled">
             <li><a href="gestao-visual.php"><i class="fa fa-fw fa-car"></i>Gestão Visual Equipe e Veiculos</a></li>
-            <li><a href="veiculos.php"><i class="fa fa-fw fa-user"></i>Comparativo</a></li>
+           <!-- <li><a href="veiculos.php"><i class="fa fa-fw fa-user"></i>Comparativo</a></li>-->
          
           </ul>
-
-
           <a class="active2" href="evolucao-preco.php"><i class="fa fa-fw fa-line-chart"></i><span> EVOLUÇÃO PREÇO</span></a>
           <a class="active2" href="evolucao-quantidade.php"><i class="fa fa-fw fa fa-tint"></i><span> EVOLUÇÃO QUANTIDADE</span></a>
           <a class="active2" href="importa.php"><i class="fa fa-fw fa-file-excel-o"></i><span>IMPORTAR DADOS (EXCEL)</span></a>

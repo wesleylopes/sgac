@@ -60,13 +60,16 @@ if (!empty($_FILES['excel']['tmp_name'])) {
             $sql = "DELETE FROM movimento_veiculos WHERE 
                             PLACA_VEICULO = '$PLACA_VEICULO'
                         AND NUMERO_CARTAO =  '$NUMERO_CARTAO'
-                        AND DATA_MOVIMENTO = '$DATA_MOVIMENTO' 
-                        AND MATRICULA = '$MATRICULA '";  
+                        AND DATA_MOVIMENTO = '$DATA_MOVIMENTO'";
+                        //AND CENTRO_RESULTADO = '$CENTRO_RESULTADO
             
             $db->beginTransaction();
             $sql = $db->query($sql);
             $db->commit();
+            
+            
             unset($sql);
+            
             
             $sql = "INSERT INTO movimento_veiculos SET 
                         PLACA_VEICULO = '$PLACA_VEICULO',
@@ -96,7 +99,7 @@ if (!empty($_FILES['excel']['tmp_name'])) {
             
             $db->beginTransaction();
             $sql = $db->query($sql);
-            $db->commit();
+            $db->commit(); 
             
             unset($sql);
             $contador++;

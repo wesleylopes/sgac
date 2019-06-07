@@ -7,7 +7,8 @@ $dti         = $_POST['datai'];  // Captura data Inicial Formulário
 $dtf         = $_POST['dataf'];  // Captura data Final Formulário
 $qtdMotoristas = buscaQtdMotoristas();
     
-$qtdVeiculos = buscaQtdVeiculos();
+$qtdVeiculosAtivos = buscaQtdVeiculos()['QTD_VEICULOS_ATIVOS'];
+$qtdVeiculosCadastrados = buscaQtdVeiculos()['QTD_VEICULOS_CADASTRADOS'];
   
 }?>
 
@@ -67,7 +68,36 @@ $qtdVeiculos = buscaQtdVeiculos();
                 <div class="clearfix"></div>
               </div>
             </div>
-          </div>     
+          </div>  
+           
+               <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+              <div class="card-header">
+                <i class="fa fa-filter"></i> FILTRAR PERIODO DE <> ATÉ
+              </div>
+              <br>
+
+              <form method="POST">
+                <div class="row">
+                  <div class="col">
+                    <div class="form-group">
+                      <input type="date" class="form-control" value="<?php echo $_POST['datai'];?>" id="InputDatai" name="datai" aria-describedby="emailHelp" placeholder="Data inicial">
+                    </div>
+                  </div>
+                  <div class="col">
+                    <div class="form-group">
+                      <input type="date" class="form-control" value="<?php echo $_POST['dataf'];?>" id="InputDataf" name="dataf" placeholder="Data final">
+                    </div>
+                  </div>
+
+                  <div class="col">
+                    <button type="submit" class="btn btn-primary  btn-block"><i class="fa fa-refresh"></i> Atualizar Graficos</button>
+                  </div>
+                </div>
+              </form>
+            
+                  </div>
+                  </div>
             
           <div class="row">
             <div class="col-xs-12 col-md-6 col-lg-6 col-xl-6">
@@ -78,6 +108,8 @@ $qtdVeiculos = buscaQtdVeiculos();
                 <h4 class="m-b-20 text-white "><?php echo buscaValorQtdtransacoes($dti,$dtf)['QTD_TRANSACOES']?></h4>
                 <span class="text-white">Valor R$</span>
                 <h4 class="m-b-20 text-white "><?php echo buscaValorQtdtransacoes($dti,$dtf)['VALOR_TRANSACOES']?></h4>
+                <span class="text-white">Litragem</span>
+                <h4 class="m-b-20 text-white "><?php echo buscaValorQtdtransacoes($dti,$dtf)['QUANTIDADE_LITROS']?></h4>
                 <span class="text-white">Analise de Combustivel</span>
               </div>
             </div>   
@@ -87,9 +119,9 @@ $qtdVeiculos = buscaQtdVeiculos();
                 <i class="fa fa-car float-right text-white"></i>
                 <h6 class="text-white text-uppercase m-b-10"> RESUMO Veiculos </h6>
                 <span class="text-white">Cadastrados</span>
-                <h4 class="m-b-20 text-white counter"><?php echo $qtdVeiculos  ?></h4>
+                <h4 class="m-b-20 text-white counter"><?php echo $qtdVeiculosCadastrados  ?></h4>
                 <span class="text-white">Ativos</span>
-                <h4 class="m-b-20 text-white counter"><?php echo $qtdVeiculos  ?></h4>
+                <h4 class="m-b-20 text-white counter"><?php echo $qtdVeiculosAtivos ?></h4>
                 <span class="text-white">Cadastro de Veiculos</span>
               </div>
             </div>

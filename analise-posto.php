@@ -174,17 +174,18 @@ if (iniciaSessao()===true){
 
                                             <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 col-xl-3">
                                                 <label for="example5">
-                                                    Veiculo - motorista:
+                                                    Veiculo:
                                                 </label>
                                                 <select multiple class=" form-control select2" id="veiculo" name="veiculo[]">
                                                     <?php 
-                                                    $sql="SELECT distinct(PLACA_VEICULO) as PLACA_VEICULO,MOTORISTA
-                                                  FROM movimento_veiculos";
+                                                    $sql="SELECT distinct(a.PLACA_VEICULO) as PLACA_VEICULO, b.MODELO_VEICULO as MODELO_VEICULO
+                                                  FROM movimento_veiculos a
+                                                  inner join veiculos b on (a.PLACA_VEICULO = b.PLACA_VEICULO)";
                                                     $sql = $db->query($sql);
                                                     $dados = $sql->fetchAll();
 
                                                     foreach ($dados as $quantidade){
-                                                        echo "<option value=".$quantidade['PLACA_VEICULO'].   ">".$quantidade['PLACA_VEICULO']." - ".$quantidade['MOTORISTA']."</option>"; 
+                                                        echo "<option value=".$quantidade['PLACA_VEICULO'].">".$quantidade['PLACA_VEICULO']." - ".$quantidade['MODELO_VEICULO']."</option>"; 
                                                     } 
 
                                                     ?>

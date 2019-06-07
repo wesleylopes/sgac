@@ -27,6 +27,12 @@ a {
     background-color: red;
 }
 
+.botao-center {
+    float: right;
+    margin-left: auto;
+    margin-right: auto;
+}
+
 .small {
     font-size: 0.7rem;
 }
@@ -44,14 +50,14 @@ a {
 }
 
 canvas {
-  border: 0px dotted blue;
+    border: 0px dotted blue;
 }
 
 .chart-container {
-  position: relative;
-  margin: auto;
-  height: 80vh;
-  width: 80vw;
+    position: relative;
+    margin: auto;
+    height: 80vh;
+    width: 80vw;
 }
 
 
@@ -63,12 +69,12 @@ label {
     margin-top: 40px;
 }
 
-#logo-login{
+#logo-login {
     display: block;
-  margin-left: auto;
-  margin-right: auto;
-  width: 50%;
-    
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+
 }
 
 .label {
@@ -135,8 +141,8 @@ img {
     white-space: nowrap;
 }
 
-.w-25{    
-  width: 50%;
+.w-25 {
+    width: 50%;
 }
 
 .text-custom {
@@ -183,7 +189,7 @@ img {
     color: #818a91;
 }
 
-.text-red{
+.text-red {
     color: #ff0000;
 }
 
@@ -258,17 +264,20 @@ img {
     margin-bottom: 0;
 }
 
+
+
+
 .card-area {
     display: inline-block;
     padding: 10%;
 }
 
-.card-text {   
+.card-text {
     font-weight: 500;
     line-height: 1.2;
     font-size: 11px;
     margin-bottom: 0;
-    
+
 }
 
 .header-title {
@@ -434,8 +443,9 @@ a {
     width: auto;
     height: auto;
 }
-.img-bg-comparativo{
-  width: 30vw;
+
+.img-bg-comparativo {
+    width: 30vw;
     height: 15hw;
 }
 
@@ -476,8 +486,8 @@ a {
     color: #fff;
 }
 
-.span-login{
-  color: #5E5D5E; 
+.span-login {
+    color: #5E5D5E;
     font-size: 12px
 }
 

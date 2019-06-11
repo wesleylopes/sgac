@@ -86,580 +86,478 @@ if (iniciaSessao()===true){
                             <br>
                             <span> Ultima importação: <?php echo $arrayMensagem['ULTIMA_IMPORTACAO']?> </span>
 
+
                         </div>
                         <br>
                         <div class="row">
                             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-                                <div class="card-header">
-                                    <i class="fa fa-filter"></i> FILTROS
-                                </div>
-                                <div class=" container card mb-3">
-                                    <form method="POST">
-                                        <div class="row">
-                                            <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 col-xl-3">
-                                                <label for="example3">
-                                                    Data Inicial:
-                                                </label>
-                                                <div class="form-group ">
-                                                    <input type="date" class="form-control" value="<?php echo $_POST['datai'];?>" id="InputDatai" name="datai" aria-describedby="emailHelp" placeholder="Data inicial">
-                                                </div>
-                                            </div>
-                                            <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 col-xl-3">
-                                                <label for="example3">
-                                                    Data Final:
-                                                </label>
-                                                <div class="form-group">
-                                                    <input type="date" class="form-control" value="<?php echo $_POST['dataf'];?>" id="InputDataf" name="dataf" placeholder="Data final">
-                                                </div>
-                                            </div>
+                                <?php require_once ("front-end/form-pesquisa-padrao.php"); ?>
+                            </div>
 
-                                            <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 col-xl-3">
-                                                <label for="example3">
-                                                    Cidade:
-                                                </label>
-                                                <select multiple class=" form-control select2" id="cidade" name="cidade[]" multiple="cidade">
-                                                    <?php 
-                                                        $sql="SELECT distinct(CIDADE) as CIDADE
-                                                  FROM movimento_veiculos";
-                                                        $sql = $db->query($sql);
-                                                        $dados = $sql->fetchAll();
 
-                                                        foreach ($dados as $quantidade){
-                                                            echo "<option>".$quantidade['CIDADE']."</option>"; 
-                                                        } 
+                            <?php
+                                $cidadeCheck='';
+                                $poloCheck='';
+                                $equipeCheck='';
+                                $veiculo='';
+                                $veiculoCheck='';
+                                $postoCheck=''; 
+                                $tipoCombustivelCheck='';
+                                $tipoVeiculoCheck='';
+                                $modeloVeiculoCheck ='';
 
-                                                        ?>
+                                $sql="SELECT DISTINCT(CIDADE) as CIDADE FROM movimento_veiculos a 
+                                                 WHERE DATE(DATA_MOVIMENTO) between '$dti' and '$dtf'";
+                              
+                                 if (isset($_POST["cidade"])){ 
+                                $cidadeCheck = implode("','", $_POST["cidade"]);
+                                $sql.="AND CIDADE IN ('$cidadeCheck')";
 
-                                                </select>
-                                            </div>
-                                            <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 col-xl-3">
-                                                <label for="example3">
-                                                    Polo:
-                                                </label>
-                                                <select multiple class=" form-control select2" id="polo" name="polo[]">
-                                                    <?php 
-                                                        $sql="SELECT distinct(CENTRO_RESULTADO) as CENTRO_RESULTADO
-                                                  FROM movimento_veiculos";
-                                                        $sql = $db->query($sql);
-                                                        $dados = $sql->fetchAll();
+                            }if (isset($_POST["polo"])){
+                                $poloCheck = implode("','", $_POST["polo"]);
+                                $sql.="AND CENTRO_RESULTADO IN('$poloCheck')";
 
-                                                        foreach ($dados as $quantidade){
-                                                            echo "<option>".$quantidade['CENTRO_RESULTADO']."</option>"; 
-                                                        }   
+                            }if (isset($_POST["equipe"])){
+                                $equipeCheck = implode("','", $_POST["equipe"]);
+                                $sql.="AND CENTRO_CUSTO IN ('$equipeCheck')";
 
-                                                        ?>
+                            }if (isset($_POST["veiculo"])){
+                                $veiculoCheck  = implode("','", $_POST["veiculo"]);
+                                $sql.="AND PLACA_VEICULO IN('$veiculoCheck')"; 
+                            }if (isset($_POST["posto"])){
+                                $postoCheck  = implode("','", $_POST["posto"]);
+                                $sql.="AND NOME_POSTO IN('$postoCheck')";
+                            }
+                            if (isset($_POST["tpCombustivel"])){
+                                $tipoCombustivelCheck  = implode("','", $_POST["tpCombustivel"]);
+                                $sql.="AND PRODUTO IN('$tipoCombustivelCheck')";
+                            }
+                            if (isset($_POST["tpVeiculo"])){
+                                $tipoVeiculoCheck  = implode("','", $_POST["tpVeiculo"]);
 
-                                                </select>
+                                $sql.="AND PLACA_VEICULO in((select PLACA_VEICULO  from veiculos B where B.TIPO_VEICULO IN('$tipoVeiculoCheck')))";
+                            }
 
-                                            </div>
+                            if (isset($_POST["modeloVeiculo"])){
+                                $modeloVeiculoCheck  = implode("','", $_POST["modeloVeiculo"]);
 
-                                            <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 col-xl-3">
-                                                <label for="example4">
-                                                    Equipe:
-                                                </label>
-                                                <select multiple class=" form-control select2" id="equipe" name="equipe[]">
-                                                    <?php 
-                                                        $sql="SELECT distinct(CENTRO_CUSTO) as CENTRO_CUSTO
-                                                  FROM movimento_veiculos";
-                                                        $sql = $db->query($sql);
-                                                        $dados = $sql->fetchAll();
+                                $sql.="AND MODELO_VEICULO IN('$modeloVeiculoCheck')";
+                            }
 
-                                                        foreach ($dados as $quantidade){
-                                                            echo "<option>".$quantidade['CENTRO_CUSTO']."</option>"; 
-                                                        } 
+                                 //echo "<br>".$sql."<br>";
 
-                                                        ?>
-                                                </select>
-                                            </div>
+                                $sql = $db->query($sql);            
+                                $registros = $sql->fetchAll(); 
 
-                                            <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 col-xl-3">
-                                                <label for="example5">
-                                                    Veiculo - motorista:
-                                                </label>
-                                                <select multiple class=" form-control select2" id="veiculo" name="veiculo[]">
-                                                    <?php 
-                                                        $sql="SELECT distinct(PLACA_VEICULO) as PLACA_VEICULO,MOTORISTA
-                                                  FROM movimento_veiculos";
-                                                        $sql = $db->query($sql);
-                                                        $dados = $sql->fetchAll();
+                                $arrayGasolinaConsolidado =array();
+                                $arrayEtanolConsolidado   =array();  
+                                $arrayDieselConsolidado   =array(); 
 
-                                                        foreach ($dados as $quantidade){
-                                                            echo "<option value=".$quantidade['PLACA_VEICULO'].   ">".$quantidade['PLACA_VEICULO']." - ".$quantidade['MOTORISTA']."</option>"; 
-                                                        } 
+                                if($sql->rowCount() >0){
 
-                                                        ?>
-                                                </select>
-                                            </div>
+                                    foreach ($registros as $registro){
+                                        $cidade =  $registro['CIDADE'];
 
-                                            <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 col-xl-3">
-                                                <label for="example5">
-                                                    Posto:
-                                                </label>
-                                                <select multiple class=" form-control select2" id="posto" name="posto[]">
+                                        $arrayGasolinaConsolidado[]   = buscaValorQtCombCidadeConsolidado(                                            $dti, $dtf,'GASOLINA',$cidade, $poloCheck, $equipeCheck, $veiculo, $veiculoCheck, $postoCheck,
+                                           $tipoCombustivelCheck, $tipoVeiculoCheck, $modeloVeiculoCheck
+                                        );
 
-                                                    <?php 
-                                                        $sql="SELECT distinct(NOME_POSTO) as NOME_POSTO
-                                                  FROM movimento_veiculos";
-                                                        $sql = $db->query($sql);
-                                                        $dados = $sql->fetchAll();
+                                        $arrayEtanolConsolidado[]   = buscaValorQtCombCidadeConsolidado(
+                                           $dti, $dtf, 'ETANOL', $cidade, $poloCheck, $equipeCheck, $veiculo, $veiculoCheck, $postoCheck, $tipoCombustivelCheck, $tipoVeiculoCheck, $modeloVeiculoCheck
+                                        );
 
-                                                        foreach ($dados as $quantidade){
-                                                            echo "<option>".$quantidade['NOME_POSTO']."</option>"; 
-                                                        } 
+                                        $arrayDieselConsolidado[]= buscaValorQtCombCidadeConsolidado(      
+                                          $dti, $dtf, 'DIESEL', $cidade, $poloCheck, $equipeCheck, $veiculo, $veiculoCheck, $postoCheck,
+                                          $tipoCombustivelCheck, $tipoVeiculoCheck, $modeloVeiculoCheck
+                                        );
+                                    } 
+                                }
 
-                                                        ?>
+                                // Remove Registros Duplicados e Agrupa as quantidades   
+                                function agrupaArray($array) {
+                                    $agrupador = array();
+                                    foreach ($array as $item) {
+                                        $key = $item['CIDADE'];
+                                        if (isset($key)){ 
+                                            if (!isset($agrupador[$key])) {
+                                                $agrupador[$key] = array(
+                                                    'CIDADE' => $key,
+                                                    'VALOR_COMBUSTIVEL' => $item['VALOR_COMBUSTIVEL'],
+                                                    'TIPO_COMBUSTIVEL_BUSCA' => $item['TIPO_COMBUSTIVEL_BUSCA'],
+                                                    'QUANTIDADE_LITROS' => $item['QUANTIDADE_LITROS'],
+                                                );
+                                            } 
+                                        }
+                                    }  
+                                    return $agrupador;
+                                } 
 
-                                                </select>
-                                            </div>
+                                $arrayValorGasolinaAgrupado = agrupaArray($arrayGasolinaConsolidado);
+                                $arrayValorEtanolAgrupado   = agrupaArray($arrayEtanolConsolidado); 
+                                $arrayValorDieselAgrupado   = agrupaArray($arrayDieselConsolidado);
 
-                                            <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 col-xl-3">
-                                                <label for="example2">
+                                $arrayQuantidadeGasolinaAgrupado = agrupaArray($arrayGasolinaConsolidado);
+                                $arrayQuantidadeEtanolAgrupado   = agrupaArray($arrayEtanolConsolidado); 
+                                $arrayQuantidadeDieselAgrupado   = agrupaArray($arrayDieselConsolidado);
 
-                                                </label>
-                                                <br>
-                                                <button type="submit" class="btn btn-primary  btn-block"><i class="fa fa-refresh"></i> Atualizar</button>
-                                            </div>
+                                function ordenaArrayValorCombustivel($a, $b) { 
+                                    return $a['QUANTIDADE_LITROS'] < $b['QUANTIDADE_LITROS']; 
+                                }
+
+                                function ordenaArrayQuantidadeCombustivel($a, $b) { 
+                                    return $a['CIDADE'] == $b['CIDADE']; 
+                                }   
+
+                                usort($arrayValorGasolinaAgrupado,'ordenaArrayValorCombustivel');
+                                usort($arrayValorEtanolAgrupado,'ordenaArrayValorCombustivel');
+                                usort($arrayValorDieselAgrupado,'ordenaArrayValorCombustivel');
+
+                                usort($arrayQuantidadeGasolinaAgrupado,'ordenaArrayQuantidadeCombustivel');
+                                usort($arrayQuantidadeEtanolAgrupado,'ordenaArrayQuantidadeCombustivel');
+                                usort($arrayQuantidadeDieselAgrupado,'ordenaArrayQuantidadeCombustivel');
+
+
+                                function montaGraficoValor($array){
+                                    return implode(',', array_map(function ($entry) {
+
+                                        return $entry['VALOR_COMBUSTIVEL']; }, $array));  
+                                } 
+
+                                function montaGraficoCidade($array){
+                                    return implode('","', array_map(function ($entry) {
+
+                                        return $entry['CIDADE']; }, $array));  
+                                } 
+
+                                function montaGraficoQuantidade($array){
+                                    return implode(',', array_map(function ($entry) {
+
+                                        return $entry['QUANTIDADE_LITROS']; }, $array));  
+                                } 
+                                ?>
+
+                            <div class="row">
+                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                                    <div class="card mb-3">
+                                        <div class="card-header">
+                                            <i class="fa fa-table"></i> PREÇO X QUANTIDADE MÉDIA CONSUMIDA DE COMBUSTÍVEL POR CIDADE
+                                            <h8><span class="badge badge-warning">(DIESEL)</span></h8>
                                         </div>
-                                    </form>
+                                        <div class="card-body">
+                                            <canvas id="grafico1"></canvas>
+                                        </div>
+                                        <div class="card-footer small text-muted"></div>
+                                    </div>
                                 </div>
-
                                 <div class="card-footer small text-muted"></div>
 
-                                <br>
 
-                                <?php
-
-                                    $cidadeCheck='';
-                                    $poloCheck='';
-                                    $equipeCheck='';
-                                    $veiculo='';
-                                    $veiculoCheck='';
-                                    $postoCheck='';
-
-                                    $sql="SELECT DISTINCT(CIDADE) as CIDADE FROM movimento_veiculos a 
-                                                 WHERE DATE(DATA_MOVIMENTO) between '$dti' and '$dtf'";
-                                    if (isset($_POST["cidade"])){ 
-                                        $cidadeCheck = implode("','", $_POST["cidade"]);
-                                        $sql.="AND CIDADE IN ('$cidadeCheck')";
-
-                                    }if (isset($_POST["polo"])){
-                                        $poloCheck = implode("','", $_POST["polo"]);
-                                        $sql.="AND CENTRO_RESULTADO IN('$poloCheck')";
-
-                                    }if (isset($_POST["equipe"])){
-                                        $equipeCheck = implode("','", $_POST["equipe"]);
-                                        $sql.="AND CENTRO_CUSTO IN ('$equipeCheck')";
-
-                                    }if (isset($_POST["veiculo"])){
-                                        $veiculoCheck  = implode("','", $_POST["veiculo"]);
-                                        $sql.="AND PLACA_VEICULO IN('$veiculoCheck')"; 
-                                    }if (isset($_POST["posto"])){
-                                        $postoCheck  = implode("','", $_POST["posto"]);
-                                        $sql.="AND NOME_POSTO IN('$postoCheck')";
-                                    }
-
-                                    // echo "<br>".$sql."<br>";
-
-                                    $sql = $db->query($sql);            
-                                    $registros = $sql->fetchAll(); 
-
-                                    $arrayGasolinaConsolidado =array();
-                                    $arrayEtanolConsolidado   =array();  
-                                    $arrayDieselConsolidado   =array(); 
-
-                                    if($sql->rowCount() >0){
-
-                                        foreach ($registros as $registro){
-                                            $cidade =  $registro['CIDADE'];
-
-                                            $arrayGasolinaConsolidado[]   = buscaValorQtCombCidadeConsolidado(
-                                                $dti,$dtf,'GASOLINA',$cidade,$poloCheck,$equipeCheck,$veiculo,$veiculoCheck,$postoCheck
-                                            );
-
-                                            $arrayEtanolConsolidado[]   = buscaValorQtCombCidadeConsolidado(
-                                                $dti,$dtf,'ETANOL',$cidade,$poloCheck,$equipeCheck,$veiculo,$veiculoCheck,$postoCheck
-                                            );
-
-                                            $arrayDieselConsolidado[]= buscaValorQtCombCidadeConsolidado(
-                                                $dti,$dtf,'DIESEL',$cidade,$poloCheck,$equipeCheck,$veiculo,$veiculoCheck,$postoCheck
-                                            );
-                                        } 
-                                    }
-
-                                    // Remove Registros Duplicados e Agrupa as quantidades   
-                                    function agrupaArray($array) {
-                                        $agrupador = array();
-                                        foreach ($array as $item) {
-                                            $key = $item['CIDADE'];
-                                            if (isset($key)){ 
-                                                if (!isset($agrupador[$key])) {
-                                                    $agrupador[$key] = array(
-                                                        'CIDADE' => $key,
-                                                        'VALOR_COMBUSTIVEL' => $item['VALOR_COMBUSTIVEL'],
-                                                        'TIPO_COMBUSTIVEL_BUSCA' => $item['TIPO_COMBUSTIVEL_BUSCA'],
-                                                        'QUANTIDADE_LITROS' => $item['QUANTIDADE_LITROS'],
-                                                    );
-                                                } 
-                                            }
-                                        }  
-                                        return $agrupador;
-                                    } 
-
-                                    $arrayValorGasolinaAgrupado = agrupaArray($arrayGasolinaConsolidado);
-                                    $arrayValorEtanolAgrupado   = agrupaArray($arrayEtanolConsolidado); 
-                                    $arrayValorDieselAgrupado   = agrupaArray($arrayDieselConsolidado);
-
-                                    $arrayQuantidadeGasolinaAgrupado = agrupaArray($arrayGasolinaConsolidado);
-                                    $arrayQuantidadeEtanolAgrupado   = agrupaArray($arrayEtanolConsolidado); 
-                                    $arrayQuantidadeDieselAgrupado   = agrupaArray($arrayDieselConsolidado);
-
-                                    function ordenaArrayValorCombustivel($a, $b) { 
-                                        return $a['QUANTIDADE_LITROS'] < $b['QUANTIDADE_LITROS']; 
-                                    }
-
-                                    function ordenaArrayQuantidadeCombustivel($a, $b) { 
-                                        return $a['CIDADE'] == $b['CIDADE']; 
-                                    }   
-
-                                    usort($arrayValorGasolinaAgrupado,'ordenaArrayValorCombustivel');
-                                    usort($arrayValorEtanolAgrupado,'ordenaArrayValorCombustivel');
-                                    usort($arrayValorDieselAgrupado,'ordenaArrayValorCombustivel');
-
-                                    usort($arrayQuantidadeGasolinaAgrupado,'ordenaArrayQuantidadeCombustivel');
-                                    usort($arrayQuantidadeEtanolAgrupado,'ordenaArrayQuantidadeCombustivel');
-                                    usort($arrayQuantidadeDieselAgrupado,'ordenaArrayQuantidadeCombustivel');
-
-                                  
-                                    function montaGraficoValor($array){
-                                        return implode('","', array_map(function ($entry) {
-
-                                            return $entry['VALOR_COMBUSTIVEL']; }, $array));  
-                                    } 
-
-                                    function montaGraficoCidade($array){
-                                        return implode('","', array_map(function ($entry) {
-
-                                            return $entry['CIDADE']; }, $array));  
-                                    } 
-
-                                    function montaGraficoQuantidade($array){
-                                        return implode('","', array_map(function ($entry) {
-
-                                            return $entry['QUANTIDADE_LITROS']; }, $array));  
-                                    } 
-                                    ?>
-
-                                <div class="row">
-                                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-                                        <div class="card mb-3">
-                                            <div class="card-header">
-                                                <i class="fa fa-table"></i> PREÇO X QUANTIDADE MÉDIA CONSUMIDA DE COMBUSTÍVEL POR CIDADE
-                                                <h8><span class="badge badge-warning">(DIESEL)</span></h8>
-                                            </div>
-                                            <div class="card-body">
-                                                <canvas id="grafico1"></canvas>
-                                            </div>
-                                            <div class="card-footer small text-muted"></div>
+                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                                    <div class="card mb-3">
+                                        <div class="card-header">
+                                            <i class="fa fa-table"></i> PREÇO X QUANTIDADE MÉDIA CONSUMIDA DE COMBUSTÍVEL POR CIDADE
+                                            <span class="badge badge-success">(GASOLINA)</span>
                                         </div>
-                                        <canvas id="grafico2"></canvas>
+                                        <div class="card-body">
+                                            <canvas id="grafico2"></canvas>
 
+                                        </div>
+                                        <div class="card-footer small text-muted"></div>
                                     </div>
-                                    <div class="card-footer small text-muted"></div>
+                                </div>
+
+                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                                    <div class="card mb-3">
+                                        <div class="card-header">
+                                            <i class="fa fa-table"></i> PREÇO X QUANTIDADE MÉDIA CONSUMIDA DE COMBUSTÍVEL POR CIDADE
+                                            <span class="badge badge-primary">(ETANOL)</span>
+                                        </div>
+                                        <div class="card-body">
+                                            <canvas id="grafico3"></canvas>
+
+                                        </div>
+                                        <div class="card-footer small text-muted"></div>
+                                    </div>
                                 </div>
                             </div>
-
-                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-                                <div class="card mb-3">
-                                    <div class="card-header">
-                                        <i class="fa fa-table"></i> PREÇO X QUANTIDADE MÉDIA CONSUMIDA DE COMBUSTÍVEL POR CIDADE
-                                        <span class="badge badge-primary">(ETANOL)</span>
-                                    </div>
-                                    <div class="card-body">
-                                        <canvas id="grafico3"></canvas>
-
-                                    </div>
-                                    <div class="card-footer small text-muted"></div>
-                                </div>
-                            </div>
+                            <!-- Start Barra Menu Lateral Esquerdo -->
+                            <?php require_once ("front-end/bar-footer.php"); ?>
+                            <!-- End Barra Menu Lateral Esquerdo -->
                         </div>
-
-                        <!-- Start Barra Menu Lateral Esquerdo -->
-                        <?php require_once ("front-end/bar-footer.php"); ?>
-                        <!-- End Barra Menu Lateral Esquerdo -->
-
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-    </div>
-    <!-- END main -->
 
-    <script src="assets/js/modernizr.min.js"></script>
-    <script src="assets/js/jquery.min.js"></script>
-    <script src="assets/js/moment.min.js"></script>
+        <!-- END main -->
 
-    <script src="assets/js/popper.min.js"></script>
-    <script src="assets/js/bootstrap.min.js"></script>
+        <script src="assets/js/modernizr.min.js"></script>
+        <script src="assets/js/jquery.min.js"></script>
+        <script src="assets/js/moment.min.js"></script>
 
-    <script src="assets/js/detect.js"></script>
-    <script src="assets/js/fastclick.js"></script>
-    <script src="assets/js/jquery.blockUI.js"></script>
-    <script src="assets/js/jquery.nicescroll.js"></script>
-    <!-- BEGIN Java Script for this page -->
-    <script src="assets/plugins/select2/js/select2.min.js"></script>
-    <script>
-        $(document).ready(function() {
-            $('.select2').select2();
-        });
+        <script src="assets/js/popper.min.js"></script>
+        <script src="assets/js/bootstrap.min.js"></script>
 
-    </script>
-    <!-- App js -->
-    <script src="assets/js/pikeadmin.js">
-    </script>
-
-    <!-- BEGIN Java Script for this page -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
-    <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap4.min.js"></script>
-
-    <!-- Counter-Up-->
-    <script src="assets/plugins/waypoints/lib/jquery.waypoints.min.js"></script>
-    <script src="assets/plugins/counterup/jquery.counterup.min.js"></script>
-    <script src="assets/js/detect.js"></script>
-
-    <script src="assets/js/jquery.scrollTo.min.js"></script>
-    <script src="assets/plugins/switchery/switchery.min.js"></script>
-
-    <!-- App js -->
-
-
-
-    <script src="assets/js/funcoes.js"></script>
-
-    <script>
-        $(document).ready(function() {
-            // data-tables
-            $('#example1').DataTable();
-
-            // counter-up
-            $('.counter').counterUp({
-                delay: 10,
-                time: 600
+        <script src="assets/js/detect.js"></script>
+        <script src="assets/js/fastclick.js"></script>
+        <script src="assets/js/jquery.blockUI.js"></script>
+        <script src="assets/js/jquery.nicescroll.js"></script>
+        <!-- BEGIN Java Script for this page -->
+        <script src="assets/plugins/select2/js/select2.min.js"></script>
+        <script>
+            $(document).ready(function() {
+                $('.select2').select2();
             });
-        });
-        }
 
-    </script>
+        </script>
+        <!-- App js -->
+        <script src="assets/js/pikeadmin.js">
+        </script>
 
-    <script>
-        var ctx1 = document.getElementById("grafico1").getContext('2d');
-        var barChart = new Chart(ctx1, {
-            type: 'horizontalBar',
-            borderWidth: 30,
-            data: {
-                labels: ["<?php echo  montaGraficoCidade($arrayValorDieselAgrupado);?>"],
-                datasets: [{
-                    label: ['QUANTIDADE MÉDIA EM LITROS', 'R'],
+        <!-- BEGIN Java Script for this page -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
+        <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+        <script src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap4.min.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/numeral.js/2.0.6/numeral.min.js"></script>
 
-                    data: ["<?php echo montaGraficoQuantidade(agrupaArray($arrayValorDieselAgrupado,$arrayQuantidadeDieselAgrupado))?>"],
-                    responsive: false,
-                    fill: false,
-                    backgroundColor: 'rgba(255,140,0,0.9)',
-                    borderColor: 'rgba(255,140,0,0.9)',
-                }, {
-                    label: 'PREÇO MÉDIO',
-                    data: ["<?php echo  montaGraficoValor($arrayValorDieselAgrupado); ?>"],
-                    responsive: false,
-                    fill: false,
-                    backgroundColor: 'rgba(251,195,0,0.9)',
-                    borderColor: 'rgba(251,195,0,0.9)',
-                }],
-            },
-            options: {
-                layout: {
-                    padding: {
-                        left: 10,
-                        right: 100,
-                        top: 10,
-                        bottom: 10
-                    }
-                },
-                title: {
-                    display: false,
-                },
-               
-                scales: {
-                    xAxes: [{
-                        display: false,
-                    }],
-                    yAxes: [{
-                        display: true,
-                    }]
-                },
-                animation: {
-                    duration: 1000,
-                    onComplete: function() {
-                        var chartInstance = this.chart,
-                            ctx = chartInstance.ctx;
-                        ctx.textAlign = 'center';
-                        ctx.fillStyle = 'rgba(25,0,0,0.9)';
-                        //ctx.font = "70% bold Calibri";
-                        ctx.strokeStyle = '#fff000';
-                        this.data.datasets.forEach(function(dataset, i) {
-                            var meta = chartInstance.controller.getDatasetMeta(i);
-                            meta.data.forEach(function(bar, index) {
-                                var data = dataset.data[index];
-                                data2 = data;
-                                ctx.fillText(data2, bar._model.x + 20, bar._model.y - 5);
-                            });
-                        });
-                    },
-                },
+        <!-- Counter-Up-->
+        <script src="assets/plugins/waypoints/lib/jquery.waypoints.min.js"></script>
+        <script src="assets/plugins/counterup/jquery.counterup.min.js"></script>
+        <script src="assets/js/detect.js"></script>
+
+        <script src="assets/js/jquery.scrollTo.min.js"></script>
+        <script src="assets/plugins/switchery/switchery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
+
+        <!-- App js -->
+
+        <script src="assets/js/funcoes.js"></script>
+
+
+        <script>
+            $(document).ready(function() {
+                // data-tables
+                $('#example1').DataTable();
+
+                // counter-up
+                $('.counter').counterUp({
+                    delay: 10,
+                    time: 600
+                });
+            });
             }
-        });
 
-    </script>
+        </script>
 
-    <script>
-        var ctx1 = document.getElementById("grafico2").getContext('2d');
-        var barChart = new Chart(ctx1, {
-            type: 'horizontalBar',
-            borderWidth: 30,
-            data: {
-                labels: ["<?php echo  montaGraficoCidade($arrayValorGasolinaAgrupado);?>"],
-                datasets: [{
-                    label: 'QUANTIDADE MÉDIA EM LITROS',
-                    data: ["<?php echo montaGraficoQuantidade(agrupaArray($arrayValorGasolinaAgrupado,$arrayQuantidadeGasolinaAgrupado))?>"],
-                    responsive: true,
-                    fill: false,
-                    backgroundColor: 'rgba(255,140,0,0.9)',
-                    borderColor: 'rgba(255,140,0,0.9)',
-                }, {
-                    label: 'PREÇO MÉDIO',
-                    data: ["<?php echo  montaGraficoValor($arrayValorGasolinaAgrupado); ?>"],
-                    responsive: false,
-                    fill: false,
-                    backgroundColor: 'rgba(96,167,0,0.9)',
-                    borderColor: 'rgba(96,167,0,0.9)',
-                }],
-            },
-            options: {
-                layout: {
-                    padding: {
-                        left: 10,
-                        right: 50,
-                        top: 10,
-                        bottom: 10
-                    }
-                },
-                title: {
-                    display: false,
-                },
-                scales: {
-                    xAxes: [{
-                        display: false,
+        <script>
+            //código usando jQuery
+            $(document).ready(function() {
+                $('.load').hide();
+            });
+
+        </script>
+
+        <script>
+            var ctx1 = document.getElementById("grafico1").getContext('2d');
+            var barChart = new Chart(ctx1, {
+                type: 'horizontalBar',
+                borderWidth: 30,
+                data: {
+                    labels: ["<?php echo  montaGraficoCidade($arrayValorDieselAgrupado);?>"],
+                    datasets: [{
+                        label: 'QUANTIDADE MÉDIA EM LITROS',
+
+                        data: [<?php echo montaGraficoQuantidade(agrupaArray($arrayValorDieselAgrupado, $arrayQuantidadeDieselAgrupado))?> ],
+                        responsive: false,
+                        fill: false,
+                        backgroundColor: 'rgba(255,140,0,0.9)',
+                        borderColor: 'rgba(255,140,0,0.9)',
+                    }, {
+                        label: 'PREÇO MÉDIO',
+                        data: [<?php echo montaGraficoValor($arrayValorDieselAgrupado);?>],
+                        responsive: false,
+                        fill: false,
+                        backgroundColor: 'rgba(251,195,0,0.9)',
+                        borderColor: 'rgba(251,195,0,0.9)',
                     }],
-                    yAxes: [{
-                        display: true,
-                    }]
                 },
-                animation: {
-                    duration: 1000,
-                    onComplete: function() {
-                        var chartInstance = this.chart,
-                            ctx = chartInstance.ctx;
-                        ctx.textAlign = 'center';
-                        ctx.fillStyle = 'rgba(25,0,0,0.9)';
-                        // ctx.font = "70% bold Calibri";
-                        ctx.fillStyle = ['blue', 'red'];
-                        ctx.strokeStyle = '#fff000';
-                        this.data.datasets.forEach(function(dataset, i) {
-                            var meta = chartInstance.controller.getDatasetMeta(i);
-                            meta.data.forEach(function(bar, index) {
-                                var data = dataset.data[index];
-                                data2 = data;
-                                ctx.fillText(data2, bar._model.x + 25, bar._model.y - 5);
-                            });
-                        });
+                options: {
+                    layout: {
+                        padding: {
+                            left: 10,
+                            right: 100,
+                            top: 10,
+                            bottom: 10
+                        }
                     },
-                },
-            }
-        });
-
-    </script>
-
-    <script>
-        var ctx1 = document.getElementById("grafico3").getContext('2d');
-        var barChart = new Chart(ctx1, {
-            type: 'horizontalBar',
-            borderWidth: 30,
-            data: {
-                labels: ["<?php echo  montaGraficoCidade($arrayValorEtanolAgrupado);?>"],
-                datasets: [{
-                    label: 'QUANTIDADE MÉDIA EM LITROS',
-                    data: ["<?php echo montaGraficoQuantidade(agrupaArray($arrayValorEtanolAgrupado,$arrayQuantidadeEtanolAgrupado))?>"],
-                    responsive: true,
-                    fill: false,
-                    backgroundColor: 'rgba(255,140,0,0.9)',
-                    borderColor: 'rgba(255,140,0,0.9)',
-                }, {
-                    label: 'PREÇO MÉDIO',
-                    data: ["<?php echo  montaGraficoValor($arrayValorEtanolAgrupado); ?>"],
-                    responsive: false,
-                    fill: false,
-                    backgroundColor: 'rgba(78,149,212,0.9)',
-                    borderColor: 'rgba(78,149,212,0.9)',
-                }],
-            },
-            options: {
-                layout: {
-                    padding: {
-                        left: 10,
-                        right: 50,
-                        top: 10,
-                        bottom: 10
-                    }
-                },
-                title: {
-                    display: false,
-                },
-                scales: {
-                    xAxes: [{
+                    title: {
                         display: false,
-                        margin: 30
-                    }],
-                    yAxes: [{
-                        display: true,
-                        margin: 30
-                    }]
-                },
-                animation: {
-                    duration: 1000,
-                    onComplete: function() {
-                        var chartInstance = this.chart,
-                            ctx = chartInstance.ctx;
-                        ctx.textAlign = 'center';
-                        ctx.fillStyle = 'rgba(25,0,0,0.9)';
-                        //ctx.font = "100% bold Calibri";
-                        ctx.fillStyle = ['blue', 'red'];
-                        ctx.strokeStyle = '#fff000';
-                        this.data.datasets.forEach(function(dataset, i) {
-                            var meta = chartInstance.controller.getDatasetMeta(i);
-                            meta.data.forEach(function(bar, index) {
-                                var data = dataset.data[index];
-                                data2 = data;
-                                ctx.fillText(data2, bar._model.x + 25, bar._model.y - 5);
-                            });
-                        });
                     },
+                    scales: {
+                        xAxes: [{
+                            display: false,
+                        }],
+                        yAxes: [{
+                            display: true,
+                        }]
+                    },
+                    animation: {
+                        duration: 1000,
+                        onComplete: function() {
+                            var chartInstance = this.chart,
+                                ctx = chartInstance.ctx;
+                            ctx.textAlign = 'center';
+                            ctx.fillStyle = 'rgba(25,0,0,0.9)';
+                            ctx.strokeStyle = '#fff000';
+                            this.data.datasets.forEach(function(dataset, i) {
+                                var meta = chartInstance.controller.getDatasetMeta(i);
+                                meta.data.forEach(function(bar, index) {
+                                    ctx.fillText(dataset.data[index].toFixed(2).replace('.', '.').replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.'), bar._model.x + 25, bar._model.y - 5);
+                                });
+                            });
+                        },
+                    },
+                }
+            });
+
+        </script>
+
+
+        <script>
+            var ctx1 = document.getElementById("grafico2").getContext('2d');
+            var barChart = new Chart(ctx1, {
+                type: 'horizontalBar',
+                borderWidth: 30,
+                data: {
+                    labels: ["<?php echo  montaGraficoCidade($arrayValorGasolinaAgrupado);?>"],
+                    datasets: [{
+                        label: 'QUANTIDADE MÉDIA EM LITROS',
+                        data: [<?php echo montaGraficoQuantidade(agrupaArray($arrayValorGasolinaAgrupado, $arrayQuantidadeGasolinaAgrupado))?> ],
+                        responsive: true,
+                        fill: false,
+                        backgroundColor: 'rgba(255,140,0,0.9)',
+                        borderColor: 'rgba(255,140,0,0.9)',
+                    }, {
+                        label: 'PREÇO MÉDIO',
+                        data: [<?php echo montaGraficoValor($arrayValorGasolinaAgrupado);?>],
+                        responsive: false,
+                        fill: false,
+                        backgroundColor: 'rgba(96,167,0,0.9)',
+                        borderColor: 'rgba(96,167,0,0.9)',
+                    }],
                 },
-            }
-        });
+                options: {
+                    layout: {
+                        padding: {
+                            left: 10,
+                            right: 50,
+                            top: 10,
+                            bottom: 10
+                        }
+                    },
+                    title: {
+                        display: false,
+                    },
+                    scales: {
+                        xAxes: [{
+                            display: false,
+                        }],
+                        yAxes: [{
+                            display: true,
+                        }]
+                    },
+                    animation: {
+                        duration: 1000,
+                        onComplete: function() {
+                            var chartInstance = this.chart,
+                                ctx = chartInstance.ctx;
+                            ctx.textAlign = 'center';
+                            ctx.fillStyle = 'rgba(25,0,0,0.9)';
+                            // ctx.font = "70% bold Calibri";
+                            ctx.fillStyle = ['blue', 'red'];
+                            ctx.strokeStyle = '#fff000';
+                            this.data.datasets.forEach(function(dataset, i) {
+                                var meta = chartInstance.controller.getDatasetMeta(i);
+                                meta.data.forEach(function(bar, index) {
+                                    ctx.fillText(dataset.data[index].toFixed(2).replace('.', '.').replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.'), bar._model.x + 25, bar._model.y - 5);
+                                });
+                            });
+                        },
+                    },
+                }
+            });
 
-    </script>
+        </script>
 
-    <!-- END Java Script Pagina -->
+        <script>
+            var ctx1 = document.getElementById("grafico3").getContext('2d');
+            var barChart = new Chart(ctx1, {
+                type: 'horizontalBar',
+                borderWidth: 30,
+                data: {
+                    labels: ["<?php echo  montaGraficoCidade($arrayValorEtanolAgrupado);?>"],
+                    datasets: [{
+                        label: 'QUANTIDADE MÉDIA EM LITROS',
+                        data: [<?php echo montaGraficoQuantidade(agrupaArray($arrayValorEtanolAgrupado, $arrayQuantidadeEtanolAgrupado)) ?>],
+                        responsive: true,
+                        fill: false,
+                        backgroundColor: 'rgba(255,140,0,0.9)',
+                        borderColor: 'rgba(255,140,0,0.9)',
+                    }, {
+                        label: 'PREÇO MÉDIO',
+                        data: [<?php echo montaGraficoValor($arrayValorEtanolAgrupado); ?>],
+                        responsive: false,
+                        fill: false,
+                        backgroundColor: 'rgba(78,149,212,0.9)',
+                        borderColor: 'rgba(78,149,212,0.9)',
+                    }],
+                },
+                options: {
+                    layout: {
+                        padding: {
+                            left: 10,
+                            right: 50,
+                            top: 10,
+                            bottom: 10
+                        }
+                    },
+                    title: {
+                        display: false,
+                    },
+                    scales: {
+                        xAxes: [{
+                            display: false,
+                            margin: 30
+                        }],
+                        yAxes: [{
+                            display: true,
+                            margin: 30
+                        }]
+                    },
+                    animation: {
+                        duration: 1000,
+                        onComplete: function() {
+                            var chartInstance = this.chart,
+                                ctx = chartInstance.ctx;
+                            ctx.textAlign = 'center';
+                            ctx.fillStyle = 'rgba(25,0,0,0.9)';
+                            //ctx.font = "100% bold Calibri";
+                            ctx.fillStyle = ['blue', 'red'];
+                            ctx.strokeStyle = '#fff000';
+                            this.data.datasets.forEach(function(dataset, i) {
+                                var meta = chartInstance.controller.getDatasetMeta(i);
+                                meta.data.forEach(function(bar, index) {
+                                    ctx.fillText(dataset.data[index].toFixed(2).replace('.', '.').replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.'), bar._model.x + 25, bar._model.y - 5);
+                                });
+                            });
+                        },
+                    },
+                }
+            });
+
+        </script>
+
+        <!-- END Java Script Pagina -->
 
 </body>
 

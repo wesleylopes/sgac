@@ -12,6 +12,7 @@ if (iniciaSessao()===true){
 
 <!DOCTYPE html>
 <html lang="pt-br">
+
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -85,134 +86,8 @@ if (iniciaSessao()===true){
                         </div>
                         <br>
                         <div class="card-header">
-                            <i class="fa fa-filter"></i> FILTROS
-                        </div>
-                        <div class=" container card mb-3">
-                            <form method="POST">
-                                <div class="row">
-                                    <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 col-xl-3">
-                                        <label for="example3">
-                                            Data Inicial:
-                                        </label>
-                                        <div class="form-group ">
-                                            <input type="date" class="form-control" value="<?php echo $_POST['datai'];?>" id="InputDatai" name="datai" aria-describedby="emailHelp" placeholder="Data inicial">
-                                        </div>
-                                    </div>
-                                    <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 col-xl-3">
-                                        <label for="example3">
-                                            Data Final:
-                                        </label>
-                                        <div class="form-group">
-                                            <input type="date" class="form-control" value="<?php echo $_POST['dataf'];?>" id="InputDataf" name="dataf" placeholder="Data final">
-                                        </div>
-                                    </div>
+                            <?php require_once ("front-end/form-pesquisa-padrao.php"); ?>
 
-                                    <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 col-xl-3">
-                                        <label for="example3">
-                                            Cidade:
-                                        </label>
-                                        <select multiple class=" form-control select2" id="cidade" name="cidade[]" multiple="cidade">
-                                            <?php 
-                                            $sql="SELECT distinct(CIDADE) as CIDADE
-                                                  FROM movimento_veiculos";
-                                            $sql = $db->query($sql);
-                                            $dados = $sql->fetchAll();
-
-                                            foreach ($dados as $quantidade){
-                                                echo "<option>".$quantidade['CIDADE']."</option>"; 
-                                            } 
-                                            ?>
-
-                                        </select>
-                                    </div>
-                                    <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 col-xl-3">
-                                        <label for="example3">
-                                            Polo:
-                                        </label>
-                                        <select multiple class=" form-control select2" id="polo" name="polo[]">
-                                            <?php 
-                                            $sql="SELECT distinct(CENTRO_RESULTADO) as CENTRO_RESULTADO
-                                                  FROM movimento_veiculos";
-                                            $sql = $db->query($sql);
-                                            $dados = $sql->fetchAll();
-
-                                            foreach ($dados as $quantidade){
-                                                echo "<option>".$quantidade['CENTRO_RESULTADO']."</option>"; 
-                                            } 
-                                            ?>
-
-                                        </select>
-
-                                    </div>
-
-                                    <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 col-xl-3">
-                                        <label for="example4">
-                                            Equipe:
-                                        </label>
-                                        <select multiple class=" form-control select2" id="equipe" name="equipe[]">
-                                            <?php 
-                                            $sql="SELECT distinct(CENTRO_CUSTO) as CENTRO_CUSTO
-                                                  FROM movimento_veiculos";
-                                            $sql = $db->query($sql);
-                                            $dados = $sql->fetchAll();
-
-                                            foreach ($dados as $quantidade){
-                                                echo "<option>".$quantidade['CENTRO_CUSTO']."</option>"; 
-                                            } 
-
-                                            ?>
-                                        </select>
-                                    </div>
-
-                                    <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 col-xl-3">
-                                        <label for="example5">
-                                            Veiculo - motorista:
-                                        </label>
-                                        <select multiple class=" form-control select2" id="veiculo" name="veiculo[]">
-                                            <?php 
-                                            $sql="SELECT distinct(PLACA_VEICULO) as PLACA_VEICULO,MOTORISTA
-                                                  FROM movimento_veiculos";
-                                            $sql = $db->query($sql);
-                                            $dados = $sql->fetchAll();
-
-                                            foreach ($dados as $quantidade){
-                                                echo "<option value=".$quantidade['PLACA_VEICULO'].   ">".$quantidade['PLACA_VEICULO']." - ".$quantidade['MOTORISTA']."</option>"; 
-                                            } 
-
-                                            ?>
-                                        </select>
-                                    </div>
-
-                                    <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 col-xl-3">
-                                        <label for="example5">
-                                            Posto:
-                                        </label>
-                                        <select multiple class=" form-control select2" id="posto" name="posto[]">
-
-                                            <?php 
-                                            $sql="SELECT distinct(NOME_POSTO) as NOME_POSTO
-                                                  FROM movimento_veiculos";
-                                            $sql = $db->query($sql);
-                                            $dados = $sql->fetchAll();
-
-                                            foreach ($dados as $quantidade){
-                                                echo "<option>".$quantidade['NOME_POSTO']."</option>"; 
-                                            } 
-
-                                            ?>
-
-                                        </select>
-                                    </div>
-
-                                    <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 col-xl-3">
-                                        <label for="example2">
-
-                                        </label>
-                                        <br>
-                                        <button type="submit" class="btn btn-primary  btn-block"><i class="fa fa-refresh"></i> Atualizar</button>
-                                    </div>
-                                </div>
-                            </form>
                         </div>
 
                         <?php 
@@ -368,6 +243,14 @@ if (iniciaSessao()===true){
 
                         </script>
 
+                        <script>
+                            //código usando jQuery
+                            $(document).ready(function() {
+                                $('.load').hide();
+                            });
+
+                        </script>
+
                         <!-- App js -->
                         <script src="assets/js/pikeadmin.js">
                         </script>
@@ -391,7 +274,7 @@ if (iniciaSessao()===true){
                                     delay: 10,
                                     time: 600
                                 });
-                            });                           
+                            });
 
                         </script>
 
@@ -403,12 +286,13 @@ if (iniciaSessao()===true){
                                 data: {
                                     labels: ["<?php echo extrairMesAnoPorExtenso($dti90);?>",
                                              "<?php echo extrairMesAnoPorExtenso($dti60);?>",
-                                             "<?php echo extrairMesAnoPorExtenso($dti30);?>"],
+                                             "<?php echo extrairMesAnoPorExtenso($dti30);?>"
+                                            ],
                                     datasets: [{
                                         label: 'DIESEL',
-                                        data: [<?php echo $vlrDieselConsolidado90Dias;?>, 
-                                               <?php echo $vlrDieselConsolidado60Dias;?>, 
-                                               <?php echo $vlrDieselConsolidado30Dias;?>
+                                        data: [ <?php echo $vlrDieselConsolidado90Dias;?>, 
+                                               <?php echo $vlrDieselConsolidado60Dias; ?>, 
+                                               <?php echo $vlrDieselConsolidado30Dias; ?>
                                               ],
                                         responsive: true,
                                         fill: false,
@@ -416,8 +300,8 @@ if (iniciaSessao()===true){
                                         borderColor: 'rgba(96,167,0,0.9)',
                                     }, {
                                         label: 'GASOLINA',
-                                        data: [ <?php echo $vlrGasolinaConsolidado90Dias;?>, 
-                                               <?php echo $vlrGasolinaConsolidado60Dias;?>, 
+                                        data: [ <?php echo $vlrGasolinaConsolidado90Dias;?> , 
+                                               <?php echo $vlrGasolinaConsolidado60Dias;?> , 
                                                <?php echo $vlrGasolinaConsolidado30Dias;?>
                                               ],
                                         responsive: true,
@@ -481,21 +365,21 @@ if (iniciaSessao()===true){
                                     labels: [ <?php echo implode(',', $arrayData); ?>],
                                     datasets: [{
                                         label: 'DIESEL',
-                                        data: [ <?php echo implode(',', $arrayVlrDiesel); ?>],
+                                        data: [ <?php echo implode(',', $arrayVlrDiesel);?>],
                                         responsive: true,
                                         fill: false,
                                         backgroundColor: ['rgba(96,167,0,0.9)'],
                                         borderColor: 'rgba(96,167,0,0.9)',
                                     }, {
                                         label: 'GASOLINA',
-                                        data: [ <?php echo implode(',', $arrayVlrGasolina) ?>],
+                                        data: [ <?php echo implode(',', $arrayVlrGasolina)?>],
                                         responsive: true,
                                         fill: false,
                                         backgroundColor: 'rgba(255,167,0,0.9)',
                                         borderColor: ['rgba(255,167,0,0.9)'],
                                     }, {
                                         label: 'ETANOL',
-                                        data: [ <?php echo implode(',', $arrayVlrEtanol) ?>],
+                                        data: [ <?php echo implode(',', $arrayVlrEtanol)?>],
                                         responsive: true,
                                         fill: false,
                                         backgroundColor: 'rgba(78,149,212,0.9)',
@@ -527,7 +411,7 @@ if (iniciaSessao()===true){
                                                 var meta = chartInstance.controller.getDatasetMeta(i);
                                                 meta.data.forEach(function(bar, index) {
                                                     var data = dataset.data[index];
-                                                   // data2 = data.toPrecision(3);
+                                                    // data2 = data.toPrecision(3);
                                                     ctx.fillText(data, bar._model.x - 5, bar._model.y - 15);
                                                 });
                                             });

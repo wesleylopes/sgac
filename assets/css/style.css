@@ -448,6 +448,17 @@ a {
     width: 30vw;
     height: 15hw;
 }
+.load {
+  margin: auto;
+  width: 50%;
+    height: 50%;
+  padding-top: 100px;
+  padding-right: 100px;
+  position: fixed;
+    z-index: 10;
+    
+    
+ }
 
 .navbar-custom {
     background-color: #4980b5;
@@ -1544,8 +1555,6 @@ a.btn:focus {
     background-color: #171515 !important;
 }
 
-
-
 .pull-right {
     float: right;
 }
@@ -1617,11 +1626,16 @@ a.btn:focus {
 }
 
 .widget-messages .message-item .message-item-date {
-    color: #a2a5a7;
-    font-weight: 200;
+    color: #525252;
+    font-weight: 500;
     position: absolute;
-    right: 7px;
-    top: 2px;
+    right: 20px;
+    top: 20px;
+}
+.botao-painel{
+  display:block;
+  color:white;
+
 }
 
 

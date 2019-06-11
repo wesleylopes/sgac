@@ -45,8 +45,14 @@
          
           </ul>
           <a class="active2" href="evolucao-preco.php"><i class="fa fa-fw fa-line-chart"></i><span> EVOLUÇÃO PREÇO</span></a>
-          <a class="active2" href="evolucao-quantidade.php"><i class="fa fa-fw fa fa-tint"></i><span> EVOLUÇÃO QUANTIDADE</span></a>
-          <a class="active2" href="importa.php"><i class="fa fa-fw fa-file-excel-o"></i><span>IMPORTAR DADOS (EXCEL)</span></a>
+          <a class="active2" href="evolucao-quantidade.php"><i class="fa fa-fw fa fa-tint"></i><span> EVOLUÇÃO QUANTIDADE</span></a>          
+          <a href="#"><i class="fa fa-group"></i> <span> IMPORTAR DADOS (EXCEL)</span> <span class="menu-arrow"></span></a>
+          <ul class="list-unstyled">
+            <li><a href="importa-movimento-veiculos.php"><i class="fa fa-fw fa-car"></i>Importação Consumo Combustivel</a></li>
+            <li><a href="importa-cadastro-veiculos.php"><i class="fa fa-fw fa-car"></i>Importação Cadastro de Veículos</a></li>
+           <!-- <li><a href="veiculos.php"><i class="fa fa-fw fa-user"></i>Comparativo</a></li>-->
+         
+          </ul>
         </li>
 
         <li class="submenu">
@@ -67,10 +73,10 @@
           <a href="sair.php"><i class="fa fa-sign-out"></i> <span> SAIR</span></a>
         </li>
 
-        <div class="clearfix">
+        
         </div>
       </ul>
     </div>
   </div>
-  <div class="clearfix"></div>
+  
 </div>

@@ -52,15 +52,6 @@ function virgulatoPonto($value){
     return str_replace(',', '.', $value);
 }
 
-function formataNumero($valor){
-    if ($valor > 1000){
-        $resultado = $valor;
-    } else {
-        $resultado = $valor;        
-    }
-    return $resultado;
-}
-
 function buscaDataHora(){ 
     date_default_timezone_set('America/Sao_Paulo');        
     return date('d/m/Y H:i:s');
@@ -278,7 +269,7 @@ function buscaValorQtCombConsolidado($dataInicial, $dataFinal, $tipoCombustivel,
         $sql.="AND NOME_POSTO IN('$posto')";      
     }
 
-    // echo "TESTE2 <br>".$sql."<br>";
+    //echo "TESTE2 <br>".$sql."<br>";
 
     $sql = $db->query($sql);            
     $movimentoVeiculos = $sql->fetchAll();
@@ -301,12 +292,12 @@ function buscaValorQtCombConsolidado($dataInicial, $dataFinal, $tipoCombustivel,
 } 
 
 
-function buscaValorQtCombCidadeConsolidado($dataInicial, $dataFinal, $tipoCombustivel, $cidade, $polo, $equipe, $veiculo, $posto){        
+function buscaValorQtCombCidadeConsolidado($dataInicial, $dataFinal, $tipoCombustivel, $cidade, $polo, $equipe, $veiculo, $posto,$tipoCombustivelCheck, $tipoVeiculoCheck, $modeloVeiculoCheck){        
     require("conexao.php");           
 
     // Coleta quantidade Total de Combustivel Abatecido de Acordo com os Filtros 
 
-    $sql= "SELECT SUM(FORMAT(QUANTIDADE,0)) as SOMA_QUANTIDADE
+    $sql= "SELECT SUM(QUANTIDADE) as SOMA_QUANTIDADE
            FROM movimento_veiculos b 
 	       WHERE b.PRODUTO like '%$tipoCombustivel%'
            AND DATE(b.DATA_MOVIMENTO) between '$dataInicial' and '$dataFinal'";
@@ -329,9 +320,23 @@ function buscaValorQtCombCidadeConsolidado($dataInicial, $dataFinal, $tipoCombus
 
     }if (isset($posto)&&!$posto==''){    
         $sql.="AND NOME_POSTO IN('$posto')";
+
+    }if (isset($_POST["tpCombustivel"])){
+        $tipoCombustivelCheck  = implode("','", $_POST["tpCombustivel"]);
+        $sql.="AND PRODUTO IN('$tipoCombustivelCheck')";
+
+    }if (isset($_POST["tpVeiculo"])){
+        $tipoVeiculoCheck  = implode("','", $_POST["tpVeiculo"]);
+
+        $sql.="AND PLACA_VEICULO in((select PLACA_VEICULO  from veiculos B where B.TIPO_VEICULO IN('$tipoVeiculoCheck')))";
+
+    }if (isset($_POST["modeloVeiculo"])){
+        $modeloVeiculoCheck  = implode("','", $_POST["modeloVeiculo"]);
+
+        $sql.="AND MODELO_VEICULO IN('$modeloVeiculoCheck')";
     }
 
-    //echo "TESTE <br>".$sql."<br>";
+    // echo "TESTE <br>".$sql."<br>";
 
     $sql = $db->query($sql);            
     $somaQuantidades = $sql->fetchAll(); 
@@ -371,7 +376,20 @@ function buscaValorQtCombCidadeConsolidado($dataInicial, $dataFinal, $tipoCombus
         $sql.="AND PLACA_VEICULO IN('$veiculo')"; 
 
     }if (isset($posto)&&!$posto==''){    
-        $sql.="AND NOME_POSTO IN('$posto')";      
+        $sql.="AND NOME_POSTO IN('$posto')";  
+
+    }if (isset($_POST["tpCombustivel"])){
+        $tipoCombustivelCheck  = implode("','", $_POST["tpCombustivel"]);
+        $sql.="AND PRODUTO IN('$tipoCombustivelCheck')";
+
+    }if (isset($_POST["tpVeiculo"])){
+        $tipoVeiculoCheck  = implode("','", $_POST["tpVeiculo"]);
+        $sql.="AND PLACA_VEICULO in((select PLACA_VEICULO  from veiculos B where B.TIPO_VEICULO IN('$tipoVeiculoCheck')))";
+
+    }if (isset($_POST["modeloVeiculo"])){
+        $modeloVeiculoCheck  = implode("','", $_POST["modeloVeiculo"]);
+
+        $sql.="AND MODELO_VEICULO IN('$modeloVeiculoCheck')";
     }
 
     // echo "TESTE2 <br>".$sql."<br>";
@@ -380,7 +398,7 @@ function buscaValorQtCombCidadeConsolidado($dataInicial, $dataFinal, $tipoCombus
     $movimentoVeiculos = $sql->fetchAll();
 
     $somaValorCombustivel=0; 
-    //Soma a kilometragem do registro atual com o total acumulado
+    // Soma a kilometragem do registro atual com o total acumulado
     foreach ($movimentoVeiculos as $movimentoVeiculo){  
         $peso = ($movimentoVeiculo['QUANTIDADE'] / $quantidadetotal);
         $somaValorCombustivel = $somaValorCombustivel + ($movimentoVeiculo['VALOR_UNITARIO'] * $peso) ;
@@ -397,8 +415,10 @@ function buscaValorQtCombCidadeConsolidado($dataInicial, $dataFinal, $tipoCombus
     }       
 } 
 
-function buscaValorQtCombPostoConsolidado($dataInicial, $dataFinal, $tipoCombustivel, $cidade, $polo, $equipe, $veiculo, $posto){        
-    require("conexao.php");  
+function buscaValorQtCombPostoConsolidado($dataInicial,$dataFinal,$tipoCombustivel,$cidade,$polo,$equipe,$veiculo,$posto,$tipoCombustivelCheck, $tipoVeiculo,$modeloVeiculo){        
+    require("conexao.php"); 
+    $quantidadetotal = 0 ;
+    $peso = 0;
 
     // Coleta quantidade Total de Combustivel Abatecido de Acordo com os Filtros 
 
@@ -423,10 +443,17 @@ function buscaValorQtCombPostoConsolidado($dataInicial, $dataFinal, $tipoCombust
     }if (isset($veiculo)&&!$veiculo==''){
         $sql.="AND PLACA_VEICULO IN('$veiculo')"; 
 
-    }
-
-    if (isset($cidade) && !$cidade==''){
+    }if (isset($cidade) && !$cidade==''){
         $sql.= "AND CIDADE IN ('$cidade')";
+
+    }if (isset($tipoCombustivelCheck) && !$tipoCombustivelCheck==''){
+        $sql.= "AND PRODUTO IN ('$tipoCombustivelCheck')";
+
+    }if (isset($modeloVeiculo) && !$modeloVeiculo==''){
+        $sql.= "AND MODELO_VEICULO IN ('$modeloVeiculo')";
+
+    }if (isset($tipoVeiculo) && !$tipoVeiculo==''){
+        $sql.="AND PLACA_VEICULO in((select PLACA_VEICULO  from veiculos B where B.TIPO_VEICULO IN('$tipoVeiculo')))";
     }
     // echo "TESTE <br>".$sql."<br>";
 
@@ -444,7 +471,7 @@ function buscaValorQtCombPostoConsolidado($dataInicial, $dataFinal, $tipoCombust
 
     $sql= "SELECT DISTINCT(NOME_POSTO),
             VALOR_UNITARIO,
-            QUANTIDADE,
+          QUANTIDADE as QUANTIDADE,
             DATA_MOVIMENTO,
             CENTRO_RESULTADO,
             PRODUTO,
@@ -481,7 +508,7 @@ function buscaValorQtCombPostoConsolidado($dataInicial, $dataFinal, $tipoCombust
     $somaValorCombustivel=0; 
     //Soma a kilometragem do registro atual com o total acumulado
     foreach ($movimentoVeiculos as $movimentoVeiculo){  
-        $peso = ($movimentoVeiculo['QUANTIDADE'] / $quantidadetotal);
+        $peso = ( $movimentoVeiculo['QUANTIDADE'] / $quantidadetotal);
         $somaValorCombustivel = $somaValorCombustivel + ($movimentoVeiculo['VALOR_UNITARIO'] * $peso) ;
 
     }
@@ -490,7 +517,7 @@ function buscaValorQtCombPostoConsolidado($dataInicial, $dataFinal, $tipoCombust
             'NOME_POSTO' =>  $posto,
             'VALOR_COMBUSTIVEL'      => number_format($somaValorCombustivel,2), 
             'TIPO_COMBUSTIVEL_BUSCA' => $tipoCombustivel,
-            'QUANTIDADE_LITROS'      => number_format($somaQuantidade['SOMA_QUANTIDADE'],2,'.',''),
+            'QUANTIDADE_LITROS'      => $somaQuantidade['SOMA_QUANTIDADE'],
             'CIDADE'                 => $cidade1
 
         );
@@ -634,7 +661,7 @@ function buscaInformacoesEquipeConsolidado($dataInicial, $dataFinal, $cidade, $p
     }
 
     $kmLitro = ( $distanciaTotal / $quantidadetotal );
-    
+
     $custoCombustivelKm = ($somaValorCombustivel / $kmLitro) ;
 
 
@@ -683,7 +710,7 @@ function buscaInformacoesVeiculoConsolidado($dataInicial, $dataFinal, $cidade, $
     if (isset($tipoCombustivel) && !$tipoCombustivel==''){
         $sql.= "AND PRODUTO IN ('$tipoCombustivel')";
     }
-    
+
     if (isset($modeloVeiculo) && !$modeloVeiculo==''){
         $sql.= "AND MODELO_VEICULO IN ('$modeloVeiculo')";
 
@@ -738,14 +765,14 @@ function buscaInformacoesVeiculoConsolidado($dataInicial, $dataFinal, $cidade, $
         $sql.= "AND MODELO_VEICULO IN ('$modeloVeiculo')";
 
     }
-    
+
     if (isset($tipoCombustivel) && !$tipoCombustivel==''){
         $sql.= "AND PRODUTO IN ('$tipoCombustivel')";
 
     }
 
     if (isset($tipoVeiculo) && !$tipoVeiculo==''){
-       $sql.="AND PLACA_VEICULO in((select PLACA_VEICULO  from veiculos B where B.TIPO_VEICULO IN('$tipoVeiculo')))";
+        $sql.="AND PLACA_VEICULO in((select PLACA_VEICULO  from veiculos B where B.TIPO_VEICULO IN('$tipoVeiculo')))";
     }
     //echo "TESTE2 <br>".$sql."<br>";
 
@@ -811,7 +838,7 @@ function buscaInformacoesVeiculoConsolidado($dataInicial, $dataFinal, $cidade, $
     if (isset($tipoCombustivel) && !$tipoCombustivel==''){
         $sql.= "AND PRODUTO IN ('$tipoCombustivel')";
     }
-    
+
     if (isset($modeloVeiculo) && !$modeloVeiculo==''){
         $sql.= "AND MODELO_VEICULO IN ('$modeloVeiculo')";
 
@@ -838,7 +865,7 @@ function buscaInformacoesVeiculoConsolidado($dataInicial, $dataFinal, $cidade, $
 
     $kmLitro = ( $distanciaTotal / $quantidadetotal ); 
 
-    $kmLitroAcrescimo = $rendimentoCombustivel + ($rendimentoCombustivel * 0.05);    
+    $kmLitroAcrescimo = $rendimentoCombustivel - ($rendimentoCombustivel * 0.05);    
 
 
     if ($kmLitroAcrescimo > $kmLitro){
@@ -1053,9 +1080,9 @@ function buscaAnomalias($dataInicial, $dataFinal, $cidade, $polo, $equipe, $veic
 function buscaValorQtdtransacoes($dataInicial,$dataFinal){        
     require("conexao.php");           
 
-    $sql= "SELECT count(*)         AS QTD_TRANSACOES, 
-          Format (Sum(valor_total), 2) AS VALOR_TRANSACOES,
-          Format (Sum(quantidade), 2) AS QUANTIDADE_LITROS 
+    $sql= "SELECT count(*)+1 AS QTD_TRANSACOES, 
+          Sum(valor_total) AS VALOR_TRANSACOES,
+          Sum(quantidade) AS QUANTIDADE_LITROS 
    FROM   movimento_veiculos a 
    WHERE Date(a.data_movimento) BETWEEN '$dataInicial' AND '$dataFinal'"; 
 
@@ -1065,19 +1092,18 @@ function buscaValorQtdtransacoes($dataInicial,$dataFinal){
     foreach ($dados as $quantidade){
         return array(
             'QTD_TRANSACOES'             => $quantidade['QTD_TRANSACOES'],
-            'VALOR_TRANSACOES'           => $quantidade['VALOR_TRANSACOES'], 
-            'QUANTIDADE_LITROS'           => $quantidade['QUANTIDADE_LITROS']
+            'VALOR_TRANSACOES'           => number_format($quantidade['VALOR_TRANSACOES'],2,',','.'), 
+            'QUANTIDADE_LITROS'           => number_format($quantidade['QUANTIDADE_LITROS'],0,',','.')
         );             
     }
 } 
 
-function buscaQtdMotoristas(){        
+function buscaQtdMotoristas($dataInicial,$dataFinal){        
     require("conexao.php");    
 
     $sql= "select count(distinct(MOTORISTA)) as QTD_MOTORISTAS
-          from movimento_veiculos a where 
-          a.CENTRO_RESULTADO in( SELECT DISTINCT(CENTRO_RESULTADO ) FROM movimento_veiculos a 
-                                                    WHERE CENTRO_RESULTADO NOT IN('PIAUI','GOIAS'))";
+          from movimento_veiculos a
+   WHERE Date(a.data_movimento) BETWEEN '$dataInicial' AND '$dataFinal'";  
     /*   
     echo $sql;
     echo "<br>";
@@ -1092,10 +1118,11 @@ function buscaQtdMotoristas(){
     }
 } 
 
-function buscaQtdVeiculos(){        
+function buscaQtdVeiculos($dataInicial,$dataFinal){        
     require("conexao.php");    
 
-    $sql= "select count(*) as QTD_VEICULOS_ATIVOS from veiculos a WHERE a.STATUS = 'Ativo'";
+    $sql= "SELECT COUNT(DISTINCT(PLACA_VEICULO)) AS QTD_VEICULOS_ATIVOS FROM movimento_veiculos a
+   WHERE Date(a.data_movimento) BETWEEN '$dataInicial' AND '$dataFinal'";  
 
     $sql = $db->query($sql); 
     $dados= $sql->fetchAll(); 
@@ -1106,7 +1133,9 @@ function buscaQtdVeiculos(){
 
     unset($sql);
 
-    $sql= "select count(*)  AS  QTD_VEICULOS_CADASTRADOS  from veiculos";
+    $sql= " select count(*) as QTD_VEICULOS_CADASTRADOS from veiculos a WHERE a.STATUS = 'Ativo'"; 
+
+    //and a.PLACA_VEICULO in ( select distinct(PLACA_VEICULO) from movimento_veiculos b where Date(b.data_movimento) BETWEEN '$dataInicial' AND '$dataFinal')";    
 
     $sql = $db->query($sql); 
     $dados= $sql->fetchAll(); 
@@ -1120,6 +1149,18 @@ function buscaQtdVeiculos(){
         'QTD_VEICULOS_CADASTRADOS'      => $qtdVeiculosCadastrados
     );   
 } 
+
+function buscaCondutoresMaiordespesa($dataInicial,$dataFinal){        
+    require("conexao.php");    
+
+
+
+    return array(
+        'QTD_VEICULOS_ATIVOS'           => $qtdVeiculosAtivos,
+        'QTD_VEICULOS_CADASTRADOS'      => $qtdVeiculosCadastrados
+    );   
+} 
+
 
 function extrairMesAnoPorExtenso($data){   
     setlocale(LC_ALL, "pt_BR", "pt_BR.iso-8859-1", "pt_BR.utf-8","Portuguese_Brazilian","Portuguese_Brazil");
@@ -1137,5 +1178,17 @@ function retornaValorChecado($chave,$array){
     }    
 }
 
+function formataNumero($valor){    
+    $valorFormatado = number_format($valor,2,',','.');
+    return $valorFormatado;
+}
 
+function limpaCPF_CNPJ_PLACA($valor){
+    $valor = trim($valor);
+    $valor = str_replace(".", "", $valor);
+    $valor = str_replace(",", "", $valor);
+    $valor = str_replace("-", "", $valor);
+    $valor = str_replace("/", "", $valor);    
+    return $valor;
 
+}

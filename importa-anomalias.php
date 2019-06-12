@@ -66,24 +66,21 @@ if (isset($_SESSION['ID'])==false){
         <!-- End Barra Menu Lateral Esquerdo -->
 
         <div class="content-page">
-
             <!-- Start content -->
             <div class="content">
 
                 <div class="container-fluid">
-
                     <div class="row">
                         <div class="col-xl-12">
                             <div class="breadcrumb-holder">
-                                <h1 class="main-title float-left">Atualizacão da Base de Dados - Cadastro de Veículos</h1>
+                                <h1 class="main-title float-left">Atualizacão da Base de Dados - Anomalias</h1>
                                 <ol class="breadcrumb float-right">
                                     <li class="breadcrumb-item">Analise de Combustiveis </li>
-                                    <li class="breadcrumb-item active">Veículos</li>
+                                    <li class="breadcrumb-item active">Anomalias</li>
                                 </ol>
                                 <div class="clearfix"></div>
                             </div>
                         </div>
-
                     </div>
                 </div>
             </div>
@@ -94,7 +91,7 @@ if (isset($_SESSION['ID'])==false){
                     <div class="row">
                         <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-12">
                             <div class="card-footer small text-muted">
-            <?php $arrayMensagem = verificaAtualizacaoPeriodoDadosSistema(); ?>
+                                    <?php $arrayMensagem = verificaAtualizacaoPeriodoDadosSistema(); ?>
                                 <br>
                                 <span class="text-red"> A base de Dados Possui Registros de
                                     <?php echo $arrayMensagem['MOVIMENTO_INICIAL']?> á <?php echo $arrayMensagem['MOVIMENTO_FINAL']?> </span>
@@ -105,9 +102,9 @@ if (isset($_SESSION['ID'])==false){
                             <br>
                             <div class="card mb-3">
                                 <div class="card-header">
-                                    <i class="fa fa-upload"></i> Selecione o Arquivo (lstCadastroVeiculo.xls) para upload e clique no botão "Enviar" para atualizar a base de Dados.
+                                    <i class="fa fa-upload"></i> Selecione o Arquivo (lstAnomalia.xls) para upload e clique no botão "Enviar" para atualizar a base de Dados.
 
-                                    <form class="form-group" method="POST" action="upload-cad-veiculos.php" enctype="multipart/form-data">
+                                    <form class="form-group" method="POST" action="upload-anomalias.php" enctype="multipart/form-data">
                                         <br />
                                         Arquivo(Excel) Cadastro de Veiculo:<br><br>
                                         <input type="file" name="excel" /><br /><br />

@@ -1,6 +1,7 @@
 <?php
 require("funcoes.php");
 require("conexao.php");
+
 if (iniciaSessao()===true){ 
     ini_set('max_execution_time', 0); 
 
@@ -37,6 +38,8 @@ if (iniciaSessao()===true){
         <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.16/css/dataTables.bootstrap4.min.css" />
         <!-- END CSS for this page -->
         <link href="assets/plugins/select2/css/select2.min.css" rel="stylesheet" type="text/css" />
+        
+        <link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.7.0/css/all.css' integrity='sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ' crossorigin='anonymous'>
 
     </head>
 
@@ -301,7 +304,7 @@ if (iniciaSessao()===true){
                                             ],
                                     datasets: [{
                                         label: 'DIESEL',
-                                        data: [ <?php echo $vlrDieselConsolidado90Dias;?>, 
+                                        data: [<?php echo $vlrDieselConsolidado90Dias;?>, 
                                                <?php echo $vlrDieselConsolidado60Dias; ?>, 
                                                <?php echo $vlrDieselConsolidado30Dias; ?>
                                               ],
@@ -311,7 +314,7 @@ if (iniciaSessao()===true){
                                         borderColor: 'rgba(96,167,0,0.9)',
                                     }, {
                                         label: 'GASOLINA',
-                                        data: [ <?php echo $vlrGasolinaConsolidado90Dias;?> , 
+                                        data: [<?php echo $vlrGasolinaConsolidado90Dias;?> , 
                                                <?php echo $vlrGasolinaConsolidado60Dias;?> , 
                                                <?php echo $vlrGasolinaConsolidado30Dias;?>
                                               ],
@@ -321,7 +324,7 @@ if (iniciaSessao()===true){
                                         borderColor: ['rgba(255,167,0,0.9)'],
                                     }, {
                                         label: 'ETANOL',
-                                        data: [ <?php echo $vlrEtanolConsolidado90Dias;?>, 
+                                        data: [<?php echo $vlrEtanolConsolidado90Dias;?>, 
                                                <?php echo $vlrEtanolConsolidado60Dias;?>, 
                                                <?php echo $vlrEtanolConsolidado30Dias;?>
                                               ],
@@ -373,7 +376,7 @@ if (iniciaSessao()===true){
                                 type: 'line',
                                 borderWidth: 20,
                                 data: {
-                                    labels: [ <?php echo implode(',', $arrayData); ?>],
+                                    labels: [<?php echo implode(',', $arrayData); ?>],
                                     datasets: [{
                                         label: 'DIESEL',
                                         data: [ <?php echo implode(',', $arrayVlrDiesel);?>],
@@ -383,14 +386,14 @@ if (iniciaSessao()===true){
                                         borderColor: 'rgba(96,167,0,0.9)',
                                     }, {
                                         label: 'GASOLINA',
-                                        data: [ <?php echo implode(',', $arrayVlrGasolina)?>],
+                                        data: [<?php echo implode(',', $arrayVlrGasolina)?>],
                                         responsive: true,
                                         fill: false,
                                         backgroundColor: 'rgba(255,167,0,0.9)',
                                         borderColor: ['rgba(255,167,0,0.9)'],
                                     }, {
                                         label: 'ETANOL',
-                                        data: [ <?php echo implode(',', $arrayVlrEtanol)?>],
+                                        data: [<?php echo implode(',', $arrayVlrEtanol)?>],
                                         responsive: true,
                                         fill: false,
                                         backgroundColor: 'rgba(78,149,212,0.9)',
@@ -422,7 +425,7 @@ if (iniciaSessao()===true){
                                                 var meta = chartInstance.controller.getDatasetMeta(i);
                                                 meta.data.forEach(function(bar, index) {
                                                     var data = dataset.data[index];
-                                                    // data2 = data.toPrecision(3);
+                                                    data2 = data.toPrecision(3);
                                                     ctx.fillText(data, bar._model.x - 5, bar._model.y - 15);
                                                 });
                                             });

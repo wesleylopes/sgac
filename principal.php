@@ -39,6 +39,7 @@ if (iniciaSessao()===true){
         <!-- BEGIN CSS for this page -->
         <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.16/css/dataTables.bootstrap4.min.css" />
         <!-- END CSS for this page -->
+        <link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.7.0/css/all.css' integrity='sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ' crossorigin='anonymous'>
 
     </head>
 
@@ -100,9 +101,10 @@ if (iniciaSessao()===true){
                                 </div>
 
                                 <div class="row">
-                                    <div class="col-xs-12 col-md-6 col-lg-6 col-xl-6">
+                                    <div class="col-xs-12 col-md-6 col-lg-4 col-xl-4"> 
+                                       <?php echo buscaDataHoraFormatoBD(); ?>                                   
                                         <div class="card-box noradius noborder bg-success">
-                                            <i class="fa fa-exchange float-right text-white"></i>
+                                            <i class="fas fa-exchange-alt float-right text-white"></i>
                                             <h6 class="text-white text-uppercase m-b-10">Transações no PERÍODO</h6>
                                             <span class="text-white">Quantidade</span>
                                             <h4 class="m-b-20 text-white "><?php echo buscaValorQtdtransacoes($dti,$dtf)['QTD_TRANSACOES']?></h4>
@@ -111,7 +113,7 @@ if (iniciaSessao()===true){
                                             <span class="text-white">Litragem</span>
                                             <h4 class="m-b-20 text-white "><?php echo buscaValorQtdtransacoes($dti,$dtf)['QUANTIDADE_LITROS']?></h4>
                                             <span class="text-white">Analise de Combustivel</span>
-                                            <button class="btn botao-painel float-right"><a class="text-white" href="detalhe.php?busca=abastecimento">Ver Mais..</a></button>
+                                            <button class="btn botao-painel float-right"><a class="text-white" href="detalhe.php?busca=transacoes">Ver Mais..</a></button>
                                         </div>
 
                                     </div>

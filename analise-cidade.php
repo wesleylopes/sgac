@@ -37,6 +37,8 @@ if (iniciaSessao()===true){
     <!-- END CSS for this page -->
 
     <link href="assets/plugins/select2/css/select2.min.css" rel="stylesheet" type="text/css" />
+    
+    <link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.7.0/css/all.css' integrity='sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ' crossorigin='anonymous'>
 
 </head>
 
@@ -93,8 +95,6 @@ if (iniciaSessao()===true){
                             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
                                 <?php require_once ("front-end/form-pesquisa-padrao.php"); ?>
                             </div>
-
-
                             <?php
                                 $cidadeCheck='';
                                 $poloCheck='';

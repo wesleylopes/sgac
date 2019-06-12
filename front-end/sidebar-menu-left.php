@@ -4,7 +4,7 @@
     <div id="sidebar-menu">
       <ul>
         <li class="submenu">
-          <a class="active" href="index.php"><i class="fa fa-fw fa-tachometer"></i><span> VISÃO GERAL </span> </a>
+          <a class="active" href="index.php"><i class="fas fa-tachometer-alt"></i><span> VISÃO GERAL </span> </a>
           <a href="#"><i class="fa fa-filter"></i> <span> FILTROS / PESQUISAR</span> <span class="menu-arrow"></span></a>
           <ul class="list-unstyled">
             <li>
@@ -48,9 +48,9 @@
           <a class="active2" href="evolucao-quantidade.php"><i class="fa fa-fw fa fa-tint"></i><span> EVOLUÇÃO QUANTIDADE</span></a>          
           <a href="#"><i class="fa fa-group"></i> <span> IMPORTAR DADOS (EXCEL)</span> <span class="menu-arrow"></span></a>
           <ul class="list-unstyled">
-            <li><a href="importa-movimento-veiculos.php"><i class="fa fa-fw fa-car"></i>Importação Consumo Combustivel</a></li>
+            <li><a href="importa-movimento-veiculos.php"><i class="fas fa-gas-pump"></i>Importação Consumo Combustivel</a></li>
             <li><a href="importa-cadastro-veiculos.php"><i class="fa fa-fw fa-car"></i>Importação Cadastro de Veículos</a></li>
-           <!-- <li><a href="veiculos.php"><i class="fa fa-fw fa-user"></i>Comparativo</a></li>-->
+            <li><a href="importa-anomalias.php"><i class="fa fa-warning"></i>Importação de Anomalias</a></li>
          
           </ul>
         </li>
@@ -65,12 +65,12 @@
         </li>
 
         <li class="submenu">
-          <a href="#"><i class="fa fa-wpforms"></i> <span> RELATÓRIOS</span> <span class="menu-arrow"></span></a>
+          <a href="#"><i class="far fa-file-alt"></i> <span> RELATÓRIOS</span> <span class="menu-arrow"></span></a>
 
         </li>
 
         <li class="submenu">
-          <a href="sair.php"><i class="fa fa-sign-out"></i> <span> SAIR</span></a>
+          <a href="sair.php"><i class="fa fa-window-close"></i> <span> SAIR</span></a>
         </li>
 
         

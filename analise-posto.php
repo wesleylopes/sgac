@@ -37,6 +37,8 @@ if (iniciaSessao()===true){
         <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.16/css/dataTables.bootstrap4.min.css" />
         <!-- END CSS for this page -->
         <link href="assets/plugins/select2/css/select2.min.css" rel="stylesheet" type="text/css" />
+        
+        <link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.7.0/css/all.css' integrity='sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ' crossorigin='anonymous'>
 
 
     </head>

@@ -111,7 +111,7 @@ if (iniciaSessao()===true){
                                             <span class="text-white">Litragem</span>
                                             <h4 class="m-b-20 text-white "><?php echo buscaValorQtdtransacoes($dti,$dtf)['QUANTIDADE_LITROS']?></h4>
                                             <span class="text-white">Analise de Combustivel</span>
-                                            <button class="btn botao-painel float-right">Ver Mais..</button>
+                                            <button class="btn botao-painel float-right"><a class="text-white" href="detalhe.php?busca=abastecimento">Ver Mais..</a></button>
                                         </div>
 
                                     </div>
@@ -134,7 +134,7 @@ if (iniciaSessao()===true){
                                             <h6 class="text-white text-uppercase m-b-10">RESUMO MOTORISTAS</h6>
                                             <span class="text-white">Ativos</span>
                                             <h4 class="m-b-20 text-white counter"><?php echo $qtdMotoristas ?></h4>
-                                            <span class="text-white">Motoristas que Abasteceram</span>
+                                            <span class="text-white">Motoristas que Abasteceram no periodo</span>
                                         </div>
                                     </div>
                                 </div>

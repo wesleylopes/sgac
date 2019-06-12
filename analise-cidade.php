@@ -124,6 +124,7 @@ if (iniciaSessao()===true){
                             }if (isset($_POST["veiculo"])){
                                 $veiculoCheck  = implode("','", $_POST["veiculo"]);
                                 $sql.="AND PLACA_VEICULO IN('$veiculoCheck')"; 
+                                     
                             }if (isset($_POST["posto"])){
                                 $postoCheck  = implode("','", $_POST["posto"]);
                                 $sql.="AND NOME_POSTO IN('$postoCheck')";

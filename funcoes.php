@@ -199,7 +199,7 @@ function buscaValorQtCombTot($dataInicial,$dataFinal,$tipoCombustivel){
     }   
 }     
 
-function buscaValorQtCombConsolidado($dataInicial, $dataFinal, $tipoCombustivel, $cidade, $polo, $equipe, $veiculo, $posto){        
+function buscaValorQtCombConsolidado($dataInicial, $dataFinal, $tipoCombustivel, $cidade, $polo, $equipe, $veiculo, $VeiculoCheck,$posto,$tipoCombustivelCheck,$tipoVeiculoCheck,$modeloVeiculoCheck){        
     require("conexao.php"); 
 
     $sql= "SELECT SUM(QUANTIDADE) as SOMA_QUANTIDADE
@@ -220,13 +220,21 @@ function buscaValorQtCombConsolidado($dataInicial, $dataFinal, $tipoCombustivel,
 
         $sql.="AND CENTRO_CUSTO IN ('$equipe')";
 
-    }if (isset($veiculo)&&!$veiculo==''){
-        $sql.="AND PLACA_VEICULO IN('$veiculo')"; 
+    }if (isset($veiculoCheck)&&!$veiculoCheck==''){
+        $sql.="AND PLACA_VEICULO IN('$veiculoCheck')"; 
 
-    }
+    }if (isset($cidade) && !$cidade==''){
+        $sql.= "AND CIDADE IN ('$cidade')"; 
+    
+    }if (isset($tipoCombustivelCheck) && !$tipoCombustivelCheck==''){
+        $sql.="AND PRODUTO IN('$tipoCombustivelCheck')";
 
-    if (isset($cidade) && !$cidade==''){
-        $sql.= "AND CIDADE IN ('$cidade')";
+    }if (isset($tipoVeiculoCheck) && !$tipoVeiculoCheck==''){
+        $sql.="AND PLACA_VEICULO in((select PLACA_VEICULO  from veiculos B where B.TIPO_VEICULO IN('$tipoVeiculoCheck')))";
+
+    }if (isset($modeloVeiculoCheck) && !$$modeloVeiculoCheck==''){
+
+        $sql.="AND MODELO_VEICULO IN('$modeloVeiculoCheck')";
     }
     //echo "TESTE <br>".$sql."<br>";
 
@@ -262,11 +270,21 @@ function buscaValorQtCombConsolidado($dataInicial, $dataFinal, $tipoCombustivel,
 
         $sql.="AND CENTRO_CUSTO IN ('$equipe')";
 
-    }if (isset($veiculo)&&!$veiculo==''){
-        $sql.="AND PLACA_VEICULO IN('$veiculo')"; 
+    }if (isset($veiculoCheck)&&!$veiculoCheck==''){
+        $sql.="AND PLACA_VEICULO IN('$veiculoCheck')"; 
 
     }if (isset($posto)&&!$posto==''){    
         $sql.="AND NOME_POSTO IN('$posto')";      
+    }
+    if (isset($tipoCombustivelCheck) && !$tipoCombustivelCheck==''){
+        $sql.="AND PRODUTO IN('$tipoCombustivelCheck')";
+
+    }if (isset($tipoVeiculoCheck) && !$tipoVeiculoCheck==''){
+        $sql.="AND PLACA_VEICULO in((select PLACA_VEICULO  from veiculos B where B.TIPO_VEICULO IN('$tipoVeiculoCheck')))";
+
+    }if (isset($modeloVeiculoCheck) && !$$modeloVeiculoCheck==''){
+
+        $sql.="AND MODELO_VEICULO IN('$modeloVeiculoCheck')";
     }
 
     //echo "TESTE2 <br>".$sql."<br>";

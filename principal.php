@@ -140,7 +140,7 @@ if (iniciaSessao()===true){
                                 </div>
 
                                 <div class="row">
-                                    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-12">
+                                    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-12 col-xl-12">
                                         <div class="card mb-3">
                                             <div class="card-body">
                                             </div>
@@ -149,12 +149,12 @@ if (iniciaSessao()===true){
                                     </div>
                                     <hr>
 
-                                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6 col-xl-4">
+                                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6 col-xl-6">
                                         <div class="card mb-3">
                                             <div class="card-header">
-                                                <h5><i class="fa fa-money"></i> 10 ÚLTIMOS VEICULOS ABASTECIDOS</h5>
+                                                <h5><i class="fa fa-tint"></i> 10 ÚLTIMOS VEICULOS ABASTECIDOS</h5>
                                                 
-                                                Baseado na data de abastecimento e ultima data de carga de dados
+                                                Baseado na ultima data de carga de dados e filtros.
                                             </div>
 
                                             <div class="card-body">
@@ -164,12 +164,12 @@ if (iniciaSessao()===true){
                                                  $sql= "SELECT  
                                              distinct(b.PLACA_VEICULO) as PLACA,
                                            A.MODELO_VEICULO MOD_VEICULO,
-   A.FABRICANTE_VEICULO AS MARCA,
-   A.VALOR_TOTAL AS VALOR,
-   A.QUANTIDADE AS QUANTIDADE1,
-   date_format(str_to_date(Date(a.data_movimento), '%Y-%m-%d '), '%d/%m/%Y') AS DATA_ABASTECIMENTO
- FROM movimento_veiculos a INNER JOIN veiculos B ON ( A.PLACA_VEICULO = B.PLACA_VEICULO) 
- AND Date(a.data_movimento) BETWEEN '$dti' AND '$dtf' ORDER BY a.data_movimento DESC LIMIT 10";  
+                                           A.FABRICANTE_VEICULO AS MARCA,
+                                               A.VALOR_TOTAL AS VALOR,
+                                               A.QUANTIDADE AS QUANTIDADE1,
+                                               date_format(str_to_date(Date(a.data_movimento), '%Y-%m-%d '), '%d/%m/%Y') AS DATA_ABASTECIMENTO
+                                             FROM movimento_veiculos a INNER JOIN veiculos B ON ( A.PLACA_VEICULO = B.PLACA_VEICULO) 
+                                             AND Date(a.data_movimento) BETWEEN '$dti' AND '$dtf' ORDER BY a.data_movimento DESC LIMIT 10";  
                                                  
                                                 $sql = $db->query($sql); 
                                                 $dados= $sql->fetchAll(); 
@@ -194,27 +194,27 @@ if (iniciaSessao()===true){
                                         </div><!-- end card-->
                                     </div>  
                                     
-                                     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6 col-xl-4">
+                                     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6 col-xl-6">
                                         <div class="card mb-3">
                                             <div class="card-header">
                                                 <h5><i class="fa fa-money"></i> 10 CONDUTORES COM MAIOR DESPESA </h5>
-                                                Baseado no total em R$.
+                                                Baseado no total em R$  e filtros de periodo.
                                             </div>
 
                                             <div class="card-body">
 
                                                 <div class="widget-messages nicescroll" style="height: 400px;">
                                                     <?php   
-                                                 $sql= "SELECT MOTORISTA,
-                                                 B.TIPO_VEICULO as TP_VEICULO,
-                                                 A.MODELO_VEICULO as MOD_VEICULO,
-                                                 ROUND(SUM(a.VALOR_TOTAL),2) AS VALOR,
-                                                 A.CENTRO_RESULTADO AS C_RESULTADO FROM 
-                                                 sgacbase.movimento_veiculos a  
-                                                 INNER JOIN veiculos B ON ( A.PLACA_VEICULO = B.PLACA_VEICULO)
-                                                 AND Date(a.data_movimento) BETWEEN '$dti' AND '$dtf'
-                                                 GROUP BY A.MOTORISTA
-                                                 ORDER BY VALOR DESC LIMIT 10";  
+                                                     $sql= "SELECT MOTORISTA,
+                                                     B.TIPO_VEICULO as TP_VEICULO,
+                                                     A.MODELO_VEICULO as MOD_VEICULO,
+                                                     ROUND(SUM(a.VALOR_TOTAL),2) AS VALOR,
+                                                     A.CENTRO_RESULTADO AS C_RESULTADO FROM 
+                                                     sgacbase.movimento_veiculos a  
+                                                     INNER JOIN veiculos B ON ( A.PLACA_VEICULO = B.PLACA_VEICULO)
+                                                     AND Date(a.data_movimento) BETWEEN '$dti' AND '$dtf'
+                                                     GROUP BY A.MOTORISTA
+                                                     ORDER BY VALOR DESC LIMIT 10";  
                                                  
                                                 $sql = $db->query($sql); 
                                                 $dados= $sql->fetchAll(); 
@@ -237,21 +237,7 @@ if (iniciaSessao()===true){
                                             <button class="btn botao-painel float-right btn-link"><a href="detalhe.php?busca=condutores">Ver Mais..</a></button>
                                             <div class="card-footer small text-muted">Atualizado Hoje</div>
                                         </div><!-- end card-->
-                                    </div>   
-                                   
-                                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-4">
-                                        <div class="card mb-3">
-                                            <div class="card-header">
-                                                <h3><i class="fa fa-line-chart"></i> Consumo por tipo de Combustivel</h3>
-                                                Baseado na data de abastecimento
-                                            </div>
-
-                                            <div class="card-body">
-                                                <canvas id="lineChart"></canvas>
-                                            </div>
-                                            <div class="card-footer small text-muted">Atualizado Segunda feira ás 08:59</div>
-                                        </div><!-- end card-->
-                                    </div>
+                                    </div> 
                                 </div>
 
                                 <!-- Start Barra Menu Lateral Esquerdo -->
@@ -606,22 +592,7 @@ if (iniciaSessao()===true){
 
                             </script>
                             <!-- END Java Script for this page -->
-                            <script type="text/javascript">
-                                $('#exampleModal').on('show.bs.modal', function(event) {
-                                    var button = $(event.relatedTarget) // Button that triggered the modal
-                                    var recipient = button.data('whatever') // Extract info from data-* attributes
-                                    var recipientnome = button.data('whatevernome')
-                                    var recipientdetalhes = button.data('whateverdetalhes')
-                                    // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
-                                    // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
-                                    var modal = $(this)
-                                    modal.find('.modal-title').text('ID do Curso: ' + recipient)
-                                    modal.find('#id_curso').val(recipient)
-                                    modal.find('#recipient-name').val(recipientnome)
-                                    modal.find('#detalhes-text').val(recipientdetalhes)
-                                })
-
-                            </script>
+                            
 
                             </body>
 

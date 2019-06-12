@@ -279,10 +279,8 @@ if (iniciaSessao()===true){
                             <br>
 
                         </div>
-                        <div class="card-footer small text-muted"></div>
+                        <div class="card-footer small text-muted"></div>                        
                         <br>
-
-
                     </div>
                     <?php } ?>
                 </div>

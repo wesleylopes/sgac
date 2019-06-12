@@ -109,8 +109,19 @@ if (iniciaSessao()===true){
 
                         }if (isset($_POST["veiculo"])){
                             $veiculoCheck  = implode("','", $_POST["veiculo"]);
+                            
                         }if (isset($_POST["posto"])){
                             $postoCheck  = implode("','", $_POST["posto"]);
+                            
+                        }if (isset($_POST["tpCombustivel"])){
+                            $tipoCombustivelCheck  = implode("','", $_POST["tpCombustivel"]);
+                            
+                        }if (isset($_POST["tpVeiculo"])){
+                            $tipoVeiculoCheck  = implode("','", $_POST["tpVeiculo"]);
+                            
+                        }if (isset($_POST["modeloVeiculo"])){
+                            $modeloVeiculoCheck  = implode("','", $_POST["modeloVeiculo"]);   
+                            
                         }
 
                         $date     = $dti;	        
@@ -130,31 +141,31 @@ if (iniciaSessao()===true){
 
 
                         $vlrGasolinaConsolidado30Dias   = buscaValorQtCombConsolidado($dti30,$dtf30,'GASOLINA',$cidadeCheck,
-                                                                                      $poloCheck, $equipeCheck, $veiculo, $veiculoCheck, $postoCheck)['VALOR_COMBUSTIVEL'];
+                                                                                      $poloCheck, $equipeCheck, $veiculo, $veiculoCheck, $postoCheck,$tipoCombustivelCheck,$tipoVeiculoCheck,$modeloVeiculoCheck)['VALOR_COMBUSTIVEL'];
 
                         $vlrEtanolConsolidado30Dias     = buscaValorQtCombConsolidado($dti30,$dtf30,'ETANOL',$cidadeCheck,
-                                                                                      $poloCheck, $equipeCheck, $veiculo, $veiculoCheck, $postoCheck)['VALOR_COMBUSTIVEL'];
+                                                                                      $poloCheck, $equipeCheck, $veiculo, $veiculoCheck, $postoCheck,$tipoCombustivelCheck,$tipoVeiculoCheck,$modeloVeiculoCheck)['VALOR_COMBUSTIVEL'];
 
                         $vlrDieselConsolidado30Dias     = buscaValorQtCombConsolidado($dti30,$dtf30,'DIESEL',$cidadeCheck,
-                                                                                      $poloCheck, $equipeCheck, $veiculo, $veiculoCheck, $postoCheck)['VALOR_COMBUSTIVEL'];
+                                                                                      $poloCheck, $equipeCheck, $veiculo, $veiculoCheck, $postoCheck,$tipoCombustivelCheck,$tipoVeiculoCheck,$modeloVeiculoCheck)['VALOR_COMBUSTIVEL'];
 
                         $vlrGasolinaConsolidado60Dias   = buscaValorQtCombConsolidado($dti60,$dtf60,'GASOLINA',$cidadeCheck,
-                                                                                      $poloCheck, $equipeCheck, $veiculo, $veiculoCheck, $postoCheck)['VALOR_COMBUSTIVEL'];
+                                                                                      $poloCheck, $equipeCheck, $veiculo, $veiculoCheck, $postoCheck,$tipoCombustivelCheck,$tipoVeiculoCheck,$modeloVeiculoCheck)['VALOR_COMBUSTIVEL'];
 
                         $vlrEtanolConsolidado60Dias     = buscaValorQtCombConsolidado($dti60,$dtf60,'ETANOL',$cidadeCheck,
-                                                                                      $poloCheck, $equipeCheck, $veiculo, $veiculoCheck, $postoCheck)['VALOR_COMBUSTIVEL'];
+                                                                                      $poloCheck, $equipeCheck, $veiculo, $veiculoCheck, $postoCheck,$tipoCombustivelCheck,$tipoVeiculoCheck,$modeloVeiculoCheck)['VALOR_COMBUSTIVEL'];
 
                         $vlrDieselConsolidado60Dias     = buscaValorQtCombConsolidado($dti60,$dtf60,'DIESEL',$cidadeCheck,
-                                                                                      $poloCheck, $equipeCheck, $veiculo, $veiculoCheck, $postoCheck)['VALOR_COMBUSTIVEL'];
+                                                                                      $poloCheck, $equipeCheck, $veiculo, $veiculoCheck, $postoCheck,$tipoCombustivelCheck,$tipoVeiculoCheck,$modeloVeiculoCheck)['VALOR_COMBUSTIVEL'];
 
                         $vlrGasolinaConsolidado90Dias   = buscaValorQtCombConsolidado($dti90,$dtf90,'GASOLINA', $cidadeCheck,
-                                                                                      $poloCheck, $equipeCheck, $veiculo, $veiculoCheck, $postoCheck)['VALOR_COMBUSTIVEL'];
+                                                                                      $poloCheck, $equipeCheck, $veiculo, $veiculoCheck, $postoCheck,$tipoCombustivelCheck,$tipoVeiculoCheck,$modeloVeiculoCheck)['VALOR_COMBUSTIVEL'];
 
                         $vlrEtanolConsolidado90Dias     = buscaValorQtCombConsolidado($dti90,$dtf90,'ETANOL', $cidadeCheck,
-                                                                                      $poloCheck, $equipeCheck, $veiculo, $veiculoCheck, $postoCheck)['VALOR_COMBUSTIVEL'];
+                                                                                      $poloCheck, $equipeCheck, $veiculo, $veiculoCheck, $postoCheck,$tipoCombustivelCheck,$tipoVeiculoCheck,$modeloVeiculoCheck)['VALOR_COMBUSTIVEL'];
 
                         $vlrDieselConsolidado90Dias     = buscaValorQtCombConsolidado($dti90,$dtf90,'DIESEL', $cidadeCheck,
-                                                                                      $poloCheck, $equipeCheck, $veiculo, $veiculoCheck, $postoCheck)['VALOR_COMBUSTIVEL'];
+                                                                                      $poloCheck, $equipeCheck, $veiculo, $veiculoCheck, $postoCheck,$tipoCombustivelCheck,$tipoVeiculoCheck,$modeloVeiculoCheck)['VALOR_COMBUSTIVEL'];
 
 
                         // Verifica se Houve Movimento no dia se não houver Repete o ultimo Preço de Combustivel abastecido.    
@@ -169,13 +180,13 @@ if (iniciaSessao()===true){
                         while (strtotime($date) <= strtotime($end_date)) {
 
                             $vlrGasolinaConsolidado1   = buscaValorQtCombConsolidado($date,$date,'GASOLINA', $cidadeCheck,
-                                                                                     $poloCheck, $equipeCheck, $veiculo, $veiculoCheck, $postoCheck)['VALOR_COMBUSTIVEL'];
+                                                                                     $poloCheck, $equipeCheck, $veiculo, $veiculoCheck, $postoCheck,$tipoCombustivelCheck,$tipoVeiculoCheck,$modeloVeiculoCheck)['VALOR_COMBUSTIVEL'];
 
                             $vlrEtanolConsolidado1     = buscaValorQtCombConsolidado($date,$date,'ETANOL', $cidadeCheck,
-                                                                                     $poloCheck, $equipeCheck, $veiculo, $veiculoCheck, $postoCheck)['VALOR_COMBUSTIVEL'];
+                                                                                     $poloCheck, $equipeCheck, $veiculo, $veiculoCheck, $postoCheck,$tipoCombustivelCheck,$tipoVeiculoCheck,$modeloVeiculoCheck)['VALOR_COMBUSTIVEL'];
 
                             $vlrDieselConsolidado1     = buscaValorQtCombConsolidado($date,$date,'DIESEL', $cidadeCheck,
-                                                                                     $poloCheck, $equipeCheck, $veiculo, $veiculoCheck, $postoCheck)['VALOR_COMBUSTIVEL'];
+                                                                                     $poloCheck, $equipeCheck, $veiculo, $veiculoCheck, $postoCheck,$tipoCombustivelCheck,$tipoVeiculoCheck,$modeloVeiculoCheck)['VALOR_COMBUSTIVEL'];
 
                             $arrayVlrDiesel[]          = verificaVazioPegaVlrAnterior($arrayVlrDiesel,$vlrDieselConsolidado1);  
                             $arrayVlrGasolina[]        = verificaVazioPegaVlrAnterior($arrayVlrGasolina,$vlrGasolinaConsolidado1);  

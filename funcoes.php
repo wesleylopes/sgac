@@ -1163,10 +1163,10 @@ return ucfirst(strftime("%B de %Y", strtotime($data)));
 
 function retornaValorChecado($chave,$array){
 
-  if (in_array(utf8_encode(trim(($chave))),$array)=== true){        
-    return "<option selected>".utf8_encode($chave)."</option>";
+  if (in_array(trim($chave),$array)=== true){        
+    return "<option selected>".$chave."</option>";
   }else{
-        return "<option >".utf8_encode($chave)."</option>";         
+        return "<option >".$chave."</option>";         
     }    
 }
 
@@ -1183,4 +1183,15 @@ function limpaCPF_CNPJ_PLACA($valor){
   $valor = str_replace("/", "", $valor);    
 return $valor;
 
+}
+
+function limpaString($texto) {
+    // matriz de entrada
+    $listaCaracteres = array( 'ä','ã','à','á','â','ê','ë','è','é','ï','ì','í','ö','õ','ò','ó','ô','ü','ù','ú','û','À','Á','É','Í','Ó','Ú','ñ','Ñ','ç','Ç',' ','-','(',')',',',';',':','|','!','"','#','$','%','&','/','=','?','~','^','>','<','ª','º' );
+
+    // matriz de saída
+    $substituirPor = array( 'a','a','a','a','a','e','e','e','e','i','i','i','o','o','o','o','o','u','u','u','u','A','A','E','I','O','U','n','n','c','C','_','_','_','_','_','_','_','_','_','_','_','_','_','_','_','_','_','_','_','_','_','_','_' );
+
+    // devolver a string
+    return str_replace($listaCaracteres, $substituirPor, $texto);
 }

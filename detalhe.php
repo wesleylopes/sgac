@@ -220,6 +220,87 @@ if (iniciaSessao()===true){
                         </div>
 
                         <?php }?>
+                        
+                         <?php  if(($_GET['busca']) ==='transacoes') { 
+                                    ?>
+
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                            <div class="card mb-3">
+                                <div class="card-header">
+                                    <h5><i class="fa fa-money"></i>TRANSAÇÕES</h5>
+                                    Baseado no movimento de Abastecimentos com Cartão .
+                                </div>
+
+                                <div class="card-body">
+                                    <div class="table-responsive">
+                                        <table id="tabela-abastecimento" class="table table-bordered table-hover display">
+                                            <thead>
+                                                <tr>
+                                                    <th>Placa</th>
+                                                    <th>Numero Cartao</th>
+                                                    <th>Data </th>
+                                                    <th>Matricula</th>
+                                                    <th>Tipo Frota</th>
+                                                    <th>Modelo</th>
+                                                    <th>Marca </th>
+                                                    <th>Posto</th>
+                                                    <th>Cidade</th>
+                                                     <th>Produto</th>
+                                                     <th>Distancia</th>
+                                                     <th>Consumo</th>
+                                                    <th>Unidade</th>
+                                                     <th>Hodometro /Horimetro</th>
+                                                     <th>Quantidade</th>
+                                                     <th>Valor Unitario</th>
+                                                    <th>Valor Total</th>
+                                                     <th>Polo</th>
+                                                     <th>Filial</th>
+                                                     <th>Equipe</th>                                                    
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <?php   
+    $sql= " 
+select PLACA_VEICULO, 
+       NUMERO_CARTAO, 
+       DATA_MOVIMENTO, 
+       MATRICULA, 
+       TIPO_FROTA,
+       MODELO_VEICULO,
+       FABRICANTE_VEICULO,
+       NOME_POSTO,
+       CIDADE,
+       PRODUTO,
+       DISTANCIA_PERCORIDA,
+       CONSUMO,
+       UNIDADE_MEDIDA,
+       HODOMETRO_HORIMETRO, QUANTIDADE, VALOR_UNITARIO, VALOR_TOTAL, CENTRO_RESULTADO, FILIAL, CENTRO_CUSTO
+       from movimento_veiculos a where DATE(DATA_MOVIMENTO) between '$dti' and '$dtf' "; 
+    $sql = $db->query($sql); 
+    $dados= $sql->fetchAll(); 
+
+    foreach ($dados as $quantidade){  
+                                                            ?>
+                                                <tr>
+                                                    <td><?php echo utf8_encode($quantidade['PLACA_VEICULO']);?></td>
+                                                    <td><?php echo utf8_encode($quantidade['NUMERO_CARTAO']);?></td>
+                                                    <td><?php echo utf8_encode($quantidade['NUMERO_CARTAO']);?></td>
+                                                    <td><?php echo utf8_encode($quantidade['DATA_MOVIMENTO']);?></td>
+                                                    <td>R$ <?php echo utf8_encode($quantidade['MATRICULA']);?></td>
+                                                    <td><?php echo utf8_encode($quantidade['QUANTIDADE1']);?></td>
+                                                     <td><?php echo utf8_encode($quantidade['DATA_ABASTECIMENTO']);?></td>
+                                                   
+                                                </tr>
+                                                <?php } ?>
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+                                </div>
+                            </div><!-- end card-->
+                        </div>
+
+                        <?php }?>
 
                     </div>
                     <!-- Start Barra Menu Lateral Esquerdo -->

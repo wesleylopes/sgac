@@ -104,7 +104,7 @@ if (iniciaSessao()===true){
                                 <i class="fa fa-filter"></i> FILTROS
                             </div>
 
-                            <div class=" container card mb-3">
+                            <div class=" container-fluid card mb-3">
                                 <form method="POST">
                                     <div class="row">
                                         <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 col-xl-3">
@@ -122,86 +122,7 @@ if (iniciaSessao()===true){
                                             <div class="form-group">
                                                 <input type="date" class="form-control" value="<?php echo $_POST['dataf'];?>" id="InputDataf" name="dataf" placeholder="Data final">
                                             </div>
-                                        </div>
-
-                                        <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 col-xl-3">
-                                            <label for="example3">
-                                                Cidade:
-                                            </label>
-                                            <select multiple class=" form-control select2" id="cidade" name="cidade[]" multiple="cidade">
-                                                <?php 
-                                                    $sql="SELECT distinct(CIDADE) as CIDADE
-                                                  FROM sgacbase.anomalia_siag";
-                                                    $sql = $db->query($sql);
-                                                    $dados = $sql->fetchAll();
-
-                                                    foreach ($dados as $quantidade){
-                                                        echo "<option>".$quantidade['CIDADE']."</option>"; 
-                                                    } 
-
-                                                    ?>
-                                            </select>
-                                        </div>
-
-                                        <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 col-xl-3">
-                                            <label for="example3">
-                                                Polo:
-                                            </label>
-                                            <select multiple class=" form-control select2" id="polo" name="polo[]">
-                                                <?php 
-                                                    $sql="SELECT distinct(CENTRO_CUSTO) as CENTRO_CUSTO
-                                                  FROM sgacbase.anomalia_siag";
-                                                    $sql = $db->query($sql);
-                                                    $dados = $sql->fetchAll();
-
-                                                    foreach ($dados as $quantidade){
-                                                        echo "<option>".$quantidade['CENTRO_CUSTO']."</option>"; 
-                                                    } 
-                                                    ?>
-
-                                            </select>
-
-                                        </div>
-
-                                        <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 col-xl-3">
-                                            <label for="example5">
-                                                Veiculo - motorista:
-                                            </label>
-                                            <select multiple class=" form-control select2" id="veiculo" name="veiculo[]">
-                                                <?php 
-                                                    $sql="SELECT distinct(PLACA_VEICULO) as PLACA_VEICULO,MOTORISTA
-                                                  FROM sgacbase.anomalia_siag";
-                                                    $sql = $db->query($sql);
-                                                    $dados = $sql->fetchAll();
-
-                                                    foreach ($dados as $quantidade){
-                                                        echo "<option value=".$quantidade['PLACA_VEICULO'].   ">".$quantidade['PLACA_VEICULO']."</option>"; 
-                                                    } 
-
-                                                    ?>
-                                            </select>
-                                        </div>
-
-                                        <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 col-xl-3">
-                                            <label for="example5">
-                                                Posto:
-                                            </label>
-                                            <select multiple class=" form-control select2" id="posto" name="posto[]">
-
-                                                <?php 
-                                                    $sql="SELECT distinct(NOME_POSTO) as NOME_POSTO
-                                                  FROM sgacbase.anomalia_siag";
-                                                    $sql = $db->query($sql);
-                                                    $dados = $sql->fetchAll();
-
-                                                    foreach ($dados as $quantidade){
-                                                        echo "<option>".$quantidade['NOME_POSTO']."</option>"; 
-                                                    } 
-
-                                                    ?>
-
-                                            </select>
-                                        </div>
+                                        </div>                                      
 
                                         <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 col-xl-3">
                                             <label for="example2">
@@ -240,7 +161,7 @@ if (iniciaSessao()===true){
                                 $sql .= ' GROUP BY ANOMALIA ORDER BY CONTADOR DESC';
 
 
-                               // echo "TESTE3 <br>".$sql."<br>";
+                                //echo "TESTE3 <br>".$sql."<br>";
 
                                 $sql = $db->query($sql);            
                                 $registros = $sql->fetchAll();                               
@@ -408,14 +329,14 @@ if (iniciaSessao()===true){
 
     <script>
         var ctx1 = document.getElementById("grafico1").getContext('2d');
-        var barChart = new Chart(ctx1, {
+        var barChart1 = new Chart(ctx1, {
             type: 'horizontalBar',
             borderWidth: 30,
             data: {
-                labels: [" <?php echo implode('", "',$arrayAnomalia);?>"],
+                labels: ["<?php echo implode('", "',$arrayAnomalia);?>"],
                 datasets: [{
                     label: 'QUANTIDADE',
-                    data: [" <?php echo implode('", "',$arrayContadorAnomalia);?>"],
+                    data: ["<?php echo implode('", "',$arrayContadorAnomalia);?>"],
                     responsive: true,
                     fill: false,
                     backgroundColor: 'rgba(255,0,0,0.9)',
@@ -442,13 +363,6 @@ if (iniciaSessao()===true){
                         display: true,
                     }]
                 },
-                tooltips: [
-                'Link 1: <a href="http://www.google.com" target="_blank" >Google</a>',
-                'Link 2: <a href="http://www.yahoo.com" target="_blank" >Yahoo</a>',
-                'Link 3: <a href="http://www.bing.com" target="_blank" >Bing</a>',
-                'Link 4: <a href="http://news.bbc.co.uk" target="_blank" >BBC News</a>',
-                'Link 5: <a href="http://www.facebook.com" target="_blank" >Facebook</a>'
-            ],
                 animation: {
                     duration: 1000,
                     onComplete: function() {
@@ -471,30 +385,26 @@ if (iniciaSessao()===true){
                 },
             }
         });
-
-        $(document).ready(
-                function() {
-                    $("#grafico1").click(
-                        function(evt) {
-                            var activePoints = ctx.getSegmentsAtEvent(evt);
-                            var url = "http://example.com/?grid[f][collor][]=" + activePoints[0].filter
-                            alert(url);
-                        }
-                    );
-                });
-
+    </script>
+    
+    <script>
+    document.getElementById("grafico1").onclick = function(evt){
+    var activePoints = barChart1.getElementsAtEvent(evt); 
+        
+    window.location.href='detalhe.php?busca=anomalias&dti=<?php echo $_POST['datai']?>&dtf=<?php echo $_POST['dataf']?>&tipoerro=anomalia&mensagem='+activePoints[0]._view.label;  
+    };
     </script>
 
     <script>
         var ctx1 = document.getElementById("grafico2").getContext('2d');
-        var barChart = new Chart(ctx1, {
+        var barChart2 = new Chart(ctx1, {
             type: 'horizontalBar',
             borderWidth: 30,
             data: {
-                labels: [" <?php echo implode('", "',$arrayAnomaliaMotorista);?>"],
+                labels: ["<?php echo implode('", "',$arrayAnomaliaMotorista);?>"],
                 datasets: [{
                     label: 'QUANTIDADE',
-                    data: [" <?php echo implode('", "',$arrayContadorAnomaliaMotorista);?>"],
+                    data: ["<?php echo implode('", "',$arrayContadorAnomaliaMotorista);?>"],
                     responsive: true,
                     fill: false,
                     backgroundColor: 'rgba(255,0,0,0.9)',
@@ -544,19 +454,30 @@ if (iniciaSessao()===true){
             }
         });
 
+    </script>
+    
+     <script>
+    document.getElementById("grafico2").onclick = function(evt){
+    var activePoints = barChart2.getElementsAtEvent(evt); 
+    
+     window.location.href='detalhe.php?busca=anomalias&dti=<?php echo $_POST['datai']?>&dtf=<?php echo $_POST['dataf']?>&tipoerro=motorista&mensagem='+activePoints[0]._view.label;  
+   
+   
+        
+    };
     </script>
 
 
     <script>
         var ctx1 = document.getElementById("grafico3").getContext('2d');
-        var barChart = new Chart(ctx1, {
+        var barChart3 = new Chart(ctx1, {
             type: 'horizontalBar',
             borderWidth: 30,
             data: {
-                labels: [" <?php echo implode('", "',$arrayAnomaliaVeiculo);?>"],
+                labels: ["<?php echo implode('", "',$arrayAnomaliaVeiculo);?>"],
                 datasets: [{
                     label: 'QUANTIDADE',
-                    data: [" <?php echo implode('", "',$arrayContadorAnomaliaVeiculo);?>"],
+                    data: ["<?php echo implode('", "',$arrayContadorAnomaliaVeiculo);?>"],
                     responsive: true,
                     fill: false,
                     backgroundColor: 'rgba(255,0,0,0.9)',
@@ -606,6 +527,16 @@ if (iniciaSessao()===true){
             }
         });
 
+    </script>
+    
+     <script>
+    document.getElementById("grafico3").onclick = function(evt){
+    var activePoints = barChart3.getElementsAtEvent(evt); 
+    
+     window.location.href='detalhe.php?busca=anomalias&dti=<?php echo $_POST['datai']?>&dtf=<?php echo $_POST['dataf']?>&tipoerro=veiculo&mensagem='+activePoints[0]._view.label; 
+   
+        
+    };
     </script>
 
 

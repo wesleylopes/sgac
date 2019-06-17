@@ -45,6 +45,7 @@ if (iniciaSessao()===true){
 
     <body class="adminbody">
         <div id="main">
+            
 
             <!-- Start  Menu Principal Superior -->
             <?php require_once ("front-end/main-menu-top.php"); ?>
@@ -92,7 +93,7 @@ if (iniciaSessao()===true){
                                             </div>
 
                                             <div class="col">
-                                                <button type="submit" class="btn btn-primary  btn-block"><i class="fa fa-refresh"></i> Atualizar Graficos</button>
+                                                <button type="submit" id ="btn-atualizar-tabela"class="btn btn-primary  btn-block"><i class="fa fa-refresh"></i> Atualizar</button>
                                             </div>
                                         </div>
                                     </form>
@@ -101,19 +102,21 @@ if (iniciaSessao()===true){
                                 </div>
 
                                 <div class="row">
-                                    <div class="col-xs-12 col-md-6 col-lg-4 col-xl-4"> 
-                                       <?php echo buscaDataHoraFormatoBD(); ?>                                   
+                                    <div class="col-xs-12 col-md-6 col-lg-4 col-xl-4">  
                                         <div class="card-box noradius noborder bg-success">
                                             <i class="fas fa-exchange-alt float-right text-white"></i>
                                             <h6 class="text-white text-uppercase m-b-10">Transações no PERÍODO</h6>
                                             <span class="text-white">Quantidade</span>
                                             <h4 class="m-b-20 text-white "><?php echo buscaValorQtdtransacoes($dti,$dtf)['QTD_TRANSACOES']?></h4>
-                                            <span class="text-white">Valor R$</span>
+                                            <span class="text-white">Valor Combustiveis R$</span>
                                             <h4 class="m-b-20 text-white "><?php echo buscaValorQtdtransacoes($dti,$dtf)['VALOR_TRANSACOES']?></h4>
                                             <span class="text-white">Litragem</span>
                                             <h4 class="m-b-20 text-white "><?php echo buscaValorQtdtransacoes($dti,$dtf)['QUANTIDADE_LITROS']?></h4>
+                                            <span class="text-white">Valor Outros R$</span>
+                                            <h4 class="m-b-20 text-white "><?php echo buscaValorQtdtransacoes($dti,$dtf)['VALOR_TRANSACOES']?></h4>
+                                            
                                             <span class="text-white">Analise de Combustivel</span>
-                                            <button class="btn botao-painel float-right"><a class="text-white" href="detalhe.php?busca=transacoes">Ver Mais..</a></button>
+                                            <button class="btn botao-painel float-right"><a class="text-white" href="detalhe.php?busca=transacoes&dti=<?php echo $_POST['datai']?>&dtf=<?php echo $_POST['dataf']?>">Ver Mais..</a></button>
                                         </div>
 
                                     </div>
@@ -132,7 +135,7 @@ if (iniciaSessao()===true){
 
                                     <div class="col-xs-12 col-md-6 col-lg-6 col-xl-3">
                                         <div class="card-box noradius noborder bg-default">
-                                            <i class="fa fa-user-o float-right text-white"></i>
+                                            <i class="fas fa-user float-right text-white"></i>
                                             <h6 class="text-white text-uppercase m-b-10">RESUMO MOTORISTAS</h6>
                                             <span class="text-white">Ativos</span>
                                             <h4 class="m-b-20 text-white counter"><?php echo $qtdMotoristas ?></h4>
@@ -594,6 +597,7 @@ if (iniciaSessao()===true){
 
                             </script>
                             <!-- END Java Script for this page -->
+                            
                             
 
                             </body>

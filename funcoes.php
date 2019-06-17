@@ -20,8 +20,8 @@ function iniciaSessao(){
     ini_set('max_execution_time', 0); 
     //unset($_POST['datai']);
     //unset($_POST['dataif']);
-
-
+ 
+    /*
     if (isset($_POST['datai'] )==false or isset($_POST['dataf'] )==false){
         $datai = 30;
         $dataf = 0;
@@ -29,6 +29,7 @@ function iniciaSessao(){
         $_POST['dataf']= date('Y-m-d',time() - ($dataf * 24 * 60 * 60));
 
     }
+    */
 
     if (isset($_SESSION['ID'])==false){
         header("location: login.php");
@@ -1157,7 +1158,7 @@ function buscaQtdVeiculos($dataInicial,$dataFinal){
     }
 
     unset($sql);
-    $sql= " select count(*) as QTD_VEICULOS_CADASTRADOS from veiculos a WHERE a.STATUS = 'Ativo'";     
+    $sql= "select count(*) as QTD_VEICULOS_CADASTRADOS from veiculos a WHERE a.STATUS = 'Ativo' and TIPO_VEICULO <> 'EQUIPAMENTOS' ";     
 
     $sql = $db->query($sql); 
     $dados= $sql->fetchAll(); 
@@ -1168,7 +1169,9 @@ function buscaQtdVeiculos($dataInicial,$dataFinal){
 
     return array(
         'QTD_VEICULOS_ATIVOS'           => $qtdVeiculosAtivos,
-        'QTD_VEICULOS_CADASTRADOS'      => $qtdVeiculosCadastrados
+        'QTD_VEICULOS_CADASTRADOS'      => $qtdVeiculosCadastrados,
+        'QTD_EQUIPAMENTOS_CADASTRADOS'      => $qtdEquipamentosCadastrados,
+        'QTD_EQUIPAMENTOS_ATIVOS'      => $qtdEquipamentosAtivos,
     );   
 } 
 
@@ -1180,7 +1183,6 @@ function buscaCondutoresMaiordespesa($dataInicial,$dataFinal){
         'QTD_VEICULOS_CADASTRADOS'      => $qtdVeiculosCadastrados
     );   
 } 
-
 
 function extrairMesAnoPorExtenso($data){   
     setlocale(LC_ALL, "pt_BR", "pt_BR.iso-8859-1", "pt_BR.utf-8","Portuguese_Brazilian","Portuguese_Brazil");
@@ -1218,7 +1220,7 @@ function limpaString($texto) {
     $listaCaracteres = array( 'ä','ã','à','á','â','ê','ë','è','é','ï','ì','í','ö','õ','ò','ó','ô','ü','ù','ú','û','À','Á','Ã','É','Í','Ó','Ú','ñ','Ñ','ç','Ç',' ','-','(',')',',',';',':','|','!','"','#','$','%','&','/','=','?','~','^','>','<','ª','º' );
 
     // matriz de saída
-    $substituirPor = array( 'a','a','a','a','a','e','e','e','e','i','i','i','o','o','o','o','o','u','u','u','u','A','A','A','E','I','O','U','n','n','c','C','_','_','_','_','_','_','_','_','_','_','_','_','_','_','_','_','_','_','_','_','_','_','_' );
+    $substituirPor = array( 'a','a','a','a','a','e','e','e','e','i','i','i','o','o','o','o','o','u','u','u','u','A','A','A','E','I','O','U','n','n','c','C',' ',' ',' ','  ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ' );
 
     // devolver a string
     return str_replace($listaCaracteres, $substituirPor, $texto);
@@ -1226,3 +1228,5 @@ function limpaString($texto) {
 function mostrarMensagem($mensagem){
     echo "<script> alert('test')</script>"; 
 }
+
+

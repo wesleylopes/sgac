@@ -4,10 +4,7 @@
 </div>
 <br>
 <div class="row">
-
-
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-
         <div class=" container card mb-3">
             <form method="POST">
                 <div class="row">
@@ -63,7 +60,6 @@
                             echo "</select>";
 
                             ?>
-
                     </div>
 
                     <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 col-xl-3">

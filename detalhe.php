@@ -4,10 +4,14 @@ require("conexao.php");
 if (iniciaSessao()===true){
     ini_set('max_execution_time', 0); 
 
-    $dti         = $_POST['datai'];  // Captura data Inicial Formulário
-    $dtf         = $_POST['dataf'];  // Captura data Final Formulário
-    $qtdMotoristas = buscaQtdMotoristas($dti,$dtf);
 
+    $_POST['datai']= $_GET['dti'];
+    $_POST['dataf']= $_GET['dtf'];
+
+    $dti = $_POST['datai'];  // Captura data Inicial Formulário
+    $dtf = $_POST['dataf'];  // Captura data Final Formulário
+
+    $qtdMotoristas = buscaQtdMotoristas($dti,$dtf);
     $qtdVeiculosAtivos = buscaQtdVeiculos($dti,$dtf)['QTD_VEICULOS_ATIVOS'];
     $qtdVeiculosCadastrados = buscaQtdVeiculos($dti,$dtf)['QTD_VEICULOS_CADASTRADOS'];
 
@@ -45,61 +49,67 @@ if (iniciaSessao()===true){
     </head>
 
     <body class="adminbody">
-        <div id="main">
 
-            <!-- Start  Menu Principal Superior -->
-            <?php require_once ("front-end/main-menu-top.php"); ?>
-            <!-- End Menu Principal Superior -->
 
-            <!-- Start Barra Menu Lateral Esquerdo -->
-            <?php require_once ("front-end/sidebar-menu-left.php"); ?>
-            <!-- End Barra Menu Lateral Esquerdo -->
-            <div class="content-page">
+        <!-- Start  Menu Principal Superior -->
+        <?php require_once ("front-end/main-menu-top.php"); ?>
+        <!-- End Menu Principal Superior -->
 
-                <!-- Start content -->
-                <div class="content">
-                    <div class="container-fluid">
+        <!-- Start Barra Menu Lateral Esquerdo -->
+        <?php require_once ("front-end/sidebar-menu-left.php"); ?>
+        <!-- End Barra Menu Lateral Esquerdo -->
+        <div class="content-page">
 
-                        <div class="row">
-                            <div class="col-xl-12">
-                                <div class="breadcrumb-holder">
-                                    <h1 class="main-title float-left">PAGINA DETALHE - <?php echo strtoupper($_GET['busca'])?> </h1>
-                                    <ol class="breadcrumb float-right">
-                                        <li class="breadcrumb-item">-</li>
-                                        <li class="breadcrumb-item active">Analise de Combustivel</li>
-                                    </ol>
-                                    <div class="clearfix"></div>
-                                </div>
+            <!-- Start content -->
+            <div class="content">
+                <div class="container-fluid">
+
+                    <div class="row">
+                        <div class="col-xl-12">
+                            <div class="breadcrumb-holder">
+                                <h1 class="main-title float-left">PAGINA DETALHE - <?php echo strtoupper($_GET['busca'])?> </h1>
+                                <ol class="breadcrumb float-right">
+                                    <li class="breadcrumb-item">-</li>
+                                    <li class="breadcrumb-item active">Analise de Combustivel</li>
+                                </ol>
+                                <div class="clearfix"></div>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-                                <div class="card-header">
-                                    <i class="fa fa-filter"></i> FILTRAR PERIODO DE <> ATÉ
-                                </div>
-                                    <br>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                            <div class="card-header">
+                                <i class="fa fa-filter"></i> FILTRAR PERIODO DE <> ATÉ
+                            </div>
+                                <br>
 
-                                    <form method="POST">
-                                        <div class="row">
-                                            <div class="col">
-                                                <div class="form-group">
-                                                    <input type="date" class="form-control" value="<?php echo $_POST['datai'];?>" id="InputDatai" name="datai" aria-describedby="emailHelp" placeholder="Data inicial">
-                                                </div>
-                                            </div>
-                                            <div class="col">
-                                                <div class="form-group">
-                                                    <input type="date" class="form-control" value="<?php echo $_POST['dataf'];?>" id="InputDataf" name="dataf" placeholder="Data final">
-                                                </div>
-                                            </div>
-
-                                            <div class="col">
-                                                <button type="submit" class="btn btn-primary  btn-block"><i class="fa fa-refresh"></i> Atualizar Graficos</button>
+                                <form id ="form-busca" method="POST">
+                                    <div class="row">
+                                        <div class="col">
+                                            <div class="form-group">
+                                                <input type="date" class="form-control" value="<?php echo $dti;?>" id="InputDatai" name="datai" aria-describedby="emailHelp" placeholder="Data inicial">
                                             </div>
                                         </div>
-                                    </form>
+                                        <div class="col">
+                                            <div class="form-group">
+                                                <input type="date" class="form-control" value="<?php echo $dtf ;?>" id="InputDataf" name="dataf" placeholder="Data final">
+                                            </div>
+                                        </div>
 
+                                        <div class="col">
+                                            <button type="submit" id="btn-atualizar-tabela" class="btn btn-primary  btn-block"><i class="fa fa-refresh"></i> Atualizar Registros</button>
+                                        </div>
                                     </div>
+                                </form>
+
                                 </div>
+                            </div>                  
+
+                            <div id="main">
+
+
+
+
 
                                 <div class="row">
                                     <?php  if(($_GET['busca']) ==='condutores') { 
@@ -222,6 +232,7 @@ if (iniciaSessao()===true){
                                     <?php }?>
 
                                     <?php  if(($_GET['busca']) ==='transacoes') { 
+                                     
                                     ?>
 
                                     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
@@ -243,7 +254,7 @@ if (iniciaSessao()===true){
                                                                 <th>Motorista</th>
                                                                 <th>Tipo Frota</th>
                                                                 <th>Modelo</th>
-                                                                <th>Marca </th> 
+                                                                <th>Marca </th>
                                                                 <th>Posto</th>
                                                                 <th>Cidade</th>
                                                                 <th>Produto</th>
@@ -256,9 +267,9 @@ if (iniciaSessao()===true){
                                                                 <th>Valor Total</th>
                                                                 <th>Polo</th>
                                                                 <th>Filial</th>
-                                                                <th>Equipe</th> 
-                                                                
-                                                                
+                                                                <th>Equipe</th>
+
+
 
 
 
@@ -290,10 +301,10 @@ if (iniciaSessao()===true){
                                                             <tr>
                                                                 <td><?php echo utf8_encode($quantidade['PLACA_VEICULO']);?></td>
                                                                 <td><?php echo utf8_encode($quantidade['NUMERO_CARTAO']);?></td>
-                                                                <td><?php echo utf8_encode($quantidade['DATA_ABASTECIMENTO']);?></td>  
+                                                                <td><?php echo utf8_encode($quantidade['DATA_ABASTECIMENTO']);?></td>
                                                                 <td><?php echo utf8_encode($quantidade['MATRICULA']);?></td>
                                                                 <td><?php echo utf8_encode($quantidade['MOTORISTA']);?></td>
-                                                                <td><?php echo utf8_encode($quantidade['TIPO_FROTA']);?>    </td>
+                                                                <td><?php echo utf8_encode($quantidade['TIPO_FROTA']);?> </td>
                                                                 <td><?php echo utf8_encode($quantidade['MODELO_VEICULO']);?></td>
                                                                 <td><?php echo utf8_encode($quantidade['FABRICANTE_VEICULO']);?></td>
                                                                 <td><?php echo utf8_encode($quantidade['NOME_POSTO']);?></td>
@@ -304,12 +315,12 @@ if (iniciaSessao()===true){
                                                                 <td><?php echo utf8_encode($quantidade['UNIDADE_MEDIDA']);?></td>
                                                                 <td><?php echo utf8_encode($quantidade['HODOMETRO_HORIMETRO']);?></td>
                                                                 <td><?php echo utf8_encode($quantidade['QUANTIDADE']);?></td>
-                                                                 <td><?php echo utf8_encode($quantidade['VALOR_UNITARIO']);?></td>
+                                                                <td><?php echo utf8_encode($quantidade['VALOR_UNITARIO']);?></td>
                                                                 <td><?php echo utf8_encode($quantidade['DISTANCIA_PERCORIDA']);?></td>
                                                                 <td><?php echo utf8_encode($quantidade['CENTRO_RESULTADO']);?></td>
                                                                 <td><?php echo utf8_encode($quantidade['FILIAL']);?></td>
                                                                 <td><?php echo utf8_encode($quantidade['CENTRO_CUSTO']);?></td>
-                                                                
+
 
 
                                                             </tr>
@@ -323,6 +334,242 @@ if (iniciaSessao()===true){
                                     </div>
 
                                     <?php }?>
+
+                                    <?php  if(($_GET['busca']) ==='anomalias') { 
+    $mensagem = $_GET['mensagem'];
+    if(($_GET['tipoerro'])==='anomalia'){
+    
+                                    ?>
+
+                                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                                        <div class="card mb-3">
+                                            <div class="card-header">
+                                                <h5><i class="fa fa-exchange"></i> ANOMALIAS - MENSAGEM: <?php echo '"'.strtoupper($mensagem).'"'    ?></h5>
+                                                Baseado em erros ao passar o Cartão.
+                                            </div>
+
+                                            <div class="card-body">
+                                                <div class="table-responsive">
+                                                    <table id="tabela-transacoes" class="table table-bordered table-hover display">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Data</th>
+                                                                <th>Motorista</th>                                                    
+                                                                <th>Marca </th>
+                                                                <th>Modelo</th>
+                                                                <th>Placa</th>                                                 
+                                                                <th>Posto</th>
+                                                                <th>Cidade</th>                                                   
+                                                                <th>Polo</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <?php   
+
+
+
+                                        $sql= "SELECT
+ date_format(str_to_date(DATA_MOVIMENTO, '%Y-%m-%d %H:%i:%s '), '%d/%m/%Y %H:%i:%s') AS DATA_ABASTECIMENTO,
+ MOTORISTA,
+ FABRICANTE_VEICULO AS MARCA_VEICULO,
+ MODELO_VEICULO,
+ PLACA_VEICULO,
+ NOME_POSTO,
+ CIDADE AS CIDADE_POSTO,
+ CENTRO_RESULTADO AS POLO
+ FROM anomalia_siag where DATE(DATA_MOVIMENTO) between '$dti' and '$dtf' and ANOMALIA=";
+    $sql.= "'$mensagem'";     
+
+    $sql = $db->query($sql); 
+    $dados= $sql->fetchAll(); 
+
+    foreach ($dados as $quantidade){  
+                                                            ?>
+                                                            <tr>
+                                                                <td><?php echo utf8_encode($quantidade['DATA_ABASTECIMENTO']);?></td>
+                                                                <td><?php echo utf8_encode($quantidade['MOTORISTA']);?></td>
+                                                                <td><?php echo utf8_encode($quantidade['MARCA_VEICULO']);?></td>
+                                                                <td><?php echo utf8_encode($quantidade['MODELO_VEICULO']);?></td>
+                                                                <td><?php echo utf8_encode($quantidade['PLACA_VEICULO']);?></td>
+                                                                <td><?php echo utf8_encode($quantidade['NOME_POSTO']);?> </td>
+                                                                <td><?php echo utf8_encode($quantidade['CIDADE_POSTO']);?> </td>
+                                                                <td><?php echo utf8_encode($quantidade['POLO']);?></td>
+
+                                                            </tr>
+                                                            <?php } ?>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+
+                                            </div>
+                                        </div><!-- end card-->
+                                    </div>
+
+                                    <?php }else if(($_GET['tipoerro'])==='motorista'){ ?>
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                                        <div class="card mb-3">
+                                            <div class="card-header">
+                                                <h5><i class="fa fa-exchange"></i> ANOMALIAS - MOTORISTA: <?php echo '"'.strtoupper($mensagem).'"'    ?></h5>
+                                                Baseado em erros ao passar o Cartão.
+                                            </div>
+
+                                            <div class="card-body">
+                                                <div class="table-responsive">
+                                                    <table id="tabela-transacoes" class="table table-bordered table-hover display">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Data</th>
+                                                                <th>Anomalia</th>                                                    
+                                                                <th>Marca </th>
+                                                                <th>Modelo</th>
+                                                                <th>Placa</th>
+                                                                <th>KM Anterior</th>
+                                                                <th>KM Informado</th>
+                                                                <th>Rendimento Combustivel</th>
+                                                                <th>Valor Unitario</th>
+                                                                <th>Valor Total</th>
+                                                                <th>Quantidade</th>                                       
+                                                                <th>Posto</th>
+                                                                <th>Cidade</th>                                                   
+                                                                <th>Polo</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <?php   
+
+
+
+                                        $sql= "SELECT
+ date_format(str_to_date(DATA_MOVIMENTO, '%Y-%m-%d %H:%i:%s '), '%d/%m/%Y %H:%i:%s') AS DATA_ABASTECIMENTO,
+ ANOMALIA,
+ FABRICANTE_VEICULO AS MARCA_VEICULO,
+ MODELO_VEICULO,
+ PLACA_VEICULO, 
+ KM_ANTERIOR,
+ HODOMETRO_HORIMETRO,
+ RENDIMENTO_COMBUSTIVEL,
+ VALOR_UNITARIO,
+ VALOR_TOTAL, 
+ QUANTIDADE,
+ NOME_POSTO,
+ CIDADE AS CIDADE_POSTO,
+ CENTRO_RESULTADO AS POLO
+ FROM anomalia_siag where DATE(DATA_MOVIMENTO) between '$dti' and '$dtf' and MOTORISTA=";
+    $sql.= "'$mensagem'";     
+    $sql = $db->query($sql); 
+    $dados= $sql->fetchAll(); 
+
+    foreach ($dados as $quantidade){  
+                                                            ?>
+                                                            <tr>
+                                                                <td><?php echo utf8_encode($quantidade['DATA_ABASTECIMENTO']);?></td>
+                                                                <td><?php echo utf8_encode($quantidade['ANOMALIA']);?></td>
+                                                                <td><?php echo utf8_encode($quantidade['MARCA_VEICULO']);?></td>
+                                                                <td><?php echo utf8_encode($quantidade['MODELO_VEICULO']);?></td>
+                                                                <td><?php echo utf8_encode($quantidade['PLACA_VEICULO']);?></td>
+                                                                <td><?php echo utf8_encode($quantidade['KM_ANTERIOR']);?></td>
+                                                                <td><?php echo utf8_encode($quantidade['HODOMETRO_HORIMETRO']);?></td>
+                                                                <td><?php echo utf8_encode($quantidade['RENDIMENTO_COMBUSTIVEL']);?></td>
+                                                                <td><?php echo utf8_encode($quantidade['VALOR_UNITARIO']);?></td>
+                                                                <td><?php echo utf8_encode($quantidade['VALOR_TOTAL']);?></td>
+                                                                <td><?php echo utf8_encode($quantidade['QUANTIDADE']);?></td>
+                                                                <td><?php echo utf8_encode($quantidade['NOME_POSTO']);?> </td>
+                                                                <td><?php echo utf8_encode($quantidade['CIDADE_POSTO']);?> </td>
+                                                                <td><?php echo utf8_encode($quantidade['POLO']);?></td>
+
+                                                            </tr>
+                                                            <?php } ?>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+
+                                            </div>
+                                        </div><!-- end card-->
+                                    </div>
+
+                                    <?php } else if(($_GET['tipoerro'])==='veiculo') { ?>
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                                        <div class="card mb-3">
+                                            <div class="card-header">
+                                                <h5><i class="fa fa-exchange"></i> ANOMALIAS - VEICULO: <?php echo '"'.strtoupper($mensagem).'"'    ?></h5>
+                                                Baseado em erros ao passar o Cartão.
+                                            </div>
+
+                                            <div class="card-body">
+                                                <div class="table-responsive">
+                                                    <table id="tabela-transacoes" class="table table-bordered table-hover display">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Data</th>
+                                                                <th>Anomalia</th>                                                    
+                                                                <th>Marca </th>
+                                                                <th>Modelo</th>                                                               
+                                                                <th>KM Anterior</th>
+                                                                <th>KM Informado</th>
+                                                                <th>Rendimento Combustivel</th>
+                                                                <th>Valor Unitario</th>
+                                                                <th>Valor Total</th>
+                                                                <th>Quantidade</th>                                       
+                                                                <th>Posto</th>
+                                                                <th>Cidade</th>                                                   
+                                                                <th>Polo</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <?php   
+
+
+
+                                        $sql= "SELECT
+ date_format(str_to_date(DATA_MOVIMENTO, '%Y-%m-%d %H:%i:%s '), '%d/%m/%Y %H:%i:%s') AS DATA_ABASTECIMENTO,
+ ANOMALIA,
+ FABRICANTE_VEICULO AS MARCA_VEICULO,
+ MODELO_VEICULO,
+ PLACA_VEICULO, 
+ KM_ANTERIOR,
+ HODOMETRO_HORIMETRO,
+ RENDIMENTO_COMBUSTIVEL,
+ VALOR_UNITARIO,
+ VALOR_TOTAL, 
+ QUANTIDADE,
+ NOME_POSTO,
+ CIDADE AS CIDADE_POSTO,
+ CENTRO_RESULTADO AS POLO
+ FROM anomalia_siag where DATE(DATA_MOVIMENTO) between '$dti' and '$dtf' and PLACA_VEICULO=";
+    $sql.= "'$mensagem'";     
+    $sql = $db->query($sql); 
+    $dados= $sql->fetchAll(); 
+
+    foreach ($dados as $quantidade){  
+                                                            ?>
+                                                            <tr>
+                                                                <td><?php echo utf8_encode($quantidade['DATA_ABASTECIMENTO']);?></td>
+                                                                <td><?php echo utf8_encode($quantidade['ANOMALIA']);?></td>
+                                                                <td><?php echo utf8_encode($quantidade['MARCA_VEICULO']);?></td>
+                                                                <td><?php echo utf8_encode($quantidade['MODELO_VEICULO']);?></td>
+                                                                <td><?php echo utf8_encode($quantidade['KM_ANTERIOR']);?></td>
+                                                                <td><?php echo utf8_encode($quantidade['HODOMETRO_HORIMETRO']);?></td>
+                                                                <td><?php echo utf8_encode($quantidade['RENDIMENTO_COMBUSTIVEL']);?></td>
+                                                                <td><?php echo utf8_encode($quantidade['VALOR_UNITARIO']);?></td>
+                                                                <td><?php echo utf8_encode($quantidade['VALOR_TOTAL']);?></td>
+                                                                <td><?php echo utf8_encode($quantidade['QUANTIDADE']);?></td>
+                                                                <td><?php echo utf8_encode($quantidade['NOME_POSTO']);?> </td>
+                                                                <td><?php echo utf8_encode($quantidade['CIDADE_POSTO']);?> </td>
+                                                                <td><?php echo utf8_encode($quantidade['POLO']);?></td>
+
+                                                            </tr>
+                                                            <?php } ?>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+
+                                            </div>
+                                        </div><!-- end card-->
+                                    </div>
+
+                                    <?php }
+    }?>
+
 
                                 </div>
                                 <!-- Start Barra Menu Lateral Esquerdo -->
@@ -423,7 +670,8 @@ if (iniciaSessao()===true){
                     }
                 });
 
-                var tabelaTransacoes = $('#tabela-transacoes').DataTable({"aaSorting": [0],                 
+                var tabelaTransacoes = $('#tabela-transacoes').DataTable({
+                    "aaSorting": [0],
                     "language": {
                         "sEmptyTable": "Nenhum registro encontrado",
                         "sInfo": "Mostrando de _START_ até _END_ de _TOTAL_ registros",
@@ -457,6 +705,18 @@ if (iniciaSessao()===true){
             });
 
         </script>
+
+        <script>
+            $(document).ready(function () {
+                $('#form-busca').delay(5000).fadeOut("slow"){
+                    $('#form-busca').submit();
+                };
+
+            });
+
+
+        </script>
+
 
 
     </body>

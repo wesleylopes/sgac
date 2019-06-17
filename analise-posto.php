@@ -476,7 +476,6 @@ if (iniciaSessao()===true){
 
     </script>
 
-
     <script>
         var ctx1 = document.getElementById("grafico3").getContext('2d');
         var barChart = new Chart(ctx1, {

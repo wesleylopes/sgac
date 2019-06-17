@@ -70,13 +70,9 @@ if (!empty($_FILES['excel']['tmp_name'])) {
         try {
             $sql = "DELETE FROM movimento_veiculos WHERE 
                             PLACA_VEICULO = '$PLACA_VEICULO'
-                       AND NUMERO_CARTAO =  '$NUMERO_CARTAO'
-                     AND DATA_MOVIMENTO = '$DATA_MOVIMENTO'";
+                     AND DATA_MOVIMENTO = '$DATA_MOVIMENTO'"; 
             
-
-            $db->beginTransaction();
-            $sql = $db->query($sql);
-            $db->commit();
+            $sql = $db->exec($sql);          
 
             unset($sql);
 

@@ -232,7 +232,7 @@ if (iniciaSessao()===true){
                                     <?php }?>
 
                                     <?php  if(($_GET['busca']) ==='transacoes') { 
-                                     
+
                                     ?>
 
                                     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
@@ -268,17 +268,12 @@ if (iniciaSessao()===true){
                                                                 <th>Polo</th>
                                                                 <th>Filial</th>
                                                                 <th>Equipe</th>
-
-
-
-
-
-
                                                             </tr>
                                                         </thead>
                                                         <tbody>
                                                             <?php   
-    $sql= " select PLACA_VEICULO, NUMERO_CARTAO,       
+    if(($_GET['tipoerro'])==='transacoes'){
+        $sql= " select PLACA_VEICULO, NUMERO_CARTAO,       
        date_format(str_to_date(DATA_MOVIMENTO, '%Y-%m-%d %H:%i:%s '), '%d/%m/%Y %H:%i:%s') AS DATA_ABASTECIMENTO,
        MATRICULA,
        MOTORISTA,
@@ -292,7 +287,36 @@ if (iniciaSessao()===true){
        CONSUMO,
        UNIDADE_MEDIDA,
        HODOMETRO_HORIMETRO, QUANTIDADE, VALOR_UNITARIO, VALOR_TOTAL, CENTRO_RESULTADO, FILIAL, CENTRO_CUSTO
-       from movimento_veiculos a where DATE(DATA_MOVIMENTO) between '$dti' and '$dtf' "; 
+       from movimento_veiculos a where 
+       (a.PRODUTO  not like '%ARLA%')
+       and (a.PRODUTO  not like '%MOTOR%')       
+       and DATE(DATA_MOVIMENTO) between '$dti' and '$dtf'";
+
+    }else if (($_GET['tipoerro'])==='transacoesoutros'){
+
+        $sql= " select PLACA_VEICULO, NUMERO_CARTAO,       
+       date_format(str_to_date(DATA_MOVIMENTO, '%Y-%m-%d %H:%i:%s '), '%d/%m/%Y %H:%i:%s') AS DATA_ABASTECIMENTO,
+       MATRICULA,
+       MOTORISTA,
+       TIPO_FROTA,
+       MODELO_VEICULO,
+       FABRICANTE_VEICULO,
+       NOME_POSTO,
+       CIDADE,
+       PRODUTO,
+       DISTANCIA_PERCORIDA,
+       CONSUMO,
+       UNIDADE_MEDIDA,
+       HODOMETRO_HORIMETRO, QUANTIDADE, VALOR_UNITARIO, VALOR_TOTAL, CENTRO_RESULTADO, FILIAL, CENTRO_CUSTO
+       from movimento_veiculos a where
+        (a.PRODUTO  not like '%GASOLINA%')
+       and (a.PRODUTO  not like '%ETANOL%')
+       and (a.PRODUTO  not like '%DIESEL%')    
+       and DATE(DATA_MOVIMENTO) between '$dti' and '$dtf' ";
+
+   
+    }
+
     $sql = $db->query($sql); 
     $dados= $sql->fetchAll(); 
 
@@ -338,7 +362,7 @@ if (iniciaSessao()===true){
                                     <?php  if(($_GET['busca']) ==='anomalias') { 
     $mensagem = $_GET['mensagem'];
     if(($_GET['tipoerro'])==='anomalia'){
-    
+
                                     ?>
 
                                     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
@@ -378,12 +402,12 @@ if (iniciaSessao()===true){
  CIDADE AS CIDADE_POSTO,
  CENTRO_RESULTADO AS POLO
  FROM anomalia_siag where DATE(DATA_MOVIMENTO) between '$dti' and '$dtf' and ANOMALIA=";
-    $sql.= "'$mensagem'";     
+        $sql.= "'$mensagem'";     
 
-    $sql = $db->query($sql); 
-    $dados= $sql->fetchAll(); 
+        $sql = $db->query($sql); 
+        $dados= $sql->fetchAll(); 
 
-    foreach ($dados as $quantidade){  
+        foreach ($dados as $quantidade){  
                                                             ?>
                                                             <tr>
                                                                 <td><?php echo utf8_encode($quantidade['DATA_ABASTECIMENTO']);?></td>
@@ -406,7 +430,7 @@ if (iniciaSessao()===true){
                                     </div>
 
                                     <?php }else if(($_GET['tipoerro'])==='motorista'){ ?>
-        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
                                         <div class="card mb-3">
                                             <div class="card-header">
                                                 <h5><i class="fa fa-exchange"></i> ANOMALIAS - MOTORISTA: <?php echo '"'.strtoupper($mensagem).'"'    ?></h5>
@@ -439,7 +463,7 @@ if (iniciaSessao()===true){
 
 
 
-                                        $sql= "SELECT
+        $sql= "SELECT
  date_format(str_to_date(DATA_MOVIMENTO, '%Y-%m-%d %H:%i:%s '), '%d/%m/%Y %H:%i:%s') AS DATA_ABASTECIMENTO,
  ANOMALIA,
  FABRICANTE_VEICULO AS MARCA_VEICULO,
@@ -455,11 +479,11 @@ if (iniciaSessao()===true){
  CIDADE AS CIDADE_POSTO,
  CENTRO_RESULTADO AS POLO
  FROM anomalia_siag where DATE(DATA_MOVIMENTO) between '$dti' and '$dtf' and MOTORISTA=";
-    $sql.= "'$mensagem'";     
-    $sql = $db->query($sql); 
-    $dados= $sql->fetchAll(); 
+                                                                                      $sql.= "'$mensagem'";     
+                                                                                      $sql = $db->query($sql); 
+                                                                                      $dados= $sql->fetchAll(); 
 
-    foreach ($dados as $quantidade){  
+                                                                                      foreach ($dados as $quantidade){  
                                                             ?>
                                                             <tr>
                                                                 <td><?php echo utf8_encode($quantidade['DATA_ABASTECIMENTO']);?></td>
@@ -488,7 +512,7 @@ if (iniciaSessao()===true){
                                     </div>
 
                                     <?php } else if(($_GET['tipoerro'])==='veiculo') { ?>
-        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
                                         <div class="card mb-3">
                                             <div class="card-header">
                                                 <h5><i class="fa fa-exchange"></i> ANOMALIAS - VEICULO: <?php echo '"'.strtoupper($mensagem).'"'    ?></h5>
@@ -520,7 +544,7 @@ if (iniciaSessao()===true){
 
 
 
-                                        $sql= "SELECT
+        $sql= "SELECT
  date_format(str_to_date(DATA_MOVIMENTO, '%Y-%m-%d %H:%i:%s '), '%d/%m/%Y %H:%i:%s') AS DATA_ABASTECIMENTO,
  ANOMALIA,
  FABRICANTE_VEICULO AS MARCA_VEICULO,
@@ -536,11 +560,11 @@ if (iniciaSessao()===true){
  CIDADE AS CIDADE_POSTO,
  CENTRO_RESULTADO AS POLO
  FROM anomalia_siag where DATE(DATA_MOVIMENTO) between '$dti' and '$dtf' and PLACA_VEICULO=";
-    $sql.= "'$mensagem'";     
-    $sql = $db->query($sql); 
-    $dados= $sql->fetchAll(); 
+                                                                                      $sql.= "'$mensagem'";     
+                                                                                      $sql = $db->query($sql); 
+                                                                                      $dados= $sql->fetchAll(); 
 
-    foreach ($dados as $quantidade){  
+                                                                                      foreach ($dados as $quantidade){  
                                                             ?>
                                                             <tr>
                                                                 <td><?php echo utf8_encode($quantidade['DATA_ABASTECIMENTO']);?></td>
@@ -568,7 +592,7 @@ if (iniciaSessao()===true){
                                     </div>
 
                                     <?php }
-    }?>
+}?>
 
 
                                 </div>

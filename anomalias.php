@@ -227,7 +227,7 @@ if (iniciaSessao()===true){
                                 ?>
 
                             <div class="row">
-                                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 col-xl-12">
+                                <div class="col-xs-6 col-sm-6 col-md-12 col-lg-12 col-xl-12">
                                     <div class="card mb-3">
                                         <div class="card-header">
                                             <i class="fa fa-table"></i> TIPOS DE TRANSAÇÕES
@@ -241,9 +241,9 @@ if (iniciaSessao()===true){
                                 </div>
 
 
-                                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 col-xl-12">
+                                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-12 col-xl-12">
                                     <div class="row">
-                                        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 col-xl-12">
+                                        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-12 col-xl-12">
                                             <div class="card mb-3">
                                                 <div class="card-header">
                                                     <i class="fa fa-table"></i> CONDUTORES
@@ -255,7 +255,7 @@ if (iniciaSessao()===true){
                                                 <div class="card-footer small text-muted"></div>
                                             </div>
                                         </div>
-                                        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 col-xl-12">
+                                        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-12 col-xl-12">
                                             <div class="card mb-3">
                                                 <div class="card-header">
                                                     <i class="fa fa-table"></i> VEICULOS

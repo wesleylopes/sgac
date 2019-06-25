@@ -45,7 +45,7 @@ if (iniciaSessao()===true){
 
     <body class="adminbody">
         <div id="main">
-            
+
 
             <!-- Start  Menu Principal Superior -->
             <?php require_once ("front-end/main-menu-top.php"); ?>
@@ -112,11 +112,15 @@ if (iniciaSessao()===true){
                                             <h4 class="m-b-20 text-white "><?php echo buscaValorQtdtransacoes($dti,$dtf)['VALOR_TRANSACOES']?></h4>
                                             <span class="text-white">Litragem</span>
                                             <h4 class="m-b-20 text-white "><?php echo buscaValorQtdtransacoes($dti,$dtf)['QUANTIDADE_LITROS']?></h4>
+                                            <button class="btn botao-painel float-right"><a class="text-white" href="detalhe.php?busca=transacoes&dti=<?php echo $_POST['datai']?>&dtf=<?php echo $_POST['dataf']?>&tipoerro=transacoes">+</a></button>
+                                            <br>
+                                            <hr>
+                                            <span class="text-white">Quantidade Outros</span>
+                                            <h4 class="m-b-20 text-white "><?php echo buscaValorQtdtransacoes($dti,$dtf)['QTD_TRANSACOES_OUTROS']?></h4>
                                             <span class="text-white">Valor Outros R$</span>
-                                            <h4 class="m-b-20 text-white "><?php echo buscaValorQtdtransacoes($dti,$dtf)['VALOR_TRANSACOES']?></h4>
-                                            
+                                            <h4 class="m-b-20 text-white "><?php echo buscaValorQtdtransacoes($dti,$dtf)['VALOR_TRANSACOES_OUTROS']?></h4>                                            
                                             <span class="text-white">Analise de Combustivel</span>
-                                            <button class="btn botao-painel float-right"><a class="text-white" href="detalhe.php?busca=transacoes&dti=<?php echo $_POST['datai']?>&dtf=<?php echo $_POST['dataf']?>">Ver Mais..</a></button>
+                                            <button class="btn botao-painel float-right"><a class="text-white" href="detalhe.php?busca=transacoes&dti=<?php echo $_POST['datai']?>&dtf=<?php echo $_POST['dataf']?>&tipoerro=transacoesoutros">+</a></button>
                                         </div>
 
                                     </div>
@@ -125,11 +129,11 @@ if (iniciaSessao()===true){
                                         <div class="card-box noradius noborder bg-warning">
                                             <i class="fa fa-car float-right text-white"></i>
                                             <h6 class="text-white text-uppercase m-b-10"> RESUMO Veiculos </h6>
-                                            <span class="text-white">Cadastrados</span>
+                                            <span class="text-white">Ativos</span>
                                             <h4 class="m-b-20 text-white counter"><?php echo $qtdVeiculosCadastrados  ?></h4>
                                             <span class="text-white">Em Atividade</span>
                                             <h4 class="m-b-20 text-white counter"><?php echo $qtdVeiculosAtivos ?></h4>
-                                            <span class="text-white">Cadastro de Veiculos</span>
+                                            <span class="text-white">Cadastro de Veiculos x Movimentação</span>
                                         </div>
                                     </div>
 
@@ -158,7 +162,7 @@ if (iniciaSessao()===true){
                                         <div class="card mb-3">
                                             <div class="card-header">
                                                 <h5><i class="fa fa-tint"></i> 10 ÚLTIMOS VEICULOS ABASTECIDOS</h5>
-                                                
+
                                                 Baseado na ultima data de carga de dados e filtros.
                                             </div>
 
@@ -166,7 +170,7 @@ if (iniciaSessao()===true){
 
                                                 <div class="widget-messages nicescroll" style="height: 400px;">
                                                     <?php   
-                                                 $sql= "SELECT  
+    $sql= "SELECT  
                                              distinct(b.PLACA_VEICULO) as PLACA,
                                            A.MODELO_VEICULO MOD_VEICULO,
                                            A.FABRICANTE_VEICULO AS MARCA,
@@ -175,7 +179,7 @@ if (iniciaSessao()===true){
                                                date_format(str_to_date(Date(a.data_movimento), '%Y-%m-%d '), '%d/%m/%Y') AS DATA_ABASTECIMENTO
                                              FROM movimento_veiculos a INNER JOIN veiculos B ON ( A.PLACA_VEICULO = B.PLACA_VEICULO) 
                                              AND Date(a.data_movimento) BETWEEN '$dti' AND '$dtf' ORDER BY a.data_movimento DESC LIMIT 10";  
-                                                 
+
                                                 $sql = $db->query($sql); 
                                                 $dados= $sql->fetchAll(); 
 
@@ -189,7 +193,7 @@ if (iniciaSessao()===true){
                                                         </div>
                                                     </a>
                                                     <?php              
-                                                           }     
+                                                }     
                                                     ?>
                                                 </div>
 
@@ -198,8 +202,8 @@ if (iniciaSessao()===true){
                                             <div class="card-footer small text-muted">Atualizado Hoje</div>
                                         </div><!-- end card-->
                                     </div>  
-                                    
-                                     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6 col-xl-6">
+
+                                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6 col-xl-6">
                                         <div class="card mb-3">
                                             <div class="card-header">
                                                 <h5><i class="fa fa-money"></i> 10 CONDUTORES COM MAIOR DESPESA </h5>
@@ -210,7 +214,7 @@ if (iniciaSessao()===true){
 
                                                 <div class="widget-messages nicescroll" style="height: 400px;">
                                                     <?php   
-                                                     $sql= "SELECT MOTORISTA,
+                                                    $sql= "SELECT MOTORISTA,
                                                      B.TIPO_VEICULO as TP_VEICULO,
                                                      A.MODELO_VEICULO as MOD_VEICULO,
                                                      ROUND(SUM(a.VALOR_TOTAL),2) AS VALOR,
@@ -220,11 +224,11 @@ if (iniciaSessao()===true){
                                                      AND Date(a.data_movimento) BETWEEN '$dti' AND '$dtf'
                                                      GROUP BY A.MOTORISTA
                                                      ORDER BY VALOR DESC LIMIT 10";  
-                                                 
-                                                $sql = $db->query($sql); 
-                                                $dados= $sql->fetchAll(); 
 
-                                                foreach ($dados as $quantidade){  
+                                                    $sql = $db->query($sql); 
+                                                    $dados= $sql->fetchAll(); 
+
+                                                    foreach ($dados as $quantidade){  
                                                     ?>
                                                     <a href="#">
                                                         <div class="message-item">
@@ -234,7 +238,7 @@ if (iniciaSessao()===true){
                                                         </div>
                                                     </a>
                                                     <?php              
-                                                           }     
+                                                    }     
                                                     ?>
                                                 </div>
 
@@ -597,8 +601,8 @@ if (iniciaSessao()===true){
 
                             </script>
                             <!-- END Java Script for this page -->
-                            
-                            
+
+
 
                             </body>
 

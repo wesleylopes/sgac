@@ -119,6 +119,9 @@ function buscaValorQtCombUnit($unidade,$dataInicial,$dataFinal,$tipoCombustivel)
            AND DATE(b.DATA_MOVIMENTO) between '$dataInicial' and '$dataFinal'";
 
     $sql.= "AND b.CENTRO_RESULTADO in('$unidade')";
+    
+    //$sql.= "AND a.CENTRO_RESULTADO in(SELECT DISTINCT(CENTRO_RESULTADO ) FROM movimento_veiculos a 
+                     //                          WHERE CENTRO_RESULTADO NOT IN('PIAUI','GOIAS'))";
 
 
     //echo "TESTE <br>".$sql."<br>";
@@ -144,6 +147,8 @@ function buscaValorQtCombUnit($unidade,$dataInicial,$dataFinal,$tipoCombustivel)
         AND DATE(a.DATA_MOVIMENTO) between '$dataInicial' and '$dataFinal'";
 
     $sql.= "AND a.CENTRO_RESULTADO in('$unidade')";
+    //$sql.= "AND a.CENTRO_RESULTADO in(SELECT DISTINCT(CENTRO_RESULTADO ) FROM movimento_veiculos a 
+           //                                    WHERE CENTRO_RESULTADO NOT IN('PIAUI','GOIAS'))";
 
     //echo "TESTE2 <br>".$sql."<br>";
 
@@ -1109,19 +1114,55 @@ function buscaValorQtdtransacoes($dataInicial,$dataFinal){
     $sql= "SELECT count(*) AS QTD_TRANSACOES, 
           Sum(valor_total) AS VALOR_TRANSACOES,
           Sum(quantidade) AS QUANTIDADE_LITROS 
-   FROM   movimento_veiculos a 
-   WHERE Date(a.data_movimento) BETWEEN '$dataInicial' AND '$dataFinal'"; 
+    FROM movimento_veiculos a WHERE 
+  (a.PRODUTO  not like '%ARLA%')
+ and (a.PRODUTO  not like '%MOTOR%')
+  and Date(a.data_movimento) BETWEEN '$dataInicial' AND '$dataFinal'";
+    //echo $sql; 
 
     $sql = $db->query($sql);            
-    $dados = $sql->fetchAll(); 
-
-    foreach ($dados as $quantidade){
-        return array(
-            'QTD_TRANSACOES'             => $quantidade['QTD_TRANSACOES'],
-            'VALOR_TRANSACOES'           => number_format($quantidade['VALOR_TRANSACOES'],2,',','.'), 
-            'QUANTIDADE_LITROS'           => number_format($quantidade['QUANTIDADE_LITROS'],2,',','.')
-        );             
+    $dadosTransacoes = $sql->fetchAll(); 
+    
+    foreach ($dadosTransacoes as $itemTransacao){
+     $qtdTransacoes= $itemTransacao['QTD_TRANSACOES']; 
+        $vlrTransacoes = $itemTransacao['VALOR_TRANSACOES']; 
+        $qtdLitros = $itemTransacao['QUANTIDADE_LITROS'];        
+     
     }
+    
+    unset($sql);
+    
+     $sql= "SELECT count(*) AS QTD_TRANSACOES_OUTROS, 
+          Sum(valor_total) AS VALOR_TRANSACOES_OUTROS,
+          Sum(quantidade) AS QUANTIDADE_LITROS_OUTROS 
+    FROM movimento_veiculos a WHERE 
+  (a.PRODUTO  not like '%GASOLINA%')
+ and (a.PRODUTO  not like '%ETANOL%')
+ and (a.PRODUTO  not like '%DIESEL%')
+  and Date(a.data_movimento) BETWEEN '$dataInicial' AND '$dataFinal'";
+    //echo $sql; 
+
+    $sql = $db->query($sql);            
+    $dadosTransacoesOutros = $sql->fetchAll(); 
+   
+     
+    foreach ($dadosTransacoesOutros as $itemTransacaoOutros){
+     $qtdTransacoesOutros= $itemTransacaoOutros['QTD_TRANSACOES_OUTROS']; 
+        $vlrTransacoesOutros = $itemTransacaoOutros['VALOR_TRANSACOES_OUTROS']; 
+        $qtdLitrosOutros= $itemTransacaoOutros['QUANTIDADE_LITROS_OUTROS'];        
+     
+    }   
+   
+        return array(
+            'QTD_TRANSACOES'             => $qtdTransacoes,
+            'VALOR_TRANSACOES'           => number_format($vlrTransacoes, 2, ',', '.'), 
+            'QUANTIDADE_LITROS'          => number_format($qtdLitros,2 ,',' ,'.'),
+            'QTD_TRANSACOES_OUTROS'      => $qtdTransacoesOutros,
+            'VALOR_TRANSACOES_OUTROS'    => number_format($vlrTransacoesOutros, 2, ',', '.'), 
+            'QUANTIDADE_LITROS_OUTROS'   => number_format($qtdLitrosOutros, 2, ',', '.')
+            
+        );             
+   
 } 
 
 function buscaQtdMotoristas($dataInicial,$dataFinal){        

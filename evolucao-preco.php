@@ -216,7 +216,7 @@ if (iniciaSessao()===true){
                             <hr>
                         </div>
                         <div class="row">
-                            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-12">
+                            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-12 col-xl-12">
                                 <div class="card mb-3">
                                     <div class="card-header">
                                         <i class="fa fa-table"></i> EVOLUÇÃO DIARIA PREÇO MÉDIO COMBUSTÍVEL

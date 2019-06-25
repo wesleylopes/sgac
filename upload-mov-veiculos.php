@@ -68,13 +68,13 @@ if (!empty($_FILES['excel']['tmp_name'])) {
         $CENTRO_CUSTO        = $objWorksheet->getCellByColumnAndRow(23, $row)->getValue();
 
         try {
-            $sql = "DELETE FROM movimento_veiculos WHERE 
-                            PLACA_VEICULO = '$PLACA_VEICULO'
-                     AND DATA_MOVIMENTO = '$DATA_MOVIMENTO'"; 
+            //$sql = "DELETE FROM movimento_veiculos WHERE 
+                 //           PLACA_VEICULO = '$PLACA_VEICULO'
+                 //   AND DATA_MOVIMENTO = '$DATA_MOVIMENTO'"; 
             
-            $sql = $db->exec($sql);          
+            //$sql = $db->exec($sql);          
 
-            unset($sql);
+            //unset($sql);
 
        $contador++;
             $sql = "INSERT INTO movimento_veiculos SET 

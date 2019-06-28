@@ -230,6 +230,77 @@ if (iniciaSessao()===true){
                                     </div>
 
                                     <?php }?>
+                                    
+
+                                    
+                                    <?php  if(($_GET['busca']) ==='veiculos') { 
+     //Veiculos
+                                    ?>
+
+                                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                                        <div class="card mb-3">
+                                            <div class="card-header">
+                                                <h5><i class="fa fa-money"></i> VEICULOS ATIVOS</h5>
+                                            </div>
+
+                                            <div class="card-body">
+                                                <div class="table-responsive">
+                                                    <table id="tabela-abastecimento" class="table table-bordered table-hover display">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Placa</th>
+                                                                <th>Numero Cartão</th>
+                                                                <th>Modelo</th>
+                                                                <th>Tipo de Veiculo</th>
+                                                                <th>Marca</th>
+                                                                <th>Ano de Fabricacao</th>
+                                                                <th>Modelo Fabricacao</th>
+                                                                <th>Filial</th>
+                                                                <th>Status</th>
+
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <?php   
+    $sql= "select PLACA_VEICULO, 
+       NUMERO_CARTAO, 
+       MODELO_VEICULO, 
+       TIPO_VEICULO, 
+       FABRICANTE_VEICULO as MARCA, 
+       ANO_FABRICACAO, 
+       MODELO_FABRICACAO, 
+       CENTRO_RESULTADO, 
+       STATUS       
+       from veiculos a WHERE a.STATUS = 'Ativo' and TIPO_VEICULO <> 'EQUIPAMENTOS' 
+       order by CENTRO_RESULTADO";
+
+    $sql = $db->query($sql); 
+    $dados= $sql->fetchAll(); 
+
+    foreach ($dados as $quantidade){  
+                                                            ?>
+                                                            <tr>
+                                                                <td><?php echo utf8_encode($quantidade['PLACA_VEICULO']);?></td>
+                                                                <td><?php echo utf8_encode($quantidade['NUMERO_CARTAO']);?></td>
+                                                                <td><?php echo utf8_encode($quantidade['MODELO_VEICULO']);?></td>
+                                                                <td><?php echo utf8_encode($quantidade['TIPO_VEICULO']);?></td>
+                                                                <td><?php echo utf8_encode($quantidade['MARCA']);?></td>
+                                                                <td><?php echo utf8_encode($quantidade['ANO_FABRICACAO']);?></td>
+                                                                <td><?php echo utf8_encode($quantidade['MODELO_FABRICACAO']);?></td>
+                                                                <td><?php echo utf8_encode($quantidade['CENTRO_RESULTADO']);?></td>
+                                                                <td><?php echo utf8_encode($quantidade['STATUS']);?></td>
+
+                                                            </tr>
+                                                            <?php } ?>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+
+                                            </div>
+                                        </div><!-- end card-->
+                                    </div>
+
+                                    <?php }?>
 
                                     <?php  if(($_GET['busca']) ==='transacoes') { 
 
@@ -661,11 +732,7 @@ if (iniciaSessao()===true){
                             "sSortDescending": ": Ordenar colunas de forma descendente"
                         }
                     }
-
-
-                }
-
-                                                                        );
+                }                                                                       );
 
                 var tabelaAbastecimento = $('#tabela-abastecimento').DataTable({
                     "aaSorting": [6],

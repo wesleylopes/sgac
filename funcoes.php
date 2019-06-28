@@ -1190,7 +1190,7 @@ function buscaQtdVeiculos($dataInicial,$dataFinal){
 
     $sql= "SELECT COUNT(DISTINCT(PLACA_VEICULO)) AS QTD_VEICULOS_ATIVOS FROM movimento_veiculos a
    WHERE Date(a.data_movimento) BETWEEN '$dataInicial' AND '$dataFinal'";  
-
+    //echo $sql;
     $sql = $db->query($sql); 
     $dados= $sql->fetchAll(); 
 
@@ -1200,7 +1200,7 @@ function buscaQtdVeiculos($dataInicial,$dataFinal){
 
     unset($sql);
     $sql= "select count(*) as QTD_VEICULOS_CADASTRADOS from veiculos a WHERE a.STATUS = 'Ativo' and TIPO_VEICULO <> 'EQUIPAMENTOS' ";     
-
+    //echo $sql;
     $sql = $db->query($sql); 
     $dados= $sql->fetchAll(); 
 
